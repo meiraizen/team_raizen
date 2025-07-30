@@ -9,20 +9,27 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/auth';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
+import { useTheme } from '@mui/material/styles';
 
 export default function Header() {
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
   const isMobile = useMediaQuery('(max-width:600px)');
+  const theme = useTheme();
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
 
+  const hoverColor = {
+    backgroundColor: theme.palette.raizenRed.hover,
+    color: theme.palette.primary.contrastText,
+  }
+
   return (
-    <AppBar position="static">
+    <AppBar position="fixed" sx={{ bgcolor: theme.palette.raizenRed.main }}>
       <Toolbar>
         {isMobile && (
           <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
@@ -34,8 +41,10 @@ export default function Header() {
         </Typography>
         {user && (
           <Box sx={{ display: 'flex', gap: 2 }}>
-            <Button color="inherit" component={Link} to="/home">Home</Button>
-            <Button color="inherit" component={Link} to="/billbook">Billbook</Button>
+            <Button color="inherit" component={Link} to="/home" sx={{
+              '&:hover': hoverColor
+            }}>Home</Button>
+            <Button color={"inherit"} component={Link} to="/billbook">Billbook</Button>
             <Button color="inherit" component={Link} to="/contact">Contact</Button>
             <Button color="inherit" onClick={handleLogout}>Logout</Button>
           </Box>
