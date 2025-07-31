@@ -26,14 +26,24 @@ export default function Login() {
   };
 
   return (
-    <Container maxWidth="xs" sx={{ mt: 8 }}>
-      <Typography variant="h5" gutterBottom>Login</Typography>
-      <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-        <TextField label="Email" type="email" value={email} onChange={e => setEmail(e.target.value)} required fullWidth />
-        <TextField label="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} required fullWidth />
-        <Button type="submit" variant="contained" color="primary">Login</Button>
-        {error && <Alert severity="error">{error}</Alert>}
-      </Box>
-    </Container>
+    <Box sx={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      bgcolor: 'background.default',
+      p: 0,
+      m: 0,
+    }}>
+      <Container maxWidth="xs" sx={{ boxShadow: 3, borderRadius: 3, py: 4, bgcolor: 'background.paper' }}>
+        <Typography variant="h5" gutterBottom>Login</Typography>
+        <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <TextField label="Email" type="email" value={email} onChange={e => setEmail(e.target.value)} required fullWidth />
+          <TextField label="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} required fullWidth />
+          <Button type="submit" variant="contained" color="primary">Login</Button>
+          {error && <Alert severity="error">{error}</Alert>}
+        </Box>
+      </Container>
+    </Box>
   );
 }
