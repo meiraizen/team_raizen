@@ -9,6 +9,7 @@ import Billbook from './pages/billbook';
 import NotFound from './pages/NotFound';
 import VerifyCertificate from './pages/VerifyCertificate';
 import StudentsInfo from './pages/StudentsInfo';
+import OtpVerify from './pages/OtpVerify.jsx';
 import Box from '@mui/material/Box';
 import { useTheme, ThemeProvider } from '@mui/material/styles';
 import theme from './themecolor.jsx';
@@ -22,6 +23,7 @@ function AppContent() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/otp-verify" element={<OtpVerify />} />
           <Route element={<ProtectedRoute />}>
             <Route
               path="*"
@@ -34,7 +36,7 @@ function AppContent() {
                       pt: { xs: 2, sm: 3, md: 6 },
                       pb: { xs: 2, sm: 3, md: 6 },
                       px: { xs: 1, sm: 2, md: 6 },
-                      maxWidth: { xs: '100%', sm: '100%', md: '1200px', xl: '2048px' },
+                      maxWidth: { xs: '100%', sm: '100%', md: '1200px' , xl: '2048px' },
                       margin: '0 auto',
                       // boxShadow: { xs: 'none', md: 3 },
                       transition: 'all 0.3s',

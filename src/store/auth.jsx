@@ -1,9 +1,11 @@
 import { create } from 'zustand';
+import emailjs from '@emailjs/browser';
 
 const allowedAccounts = [
   { email: 'mei@gmail.com', password: 'r' },
   { email: 'sam@gmail.com', password: 'raizen' },
   { email: 'rv@gmail.com', password: 'raizen' },
+  { email: 'meii.raizen@gmail.com' }, // Added this email
 ];
 
 const getStoredUser = () => {
@@ -15,22 +17,67 @@ const getStoredUser = () => {
   }
 };
 
-export const useAuthStore = create((set) => ({
+// Secure random OTP generator (6 digits)
+const generateOtp = () => String(Math.floor(100000 + Math.random() * 900000));
+
+// Use environment variables for EmailJS keys
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_USER_ID = import.meta.env.VITE_EMAILJS_USER_ID;
+
+const sendOtpEmail = (email, otp) => {
+  return emailjs.send(
+    EMAILJS_SERVICE_ID,
+    EMAILJS_TEMPLATE_ID,
+    {
+      passcode: otp,
+      email: email, // Use this if your template's To field is {{email}}
+    },
+    EMAILJS_USER_ID
+  );
+};
+
+export const useAuthStore = create((set, get) => ({
   user: getStoredUser(),
-  login: (email, password) => {
+  otpSent: false,
+  otp: null,
+  otpExpiry: null,
+  login: async (email) => {
     const found = allowedAccounts.find(
-      (acc) => acc.email === email && acc.password === password
+      (acc) => acc.email === email
     );
     if (found) {
-      const user = { email };
-      localStorage.setItem('auth_user', JSON.stringify(user));
-      set({ user });
-      return true;
+      const otp = generateOtp();
+      const expiry = Date.now() + 5 * 60 * 1000; // 5 minutes from now
+      try {
+        await sendOtpEmail(email, otp);
+      } catch (e) {
+        set({ otpSent: false, otp: null, otpExpiry: null });
+        return { error: 'Failed to send OTP. Please try again.' };
+      }
+      set({ otpSent: true, otp, otpExpiry: expiry, user: { email } });
+      localStorage.setItem('auth_user', JSON.stringify({ email }));
+      return 'otp';
     }
     return false;
   },
+  verifyOtp: (inputOtp) => {
+    const { otp, otpExpiry } = get();
+    if (!inputOtp || inputOtp.length !== 6 || !/^[0-9]{6}$/.test(inputOtp)) {
+      return { error: 'OTP must be a 6-digit number.' };
+    }
+    if (!otp || !otpExpiry || Date.now() > otpExpiry) {
+      set({ otpSent: false, otp: null, otpExpiry: null });
+      return { error: 'OTP expired. Please login again.' };
+    }
+    if (inputOtp === otp) {
+      set({ otpSent: false, otp: null, otpExpiry: null });
+      return true;
+    }
+    return { error: 'Invalid OTP.' };
+  },
   logout: () => {
     localStorage.removeItem('auth_user');
-    set({ user: null });
+    set({ user: null, otpSent: false, otp: null, otpExpiry: null });
   },
 }));
