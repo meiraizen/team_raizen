@@ -3,6 +3,10 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
     palette: {
         mode: 'light',
+        textColor: {
+            white: '#fff',
+            primary: '#1565c0',
+        },
         primary: {
             main: '#1565c0',
             contrastText: '#fff',
@@ -11,7 +15,7 @@ const theme = createTheme({
             main: '#ff9800',
             contrastText: '#fff',
         },
-        raizenRed: {
+        raizenColors: {
             main: '#0f0f0f', // Raizen Red
             contrastText: '#fff',
             hover: '#B71C2B', // custom hover color
@@ -26,12 +30,16 @@ const theme = createTheme({
         },
         error: {
             main: '#d32f2f',
+            red: '#d32f2f'
         },
         success: {
             main: '#388e3c',
+            green: '#388e3c',
+
         },
         warning: {
             main: '#fbc02d',
+            yellow: '#fbc02d'
         },
         info: {
             main: '#0288d1',

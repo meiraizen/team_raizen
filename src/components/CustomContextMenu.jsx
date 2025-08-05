@@ -62,7 +62,7 @@ export default function CustomContextMenu({ mode = "nothing . its rest" }) {
         boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 2px 2px rgb(0 0 0 / 3%), 0 4px 4px rgb(0 0 0 / 4%), 0 10px 8px rgb(0 0 0 / 5%), 0 15px 15px rgb(0 0 0 / 6%), 0 30px 30px rgb(0 0 0 / 7%), 0 70px 65px rgb(0 0 0 / 9%)',
         borderColor: 'rgba(255,255,255,0.1)',
         hoverBg: 'rgba(17, 16, 16, 0.1)',
-        hoverColor: theme.palette.raizenRed.contrastText,
+        hoverColor: theme.palette.raizenColors.contrastText,
         iconColor: '#fff',
       }
     : mode === "white"
@@ -74,7 +74,7 @@ export default function CustomContextMenu({ mode = "nothing . its rest" }) {
         border: '1px solid rgba(255,255,255,0.18)',
         borderColor: 'rgba(0,0,0,0.1)',
         hoverBg: 'rgba(10, 20, 28, 0.15)',
-        hoverColor: theme.palette.raizenRed.main,
+        hoverColor: theme.palette.raizenColors.main,
         iconColor: 'rgb(10,20,28)',
     
       }
@@ -85,7 +85,7 @@ export default function CustomContextMenu({ mode = "nothing . its rest" }) {
         boxShadow: '0 0 0 1px rgba(0,0,0,0.08), 0 2px 2px rgb(0 0 0 / 3%), 0 4px 4px rgb(0 0 0 / 4%), 0 10px 8px rgb(0 0 0 / 5%), 0 15px 15px rgb(0 0 0 / 6%), 0 30px 30px rgb(0 0 0 / 7%), 0 70px 65px rgb(0 0 0 / 9%)',
         borderColor: 'rgba(0,0,0,0.1)',
         hoverBg: 'rgba(10, 20, 28, 0.16)',
-        hoverColor: theme.palette.raizenRed.main,
+        hoverColor: theme.palette.raizenColors.main,
         iconColor: 'rgb(10,20,28)',
       };
 

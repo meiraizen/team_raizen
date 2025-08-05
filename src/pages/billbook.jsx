@@ -8,7 +8,7 @@ export default function Billbook() {
     <Container maxWidth="md" sx={{ mt: 4 }}>
       <BackButton />
       <Typography variant="h4" gutterBottom>Billbook</Typography>
-      <Typography variant="body1">Manage your bills here. Only authenticated users can access this page.</Typography>
+      <Typography variant="body1">Manage Student bills here. Only authenticated users can access this page.</Typography>
     </Container>
   );
 }
