@@ -15,6 +15,10 @@ const theme = createTheme({
             main: '#0f0f0f', // Raizen Red
             contrastText: '#fff',
             hover: '#B71C2B', // custom hover color
+            white: '#fff',
+            black: '#000',
+            neon_red: "#FF1E1E",
+            neon_blue: "#1982c4"
         },
         background: {
             default: '#f4f6fb',

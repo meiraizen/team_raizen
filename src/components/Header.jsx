@@ -24,8 +24,17 @@ export default function Header() {
   };
 
   const hoverColor = {
-    backgroundColor: theme.palette.raizenRed.hover,
-    color: theme.palette.primary.contrastText,
+    // fontWeight: '700',
+    transition: 'color 0.5s, text-shadow 0.5s',
+    '&:hover': {
+      color: theme.palette.raizenRed.white,
+      textShadow: [
+        '0 0 6px ' + theme.palette.raizenRed.neon_red,
+        '0 0 12px ' + theme.palette.raizenRed.neon_red,
+        '0 0 20px ' + theme.palette.raizenRed.neon_red,
+        '0 0 30px ' + theme.palette.raizenRed.neon_red
+      ].join(', ')
+    }
   }
 
   return (
@@ -40,17 +49,15 @@ export default function Header() {
           Raizen Management
         </Typography>
         {user && (
-          <Box sx={{ display: 'flex', gap: 2 }}>
-            <Button color="inherit" component={Link} to="/home" sx={{
-              '&:hover': hoverColor
-            }}>Home</Button>
-            <Button color={"inherit"} component={Link} to="/billbook">Billbook</Button>
-            <Button color="inherit" component={Link} to="/contact">Contact</Button>
-            <Button color="inherit" onClick={handleLogout}>Logout</Button>
+          <Box sx={{ display: 'flex', gap: 5 }}>
+            <Button color="inherit" component={Link} to="/home" sx={hoverColor}>Home</Button>
+            <Button color="inherit" component={Link} to="/billbook" sx={hoverColor}>Billbook</Button>
+            <Button color="inherit" component={Link} to="/contact" sx={hoverColor}>Contact</Button>
+            <Button color="inherit" onClick={handleLogout} sx={hoverColor}>Logout</Button>
           </Box>
         )}
         {!user && (
-          <Button color="inherit" component={Link} to="/login">Login</Button>
+          <Button color="inherit" component={Link} to="/login" sx={neonButtonSx}>Login</Button>
         )}
       </Toolbar>
     </AppBar>
