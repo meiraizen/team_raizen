@@ -2,10 +2,12 @@ import { create } from 'zustand';
 import emailjs from '@emailjs/browser';
 
 const allowedAccounts = [
-  { email: 'mei@gmail.com', password: 'r' },
-  { email: 'sam@gmail.com', password: 'raizen' },
-  { email: 'rv@gmail.com', password: 'raizen' },
-  { email: 'meii.raizen@gmail.com' }, // Added this email
+  { email: 'bala.raizen@gmail.com' },
+  { email: 'amalesh.raizen@gmail.com' },
+  { email: 'samebinezer.raizen@gmail.com' },
+  { email: 'danjr.raizen@gmail.com' },
+  { email: 'meii.raizen@gmail.com' },
+  { email: 'muthu.raizen@gmail.com' },
 ];
 
 const getStoredUser = () => {
@@ -48,7 +50,7 @@ export const useAuthStore = create((set, get) => ({
     );
     if (found) {
       const otp = generateOtp();
-      const expiry = Date.now() + 5 * 60 * 1000; // 5 minutes from now
+      const expiry = Date.now() + 2 * 60 * 1000; // 5 minutes from now
       try {
         await sendOtpEmail(email, otp);
       } catch (e) {
