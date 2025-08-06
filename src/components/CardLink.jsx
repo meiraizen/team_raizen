@@ -1,64 +1,91 @@
 import React from "react";
-import Card from "@mui/material/Card";
-import CardActionArea from "@mui/material/CardActionArea";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
-import theme from "../themecolor";
 
-export default function CardLink({ title, description, to }) {
-  const navigate = useNavigate();
+// Google Fonts import for Alegreya Sans SC
+const fontLink = document.createElement("link");
+fontLink.href = "https://fonts.googleapis.com/css?family=Alegreya+Sans+SC";
+fontLink.rel = "stylesheet";
+document.head.appendChild(fontLink);
 
-  const typoStyles = {
-    color: (theme) => theme.palette.text.primary,
+// Responsive styles injected into the document head
+const styleTag = document.createElement("style");
+styleTag.innerHTML = `
+  .card-link-custom {
+    height: 200px;
+    width: 275px;
+    background: #fff;
+    padding: 40px 20px 60px 20px;
+    border-radius: 10px;
+    transition: all 300ms ease;
+    cursor: pointer;
+    box-sizing: border-box;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    outline: none;
   }
+  .card-link-custom:hover {
+    box-shadow: 20px 20px 0px 0px rgba(0, 0, 0, 0.3);
+    border: 1px solid #1f3b64;
+    transform: translate(-5px,-5px);
+  }
+  .card-link-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    color: #1f3b64;
+    text-align: center;
+  }
+  .card-link-desc {
+    font-size: 1rem;
+    color: #333;
+    text-align: center;
+  }
+  @media (max-width: 500px) {
+    .card-link-custom {
+      width: 90vw;
+      min-width: 140px;
+      height: auto;
+      padding: 20px 10px 30px 10px;
+    }
+    .card-link-title {
+      font-size: 1.1rem;
+    }
+    .card-link-desc {
+      font-size: 0.95rem;
+    }
+  }
+`;
+document.head.appendChild(styleTag);
+
+const CardLink = ({ title, description, to }) => {
+  const navigate = useNavigate();
+  const [hover, setHover] = React.useState(false);
+
+  const handleClick = () => {
+    if (to) navigate(to);
+  };
+
   return (
-    <Card
-      sx={{
-        width: 250,
-        height: 150,
-        boxShadow: 3,
-        borderRadius: 3,
-        display: "flex",
-        flexDirection: "column",
+    <div
+      className="card-link-custom"
+      style={hover ? { boxShadow: "20px 20px 0px 0px rgba(0, 0, 0, 0.3)", border: "1px solid #1f3b64", transform: "translate(-5px,-5px)" } : {}}
+      onClick={handleClick}
+      tabIndex={0}
+      role="button"
+      aria-pressed="false"
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onKeyDown={e => {
+        if (e.key === "Enter" || e.key === " ") handleClick();
       }}
     >
-      <CardActionArea
-        onClick={() => navigate(to)}
-        sx={{
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          transition: 'background-color 0.2s, color 0.2s',
-          '&:hover': {
-            backgroundColor: (theme) => theme.palette.textColor.primary,
-            color: (theme) => theme.palette.textColor.white,
-          },
-          '&:hover .MuiTypography-root': {
-            color: (theme) => theme.palette.textColor.white,
-          },
-        }}
-      >
-        <CardContent
-          sx={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            height: "100%",
-          }}
-        >
-          <Typography   sx={typoStyles} variant="h6" gutterBottom>
-            {title}
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={typoStyles}
-          >
-            {description}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+      <div className="card-link-title">{title}</div>
+      <div className="card-link-desc">{description}</div>
+    </div>
   );
-}
+};
+
+export default CardLink;

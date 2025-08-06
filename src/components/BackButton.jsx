@@ -1,18 +1,28 @@
 import React from "react";
-import Button from "@mui/material/Button";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import IconButton from "@mui/material/IconButton";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 
-export default function BackButton({ to = "/home" }) {
+export default function BackButton() {
   const navigate = useNavigate();
   return (
-    <Button
-      startIcon={<ArrowBackIcon />}
-      variant="outlined"
-      sx={{ mb: 2 }}
-      onClick={() => navigate(to)}
+    <IconButton
+      onClick={() => navigate(-1)}
+      color="primary"
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius:'50%',
+        width: 44,
+        height: 20,
+                background: "#575757ff",color: "white",
+              boxShadow: 1,
+        "&:hover": { background: "#000" },
+      }}
+      aria-label="Go back"
     >
-      Back
-    </Button>
+    <ArrowBack />
+    </IconButton>
   );
 }

@@ -5,6 +5,7 @@ const theme = createTheme({
         mode: 'light',
         textColor: {
             white: '#fff',
+            black: '#000',
             primary: '#1565c0',
         },
         primary: {
@@ -22,7 +23,10 @@ const theme = createTheme({
             white: '#fff',
             black: '#000',
             neon_red: "#FF1E1E",
-            neon_blue: "#1982c4"
+            neon_blue: "#1982c4",
+            darkRed01: "#ff0202",
+            ash: "#757575",
+            darkRed02: '#ff0000'
         },
         background: {
             default: '#f4f6fb',
