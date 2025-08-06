@@ -2,12 +2,12 @@ import { create } from 'zustand';
 import emailjs from '@emailjs/browser';
 
 const allowedAccounts = [
-  { email: 'bala.raizen@gmail.com' },
-  { email: 'amalesh.raizen@gmail.com' },
-  { email: 'samebinezer.raizen@gmail.com' },
-  { email: 'danjr.raizen@gmail.com' },
-  { email: 'meii.raizen@gmail.com' },
-  { email: 'muthu.raizen@gmail.com' },
+  { email: 'bala.raizen@gmail.com',name: 'Bala' },
+  { email: 'amalesh.raizen@gmail.com',name: 'Amalesh' },
+  { email: 'samebinezer.raizen@gmail.com',name: 'Ebi' },
+  { email: 'danjr.raizen@gmail.com',name: 'Dan' },
+  { email: 'meii.raizen@gmail.com',name: 'Mei' },
+  { email: 'muthu.raizen@gmail.com',name: 'Muthu' },
 ];
 
 const getStoredUser = () => {
@@ -57,8 +57,9 @@ export const useAuthStore = create((set, get) => ({
         set({ otpSent: false, otp: null, otpExpiry: null });
         return { error: 'Failed to send OTP. Please try again.' };
       }
-      set({ otpSent: true, otp, otpExpiry: expiry, user: { email } });
-      localStorage.setItem('auth_user', JSON.stringify({ email }));
+      // Store both email and name
+      set({ otpSent: true, otp, otpExpiry: expiry, user: { email, name: found.name } });
+      localStorage.setItem('auth_user', JSON.stringify({ email, name: found.name }));
       return 'otp';
     }
     return false;

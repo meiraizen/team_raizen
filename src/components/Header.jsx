@@ -10,6 +10,7 @@ import { useAuthStore } from '../store/auth';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
+import  {RaizenEagle}  from '../assets/LogoData'; 
 
 export default function Header() {
   const user = useAuthStore((state) => state.user);
@@ -28,34 +29,23 @@ export default function Header() {
     // fontWeight: '700',
     transition: 'color 0.5s, text-shadow 0.5s',
     '&:hover': {
-      color: theme.palette.raizenColors.white,
-      textShadow: [
-        '0 0 6px ' + theme.palette.raizenColors.neon_red,
-        '0 0 12px ' + theme.palette.raizenColors.neon_red,
-        '0 0 20px ' + theme.palette.raizenColors.neon_red,
-        '0 0 30px ' + theme.palette.raizenColors.neon_red
-      ].join(', ')
+      color: theme.palette.raizenColors.neon_red,
+      // textShadow: [
+      //   '0 0 6px ' + theme.palette.raizenColors.neon_red,
+      //   '0 0 12px ' + theme.palette.raizenColors.neon_red,
+      //   '0 0 20px ' + theme.palette.raizenColors.neon_red,
+      //   '0 0 30px ' + theme.palette.raizenColors.neon_red
+      // ].join(', ')
     }
   }
 
-  // Map routes to titles
-  // const routeTitles = {
-  //   '/home': 'Home',
-  //   '/billbook': 'Billbook',
-  //   '/contact': 'Contact',
-  //   '/login': 'Login',
-  //   // add more routes as needed
-  // };
-  // Get the title for the current route, fallback to default
-  // const currentTitle = routeTitles[location.pathname] || 'Raizen Management';
-
-
   const getTitleFromPath = (pathname) => {
     if (pathname === '/' || pathname === '') return 'Raizen Management';
+    if (pathname === '/home') return null; // null means show SVG
     return pathname
       .split('/')
       .filter(Boolean)
-      .map(segment => 
+      .map(segment =>
         segment
           .replace(/-/g, ' ')
           .split(' ')
@@ -66,8 +56,6 @@ export default function Header() {
   };
   const currentTitle = getTitleFromPath(location.pathname);
 
-
-
   return (
     <AppBar position="fixed" sx={{ bgcolor: theme.palette.raizenColors.main }}>
       <Toolbar>
@@ -76,8 +64,12 @@ export default function Header() {
             <MenuIcon />
           </IconButton>
         )}
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          {currentTitle}
+        <Typography variant="h6" sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+          {currentTitle === null
+            ? <img src='src/assets/RaizenEagle.svg' style={{ height: 35, width: 60, 
+              // filter: 'drop-shadow(1.5px 1.5px 5px #fff)'
+            }} />
+            : currentTitle}
         </Typography>
         {user && (
           <Box sx={{ display: 'flex', gap: 5 }}>

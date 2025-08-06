@@ -10,8 +10,8 @@ export default function StudentsInfo() {
     // maxWidth="sm" 
     sx={{ mt: 4 }}>
       <BackButton />
-      <Typography variant="h4" gutterBottom>Students Info</Typography>
-      <Typography variant="body1">This is a placeholder for students information.</Typography>
+      {/* <Typography variant="h4" gutterBottom>Students Info</Typography> */}
+      {/* <Typography variant="body1">This is a placeholder for students information.</Typography> */}
       <StudentDataGrid />
 
     </Container>
