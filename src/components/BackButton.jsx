@@ -30,7 +30,7 @@ const BackButton = () => {
 
         button:hover {
           transform: translateY(-4px) translateX(-2px);
-          box-shadow: 2px 5px 0 0 black;
+          box-shadow: 2px 2px 0 0 black;
           background-color: white;
         }
 

@@ -35,7 +35,7 @@ styleTag.innerHTML = `
     font-size: 1.3rem;
     font-weight: bold;
     margin-bottom: 0.5em;
-    color: #1f3b64;
+    color: #0b0b0cff;
     text-align: center;
   }
   .card-link-desc {
@@ -71,7 +71,7 @@ const CardLink = ({ title, description, to }) => {
   return (
     <div
       className="card-link-custom"
-      style={hover ? { boxShadow: "20px 20px 0px 0px rgba(0, 0, 0, 0.3)", border: "1px solid #1f3b64", transform: "translate(-5px,-5px)" } : {}}
+      style={hover ? { boxShadow: "10px 10px 0px 0px rgba(0, 0, 0, 0.3)", border: "1px solid #050a12ff", transform: "translate(-5px,-5px)" } : {}}
       onClick={handleClick}
       tabIndex={0}
       role="button"
