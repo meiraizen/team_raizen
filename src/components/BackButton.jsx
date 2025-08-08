@@ -1,28 +1,49 @@
 import React from "react";
-import IconButton from "@mui/material/IconButton";
-import ArrowBack from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 
-export default function BackButton() {
+const BackButton = () => {
   const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(-1);
+  };
+
   return (
-    <IconButton
-      onClick={() => navigate(-1)}
-      color="primary"
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        borderRadius:'50%',
-        width: 44,
-        height: 20,
-                background: "#575757ff",color: "white",
-              boxShadow: 1,
-        "&:hover": { background: "#000" },
-      }}
-      aria-label="Go back"
-    >
-    <ArrowBack />
-    </IconButton>
+    <button onClick={handleClick}>
+      <style jsx>{`
+        button {
+          background-color: white;
+          color: black;
+          height: 30px;
+          // padding: 0 16px;
+          font-size: 16px;
+          font-weight: 600;
+          // padding: 1em 2em;
+           // border-radius: 10em;
+          cursor: pointer;
+          transition: all 0.2s ease-in-out;
+          border: 1px solid black;
+          box-shadow: 0 0 0 0 black;
+          display: flex;
+          align-items: center;
+        }
+
+        button:hover {
+          transform: translateY(-4px) translateX(-2px);
+          box-shadow: 2px 5px 0 0 black;
+          background-color: white;
+        }
+
+        button:active {
+          transform: translateY(2px) translateX(1px);
+          box-shadow: 0 0 0 0 black;
+        }
+      `}</style>
+      Back
+    </button>
   );
-}
+};
+
+export default BackButton;
+          
+        
