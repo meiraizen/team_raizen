@@ -273,15 +273,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 28px;
-  height: 28px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   padding: 4px;
 }
 
 .belt-svg {
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
 }
 
 /* WKF OFFICIAL KARATE BELT COLORS FOR BACKGROUND */
@@ -383,6 +383,26 @@ body {
   border: 1px solid var(--border);
   font-size: 0.95rem;
   line-height: 1.4;
+}
+
+/* INFO ITEMS WITH ICONS */
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  padding: var(--s3);
+  background: var(--white);
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.info-icon {
+  width: 16px;
+  height: 16px;
+  filter: opacity(0.7);
+  flex-shrink: 0;
 }
 
 .info-grid div strong {

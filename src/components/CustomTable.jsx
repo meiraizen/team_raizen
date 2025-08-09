@@ -8,6 +8,9 @@ import DeleteIcon from '../assets/delete.svg';
 import MaleIcon from '../assets/male.svg';
 import FemaleIcon from '../assets/female.svg';
 import KarateBeltIcon from '../assets/karate_belt.svg';
+import ContactIcon from '../assets/contact.svg';
+import LocationIcon from '../assets/location.svg';
+import DateIcon from '../assets/date.svg';
 
 const CustomTable = ({ data = [] }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -286,7 +289,7 @@ const CustomTable = ({ data = [] }) => {
                   </td>
                   <td>
                     <div className="actions">
-                      <button className="action-btn view">
+                      <button   onClick={() => toggleRowExpansion(student.id)} className="action-btn view">
                         <img src={InfoIcon} alt="View" className="action-icon" />
                       </button>
                       <button className="action-btn edit">
@@ -306,10 +309,22 @@ const CustomTable = ({ data = [] }) => {
                         <div className="info-section">
                           <h4>Personal Information</h4>
                           <div className="info-grid">
-                            <div><strong>Contact:</strong> {student.contact_number}</div>
-                            <div><strong>Address:</strong> {student.address}</div>
-                            <div><strong>Guardian:</strong> {student.guardian_name}</div>
-                            <div><strong>Joining Date:</strong> {student.joining_date}</div>
+                            <div className="info-item">
+                              <img src={ContactIcon} alt="Contact" className="info-icon" />
+                              {student.contact_number}
+                            </div>
+                            <div className="info-item">
+                              <img src={LocationIcon} alt="Address" className="info-icon" />
+                              {student.address}
+                            </div>
+                            <div className="info-item">
+                              <img src={ContactIcon} alt="Guardian" className="info-icon" />
+                              {student.guardian_name}
+                            </div>
+                            <div className="info-item">
+                              <img src={DateIcon} alt="Joining Date" className="info-icon" />
+                              {student.joining_date}
+                            </div>
                           </div>
                         </div>
                         
