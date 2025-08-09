@@ -1,6 +1,14 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import './CustomTable.css';
 
+// Import SVG icons
+import InfoIcon from '../assets/info.svg';
+import EditIcon from '../assets/edit.svg';
+import DeleteIcon from '../assets/delete.svg';
+import MaleIcon from '../assets/male.svg';
+import FemaleIcon from '../assets/female.svg';
+import KarateBeltIcon from '../assets/karate_belt.svg';
+
 const CustomTable = ({ data = [] }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [genderFilter, setGenderFilter] = useState('');
@@ -235,10 +243,32 @@ const CustomTable = ({ data = [] }) => {
                     <span className="student-age">{student.age}</span>
                   </td>
                   <td>
-                    <span className="student-gender">{student.gender}</span>
+                    <div className="gender-icon">
+                      {student.gender === 'Male' ? (
+                        <img src={MaleIcon} alt="Male" className="gender-svg" />
+                      ) : (
+                        <img src={FemaleIcon} alt="Female" className="gender-svg female" />
+                      )}
+                    </div>
                   </td>
                   <td>
-                    <span className="belt-badge">{student.belt_level}</span>
+                    <div className={`belt-icon ${student.belt_level.toLowerCase()}`}>
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        viewBox="-5.0 -10.0 110.0 135.0" 
+                        className="belt-svg"
+                        width="20" 
+                        height="20"
+                      >
+                        <path d="m80.555 49.262v-8.082h-19.301v0.87891l12.531 7.2031z" fill="#8b4513" stroke="#654321" strokeWidth="0.5"/>
+                        <path d="m41.152 41.18h-20.91v8.082h6.7422z" fill="#8b4513" stroke="#654321" strokeWidth="0.5"/>
+                        <path d="m44.344 49.262 5.25-3.2383-7.332-4.3789-13.352 7.6172-0.83594 0.47656-0.83594 0.48047-11.613 6.625 4.3359 6.7852 22.25-13.051 0.58594-0.35938 0.77344-0.48047z" fill="#8b4513" stroke="#654321" strokeWidth="0.5"/>
+                        <path d="m73.527 50.219-0.83203-0.47656-0.82812-0.47656-10.613-6.1016v8.5469c0 0.054687-0.007812 0.10547-0.023437 0.15234l19.148 11.438 3.9961-6.8477z" fill="#8b4513" stroke="#654321" strokeWidth="0.5"/>
+                        <path d="m49.512 36.41-0.070313-0.039062-6.8086 3.8516-0.45703 0.25781 0.37109 0.22266 0.19922 0.11719 0.46875 0.28125 0.12891 0.078126 7.1641 4.2773 2.0898-1.2891v-5.9844l-3.0469-1.75z" fill="#8b4513" stroke="#654321" strokeWidth="0.5"/>
+                        <path d="m50.973 46.293-0.45703 0.28125-4.3555 2.6875-0.77344 0.47656-0.77344 0.48047-1.4961 0.92188 0.011718 0.003906 5.8477 4.6367 3.6211-2.3203v-8.1719l-1.1641 0.71875z" fill="#8b4513" stroke="#654321" strokeWidth="0.5"/>
+                        <path d="m59.039 40.223-5.4844-2.7266v16.543l5.7031-2.2422 0.55859-0.22266 0.48047-0.19141v-10.531z" fill="#8b4513" stroke="#654321" strokeWidth="0.5"/>
+                      </svg>
+                    </div>
                   </td>
                   <td>
                     <span className="student-batch">{student.batch_time}</span>
@@ -252,15 +282,19 @@ const CustomTable = ({ data = [] }) => {
                     </span>
                   </td>
                   <td>
-                    <span className={`status-badge ${student.fees_paid ? 'paid' : 'unpaid'}`}>
-                      {student.fees_paid ? 'Paid' : 'Unpaid'}
-                    </span>
+                    <span className={`status-badge ${student.fees_paid ? 'paid' : 'unpaid'}`}></span>
                   </td>
                   <td>
                     <div className="actions">
-                      <button className="action-btn view">View</button>
-                      <button className="action-btn edit">Edit</button>
-                      <button className="action-btn delete">Delete</button>
+                      <button className="action-btn view">
+                        <img src={InfoIcon} alt="View" className="action-icon" />
+                      </button>
+                      <button className="action-btn edit">
+                        <img src={EditIcon} alt="Edit" className="action-icon" />
+                      </button>
+                      <button className="action-btn delete">
+                        <img src={DeleteIcon} alt="Delete" className="action-icon" />
+                      </button>
                     </div>
                   </td>
                 </tr>

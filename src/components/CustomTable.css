@@ -6,7 +6,20 @@
   --black: #000;
   --white: #fff;
   --grey: #666;
-  --light-grey: #f8f9fa;
+  --ligh.status-badge {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-badge.paid { background: var(--green); }
+.status-badge.unpaid { background: var(--red); }
+
+/* CENTER ALIGN STATUS COLUMN */
+.data-table td:nth-child(8) {
+  text-align: center;
+}
   --border: #e9ecef;
   --red: #dc3545;
   --green: #28a745;
@@ -136,7 +149,7 @@ body {
   cursor: pointer;
 }
 
-.clear-btn:hover { opacity: 0.9; }
+.clear-btn:hover { opacity: 0.9; color: var(--red); border: 1px solid #000; }
 
 /* RESULTS */
 .results-info {
@@ -217,6 +230,24 @@ body {
   font-weight: 400;
 }
 
+/* GENDER ICONS */
+.gender-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gender-svg {
+  width: 25px;
+  height: 25px;
+  filter: opacity(0.7);
+}
+
+.gender-svg.female {
+  width: 22px;
+  height: 22px;
+}
+
 /* EXPAND BUTTON */
 .expand-btn {
   width: 24px;
@@ -238,14 +269,30 @@ body {
 }
 
 /* BADGES - MINIMAL */
-.belt-badge {
-  background: var(--light-grey);
-  color: var(--black);
-  padding: var(--s1) var(--s2);
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 500;
+.belt-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  padding: 4px;
 }
+
+.belt-svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* WKF OFFICIAL KARATE BELT COLORS FOR BACKGROUND */
+.belt-icon.white { background-color: #ffffff; border: 1px solid #e0e0e0; }
+.belt-icon.yellow { background-color: #ffff00; }
+.belt-icon.orange { background-color: #ff8c00; }
+.belt-icon.green { background-color: #008000; }
+.belt-icon.blue { background-color: #0066cc; }
+.belt-icon.purple { background-color: #800080; }
+.belt-icon.brown { background-color: #8b4513; }
+.belt-icon.black { background-color: #000000; }
 
 .attendance-badge {
   padding: var(--s1) var(--s2);
@@ -259,14 +306,14 @@ body {
 .attendance-badge.poor { background: #f8d7da; color: var(--red); }
 
 .status-badge {
-  padding: var(--s1) var(--s2);
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 600;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
 }
 
-.status-badge.paid { background: #d4edda; color: var(--green); }
-.status-badge.unpaid { background: #f8d7da; color: var(--red); }
+.status-badge.paid { background: var(--green); }
+.status-badge.unpaid { background: var(--red); }
 
 /* ACTIONS */
 .actions {
@@ -275,23 +322,34 @@ body {
 }
 
 .action-btn {
-  padding: var(--s1) var(--s2);
+  padding: var(--s2);
   border: 1px solid;
   border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 500;
   cursor: pointer;
   background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
 }
 
-.action-btn.view { color: var(--blue); border-color: var(--blue); }
-.action-btn.view:hover { background: var(--blue); color: var(--white); }
+.action-icon {
+  width: 16px;
+  height: 16px;
+}
 
-.action-btn.edit { color: var(--grey); border-color: var(--border); }
-.action-btn.edit:hover { background: var(--grey); color: var(--white); }
+.action-btn.view { border-color: var(--blue); }
+.action-btn.view:hover { background: var(--blue); }
+.action-btn.view:hover .action-icon { filter: brightness(0) invert(1); }
 
-.action-btn.delete { color: var(--red); border-color: var(--red); }
-.action-btn.delete:hover { background: var(--red); color: var(--white); }
+.action-btn.edit { border-color: var(--border); }
+.action-btn.edit:hover { background: var(--grey); }
+.action-btn.edit:hover .action-icon { filter: brightness(0) invert(1); }
+
+.action-btn.delete { border-color: var(--red); }
+.action-btn.delete:hover { background: var(--red); }
+.action-btn.delete:hover .action-icon { filter: brightness(0) invert(1); }
 
 /* EXPANDED ROW */
 .expanded-row { background: var(--light-grey); }
