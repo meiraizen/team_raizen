@@ -14,6 +14,9 @@ export default function HomeCards() {
       <Grid item xs={12} sm={6} md={4}>
         <CardLink title="Students Info" description="View student information." to="/students-info" />
       </Grid>
+      <Grid item xs={12} sm={6} md={4}>
+        <CardLink title="Chat" description="Message your teammates." to="/chat" />
+      </Grid>
     </Grid>
   );
 }

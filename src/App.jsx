@@ -11,13 +11,13 @@ import VerifyCertificate from './pages/VerifyCertificate';
 import StudentsInfo from './pages/StudentsInfo';
 import OtpVerify from './pages/OtpVerify.jsx';
 import Box from '@mui/material/Box';
-import { useTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import theme from './themecolor.jsx';
 import CustomContextMenu from './components/CustomContextMenu.jsx';
+import ChatView from './chat/ChatView.jsx';
 import { useAuthStore } from './store/auth';
 
 function AppContent() {
-  const theme = useTheme();
   const user = useAuthStore((state) => state.user);
   
   return (
@@ -59,6 +59,7 @@ function AppContent() {
                         <Route path="/billbook" element={<Billbook />} />
                         <Route path="/verify-certificate" element={<VerifyCertificate />} />
                         <Route path="/students-info" element={<StudentsInfo />} />
+                        <Route path="/chat" element={<ChatView />} />
                         <Route path="*" element={<NotFound />} />
                       </Routes>
                     </Box>

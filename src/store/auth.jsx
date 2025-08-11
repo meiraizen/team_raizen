@@ -1,13 +1,14 @@
 import { create } from 'zustand';
 import emailjs from '@emailjs/browser';
 
-const allowedAccounts = [
-  { email: 'bala.raizen@gmail.com',name: 'Bala' },
-  { email: 'amalesh.raizen@gmail.com',name: 'Amalesh' },
-  { email: 'samebinezer.raizen@gmail.com',name: 'Ebi' },
-  { email: 'danjr.raizen@gmail.com',name: 'Dan' },
-  { email: 'meii.raizen@gmail.com',name: 'Mei' },
-  { email: 'muthu.raizen@gmail.com',name: 'Muthu' },
+export const allowedAccounts = [
+  { id:'1', email: 'bala.raizen@gmail.com',name: 'Bala' },
+  { id:'2', email: 'amalesh.raizen@gmail.com',name: 'Amalesh' },
+  { id:'3', email: 'samebinezer.raizen@gmail.com',name: 'Ebi' },
+  { id:'4', email: 'danjr.raizen@gmail.com',name: 'Dan' },
+  { id:'5', email: 'meii.raizen@gmail.com',name: 'Mei' },
+  { id:'6', email: 'muthu.raizen@gmail.com',name: 'Muthu' },
+  { id:'7', email: 'bsmeiyarasu@gmail.com',name: 'MEi OG' }
 ];
 
 const getStoredUser = () => {
