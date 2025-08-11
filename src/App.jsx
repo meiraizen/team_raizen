@@ -14,31 +14,43 @@ import Box from '@mui/material/Box';
 import { useTheme, ThemeProvider } from '@mui/material/styles';
 import theme from './themecolor.jsx';
 import CustomContextMenu from './components/CustomContextMenu.jsx';
+import { useAuthStore } from './store/auth';
 
 function AppContent() {
   const theme = useTheme();
+  const user = useAuthStore((state) => state.user);
+  
   return (
     <>
       <CustomContextMenu />
       <BrowserRouter>
         <Routes>
+          {/* Root route - redirect based on auth status */}
+          <Route 
+            path="/" 
+            element={
+              user ? <Navigate to="/home" replace /> : <Navigate to="/login" replace />
+            } 
+          />
+          
+          {/* Public routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/otp-verify" element={<OtpVerify />} />
+          
+          {/* Protected routes */}
           <Route element={<ProtectedRoute />}>
             <Route
               path="*"
               element={
                 <>
                   <Header />
-                  <Box sx={{ width: '100%'  ,  minHeight: '100vh',}}>
-                                   <Box sx={{
-                                      // bgcolor: theme.palette.background.default,
+                  <Box sx={{ width: '100%', minHeight: '100vh' }}>
+                    <Box sx={{
                       pt: { xs: 2, sm: 3, md: 6 },
                       pb: { xs: 2, sm: 3, md: 6 },
                       px: { xs: 1, sm: 2, md: 6 },
-                      maxWidth: { xs: '100%', sm: '100%', md: '1200px' , xl: '2048px' },
+                      maxWidth: { xs: '100%', sm: '100%', md: '1200px', xl: '2048px' },
                       margin: '0 auto',
-                      // boxShadow: { xs: 'none', md: 3 },
                       transition: 'all 0.3s',
                     }}>
                       <Routes>

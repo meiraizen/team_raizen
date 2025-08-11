@@ -248,9 +248,9 @@ const CustomTable = ({ data = [] }) => {
                   <td>
                     <div className="gender-icon">
                       {student.gender === 'Male' ? (
-                        <img src={MaleIcon} alt="Male" className="gender-svg" />
+                        <span  alt="Male" className="gender-svg">M</span>
                       ) : (
-                        <img src={FemaleIcon} alt="Female" className="gender-svg female" />
+                        <span  alt="Female" className="gender-svg female">F</span>
                       )}
                     </div>
                   </td>
