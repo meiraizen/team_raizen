@@ -1,30 +1,73 @@
-import React, { useEffect, useMemo, useRef } from 'react'
+import { memo, useMemo } from 'react'
 
-export default function MessageList({ me, items }) {
-  const ref = useRef(null)
-
-  const sorted = useMemo(() => {
-    return [...items].sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
-  }, [items])
-
-  useEffect(() => {
-    const el = ref.current
-    if (el) el.scrollTop = el.scrollHeight
-  }, [sorted])
+const MessageBubble = memo(({ message, isOwn }) => {
+  const time = useMemo(() => 
+    new Date(message.created_at).toLocaleTimeString([], { 
+      hour: '2-digit', 
+      minute: '2-digit' 
+    }), [message.created_at]
+  )
 
   return (
-    <div ref={ref} className="chatApp__convTimeline">
-      {sorted.map((m) => {
-        const left = m.sender_email !== me
-        const cls = left ? 'chatApp__convMessageItem--left' : 'chatApp__convMessageItem--right'
-        return (
-          <div key={m.id} className={`chatApp__convMessageItem ${cls} clearfix`}>
-            <img className="chatApp__convMessageAvatar" alt="avatar" src={`https://api.dicebear.com/9.x/initials/svg?seed=${left ? m.sender_email : me}`} />
-            <div className="chatApp__convMessageValue">{m.content}</div>
-          </div>
-        )
-      })}
-      {sorted.length === 0 && (<div style={{ color: '#888', textAlign: 'center', padding: 12 }}>No messages yet</div>)}
+    <div className={`msg-wrapper ${isOwn ? 'msg-own' : 'msg-other'}`}>
+      <div className={`msg-bubble ${isOwn ? 'msg-bubble-own' : 'msg-bubble-other'}`}>
+        <div className="msg-text">{message.content}</div>
+        <div className="msg-time">{time}</div>
+      </div>
     </div>
   )
-}
+})
+
+const EmptyState = memo(({ type, selectedContactName }) => {
+  if (type === 'select') {
+    return (
+      <div className="empty-state">
+        <div className="empty-icon">💬</div>
+        <div className="empty-text">Select a contact to start messaging</div>
+        <div className="empty-subtext">Choose from your contacts on the left</div>
+      </div>
+    )
+  }
+  
+  if (type === 'loading') {
+    return <div className="loading-state">Loading messages...</div>
+  }
+  
+  return (
+    <div className="empty-state">
+      <div className="empty-icon">👋</div>
+      <div className="empty-text">No messages yet</div>
+      <div className="empty-subtext">
+        Start the conversation{selectedContactName ? ` with ${selectedContactName}` : ''}
+      </div>
+    </div>
+  )
+})
+
+const MessageList = memo(({ peer, loading, messages, user, messagesRef, selectedContactName }) => {
+  if (!peer) {
+    return <EmptyState type="select" />
+  }
+  
+  if (loading) {
+    return <EmptyState type="loading" />
+  }
+  
+  if (messages.length === 0) {
+    return <EmptyState type="empty" selectedContactName={selectedContactName} />
+  }
+  
+  return (
+    <>
+      {messages.map(message => (
+        <MessageBubble
+          key={message.id}
+          message={message}
+          isOwn={message.sender_email === user?.email}
+        />
+      ))}
+    </>
+  )
+})
+
+export default MessageList

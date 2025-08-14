@@ -14,8 +14,8 @@ import Box from '@mui/material/Box';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './themecolor.jsx';
 import CustomContextMenu from './components/CustomContextMenu.jsx';
-import ChatView from './chat/ChatView.jsx';
 import { useAuthStore } from './store/auth';
+import ChatPage from './chat/ChatPage.jsx';
 
 function AppContent() {
   const user = useAuthStore((state) => state.user);
@@ -59,7 +59,7 @@ function AppContent() {
                         <Route path="/billbook" element={<Billbook />} />
                         <Route path="/verify-certificate" element={<VerifyCertificate />} />
                         <Route path="/students-info" element={<StudentsInfo />} />
-                        <Route path="/chat" element={<ChatView />} />
+                        <Route path="/chat" element={<ChatPage />} />
                         <Route path="*" element={<NotFound />} />
                       </Routes>
                     </Box>

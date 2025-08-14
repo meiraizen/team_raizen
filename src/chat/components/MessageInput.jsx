@@ -1,43 +1,48 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { memo, useCallback } from 'react'
 
-export default function MessageInput({ onSend, disabled, autoFocus }) {
-  const [value, setValue] = useState('')
-  const [sending, setSending] = useState(false)
-  const inputRef = useRef(null)
-
-  useEffect(() => {
-    if (autoFocus) {
-      setTimeout(() => inputRef.current?.focus(), 0)
+const MessageInput = memo(({ 
+  input, 
+  setInput, 
+  onSend, 
+  disabled, 
+  placeholder = 'Type a message...' 
+}) => {
+  const handleKeyPress = useCallback((e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      onSend()
     }
-  }, [autoFocus])
+  }, [onSend])
 
-  const submit = async (e) => {
-    e?.preventDefault?.()
-    const v = value.trim()
-    if (!v || sending || disabled) return
-    setSending(true)
-    const { error } = await onSend?.(v)
-    if (!error) setValue('')
-    setSending(false)
-  }
-
-  const placeholder = disabled ? 'Select a contact to start chatting' : 'Type a message'
+  const handleSend = useCallback(() => {
+    if (input.trim() && !disabled) {
+      onSend()
+    }
+  }, [input, disabled, onSend])
 
   return (
-    <form onSubmit={submit} className="chatApp__convSendMessage clearfix">
-      <input
-        ref={inputRef}
-        className="chatApp__convInput"
-        placeholder={placeholder}
-        value={value}
-        onChange={(e)=>setValue(e.target.value)}
-        disabled={sending}
-      />
-      <button type="submit" className={`chatApp__convButton ${sending ? 'chatApp__convButton--loading' : ''}`} disabled={sending || disabled} aria-label="Send">
-        {!sending && (
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
-        )}
-      </button>
-    </form>
+    <div className="input-container">
+      <div className="input-wrapper">
+        <textarea
+          className="message-input"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyPress}
+          placeholder={placeholder}
+          disabled={disabled}
+          rows={1}
+        />
+        <button
+          className="send-button"
+          onClick={handleSend}
+          disabled={disabled || !input.trim()}
+          title="Send message"
+        >
+          ➤
+        </button>
+      </div>
+    </div>
   )
-}
+})
+
+export default MessageInput
