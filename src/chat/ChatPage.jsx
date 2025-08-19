@@ -21,7 +21,7 @@ export default function ChatPage() {
   const [input, setInput] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
   
-  const { messages, loading, send, messagesRef } = useChat(peer)
+  const { messages, loading, send, messagesRef, retry, refreshing } = useChat(peer)
   const { isMobile, showSidebar, setShowSidebar } = useResponsive(peer)
   const onlineUsers = usePresence()
 
@@ -418,10 +418,24 @@ export default function ChatPage() {
           opacity: 0.7;
           text-align: right;
         }
-
-        .msg-bubble-other .msg-time {
-          text-align: left;
+        /* Added message status styles */
+        .msg-meta {
+          display: flex;
+          gap: 4px;
+          align-items: center;
+          justify-content: flex-end;
+          font-size: 10px;
+          opacity: 0.7;
+          margin-top: 2px;
         }
+        .msg-status {
+          font-size: 10px;
+        }
+        .msg-status.sending { opacity: 0.5; }
+        .msg-status.sent { color: #e0f2ff; }
+        .msg-status.received { color: #e0f2ff; }
+        .msg-status.error { color: #dc3545; cursor: pointer; font-weight: 600; }
+        .msg-status.error:hover { text-decoration: underline; }
 
         /* Input Area */
         .input-container {
@@ -550,6 +564,8 @@ export default function ChatPage() {
               user={user}
               messagesRef={messagesRef}
               selectedContactName={selectedContact?.name}
+              retry={retry}
+              refreshing={refreshing} // added (silent)
             />
           </div>
 

@@ -40,21 +40,22 @@ export async function fetchConversation({ a, b, limit = 100 }) {
 }
 
 export function subscribeConversation({ a, b, onInsert }) {
-  const channel = supabase.channel(`messages_${a}_${b}`)
-    // listen to messages sent by a
-    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `sender_email=eq.${a}` }, (payload) => {
-      const row = payload.new
-      if ((row.sender_email === a && row.receiver_email === b) || (row.sender_email === b && row.receiver_email === a)) {
-        onInsert?.(row)
+  const channel = supabase
+    .channel(`messages_convo_${a}_${b}`)
+    .on(
+      'postgres_changes',
+      { event: 'INSERT', schema: 'public', table: 'messages' },
+      (payload) => {
+        const row = payload.new
+        // only forward rows that belong to this 2-party conversation
+        if (
+          (row.sender_email === a && row.receiver_email === b) ||
+          (row.sender_email === b && row.receiver_email === a)
+        ) {
+          onInsert?.(row)
+        }
       }
-    })
-    // listen to messages sent by b
-    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `sender_email=eq.${b}` }, (payload) => {
-      const row = payload.new
-      if ((row.sender_email === a && row.receiver_email === b) || (row.sender_email === b && row.receiver_email === a)) {
-        onInsert?.(row)
-      }
-    })
+    )
     .subscribe()
 
   return () => {
