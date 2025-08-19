@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react'
 import { useAuthStore, allowedAccounts } from '../../store/auth'
 
-const ContactItem = memo(({ contact, isActive, onClick, lastMessage }) => (
+const ContactItem = memo(({ contact, isActive, onClick, lastMessage, isOnline }) => (
   <div 
     className={`contact-item ${isActive ? 'contact-active' : ''}`}
     onClick={onClick}
@@ -10,7 +10,7 @@ const ContactItem = memo(({ contact, isActive, onClick, lastMessage }) => (
       <div className="avatar-circle">
         {contact.name[0].toUpperCase()}
       </div>
-      <div className="online-indicator"></div>
+      <div className={`status-dot ${isOnline ? 'online' : 'offline'}`}></div>
     </div>
     <div className="contact-info">
       <div className="contact-name">{contact.name}</div>
@@ -21,25 +21,25 @@ const ContactItem = memo(({ contact, isActive, onClick, lastMessage }) => (
   </div>
 ))
 
-const ContactList = memo(({ peer, onSelectContact, getLastMessage, searchTerm = '' }) => {
+const ContactList = memo(({ peer, onSelectContact, getLastMessage, searchTerm = '', onlineUsers = [] }) => {
   const user = useAuthStore(s => s.user)
   
-  const contacts = useMemo(() => 
-    allowedAccounts.filter(c => c.email !== user?.email), 
+  const contacts = useMemo(
+    () => allowedAccounts.filter(c => c.email !== user?.email),
     [user?.email]
   )
 
-  // Filter contacts based on search term
+  // Search across all contacts (not only online)
   const filteredContacts = useMemo(() => {
     if (!searchTerm.trim()) return contacts
-    
-    return contacts.filter(contact => 
-      contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      contact.email.toLowerCase().includes(searchTerm.toLowerCase())
+    const term = searchTerm.toLowerCase()
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(term) ||
+      contact.email.toLowerCase().includes(term)
     )
   }, [contacts, searchTerm])
 
-  if (filteredContacts.length === 0 && searchTerm.trim()) {
+  if (filteredContacts.length === 0) {
     return (
       <div className="contacts-list">
         <div className="no-results">
@@ -53,17 +53,22 @@ const ContactList = memo(({ peer, onSelectContact, getLastMessage, searchTerm = 
 
   return (
     <div className="contacts-list">
-      {filteredContacts.map(contact => (
-        <ContactItem
-          key={contact.email}
-          contact={contact}
-          isActive={peer === contact.email}
-          onClick={() => onSelectContact(contact.email)}
-          lastMessage={getLastMessage(contact.email)}
-        />
-      ))}
+      {filteredContacts.map(contact => {
+        const isOnline = onlineUsers.includes(contact.email)
+        return (
+          <ContactItem
+            key={contact.email}
+            contact={contact}
+            isActive={peer === contact.email}
+            onClick={() => onSelectContact(contact.email)}
+            lastMessage={getLastMessage(contact.email)}
+            isOnline={isOnline}
+          />
+        )
+      })}
     </div>
   )
 })
+
 
 export default ContactList

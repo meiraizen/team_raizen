@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-const ChatHeader = memo(({ selectedContact, loading, onBack, isMobile }) => (
+const ChatHeader = memo(({ selectedContact, loading, onBack, isMobile, isOnline }) => (
   <div className="chat-header">
     {isMobile && (
       <button className="mobile-back" onClick={onBack}>
@@ -15,7 +15,7 @@ const ChatHeader = memo(({ selectedContact, loading, onBack, isMobile }) => (
         <div className="chat-info">
           <h3>{selectedContact.name}</h3>
           <p className="chat-status">
-            {loading ? 'Loading...' : 'Online'}
+            {loading ? 'Loading...' : (isOnline ? 'Online' : 'Offline')}
           </p>
         </div>
       </>

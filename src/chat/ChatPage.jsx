@@ -12,6 +12,7 @@ import MessageInput from './components/MessageInput'
 // Hooks
 import { useChat } from './hooks/useChat'
 import { useResponsive } from './hooks/useResponsive'
+import { usePresence } from './hooks/usePresence'
 
 export default function ChatPage() {
   const user = useAuthStore(s => s.user)
@@ -22,6 +23,7 @@ export default function ChatPage() {
   
   const { messages, loading, send, messagesRef } = useChat(peer)
   const { isMobile, showSidebar, setShowSidebar } = useResponsive(peer)
+  const onlineUsers = usePresence()
 
   // Memoized values to prevent unnecessary recalculations
   const contacts = useMemo(() => 
@@ -33,6 +35,8 @@ export default function ChatPage() {
     contacts.find(c => c.email === peer), 
     [contacts, peer]
   )
+
+  const isSelectedOnline = selectedContact ? onlineUsers.includes(selectedContact.email) : false
 
   // Optimized handlers with useCallback
   const handleSend = useCallback(() => {
@@ -227,30 +231,38 @@ export default function ChatPage() {
 
         .contact-avatar {
           position: relative;
+          width: 40px;            /* ensure fixed size */
+          height: 40px;
+          flex-shrink: 0;         /* prevent shrinking */
         }
 
         .avatar-circle {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
+          width: 100%;            /* fill container */
+          height: 100%;
+          border-radius: 50% !important; /* enforce circle */
           background: #007bff;
           display: flex;
           align-items: center;
           justify-content: center;
-          color: white;
+          color: #fff;
           font-weight: 500;
           font-size: 16px;
+          overflow: hidden;       /* clip anything overflow */
+          border: 1px solid rgba(0,0,0,0.05); /* subtle edge for visibility */
         }
 
-        .online-indicator {
+        .status-dot {
           width: 10px;
           height: 10px;
-          background: #4caf50;
           border-radius: 50%;
           position: absolute;
-          bottom: 0;
-          right: 0;
-          border: 2px solid white;
+            bottom: 0;
+            right: 0;
+          border: 2px solid #fff;
+          background: #bbb; /* offline */
+        }
+        .status-dot.online {
+          background: #34c759; /* green online */
         }
 
         .contact-info {
@@ -517,6 +529,7 @@ export default function ChatPage() {
             onSelectContact={selectContact}
             getLastMessage={getLastMessage}
             searchTerm={searchTerm}
+            onlineUsers={onlineUsers}
           />
         </Sidebar>
 
@@ -526,6 +539,7 @@ export default function ChatPage() {
             loading={loading}
             onBack={goBack}
             isMobile={isMobile}
+            isOnline={isSelectedOnline}
           />
 
           <div className="messages-container" ref={messagesRef}>
