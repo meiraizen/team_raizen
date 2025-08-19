@@ -40,11 +40,24 @@ const sendOtpEmail = (email, otp) => {
   );
 };
 
+const SESSION_KEY = 'auth_session_expiry';
+const TWO_HOURS_MS = 5 * 60 * 60 * 1000;
+
+const getStoredSessionExpiry = () => {
+  try {
+    const v = localStorage.getItem(SESSION_KEY);
+    return v ? Number(v) : null;
+  } catch {
+    return null;
+  }
+};
+
 export const useAuthStore = create((set, get) => ({
   user: getStoredUser(),
   otpSent: false,
   otp: null,
   otpExpiry: null,
+  sessionExpiry: getStoredSessionExpiry(),
   login: async (email) => {
     const found = allowedAccounts.find(
       (acc) => acc.email === email
@@ -66,7 +79,7 @@ export const useAuthStore = create((set, get) => ({
     return false;
   },
   verifyOtp: (inputOtp) => {
-    const { otp, otpExpiry } = get();
+    const { otp, otpExpiry, user } = get();
     if (!inputOtp || inputOtp.length !== 6 || !/^[0-9]{6}$/.test(inputOtp)) {
       return { error: 'OTP must be a 6-digit number.' };
     }
@@ -75,13 +88,44 @@ export const useAuthStore = create((set, get) => ({
       return { error: 'OTP expired. Please login again.' };
     }
     if (inputOtp === otp) {
-      set({ otpSent: false, otp: null, otpExpiry: null });
+      // set session expiry ONLY after successful OTP verification
+      const sessionExpiry = Date.now() + TWO_HOURS_MS;
+      try { localStorage.setItem(SESSION_KEY, String(sessionExpiry)); } catch {}
+      set({ otpSent: false, otp: null, otpExpiry: null, sessionExpiry });
       return true;
     }
     return { error: 'Invalid OTP.' };
   },
   logout: () => {
-    localStorage.removeItem('auth_user');
-    set({ user: null, otpSent: false, otp: null, otpExpiry: null });
+    try { localStorage.removeItem('auth_user'); } catch {}
+    try { localStorage.removeItem(SESSION_KEY); } catch {}
+    set({ user: null, otpSent: false, otp: null, otpExpiry: null, sessionExpiry: null });
+  },
+  // Helper to manually refresh session if desired (not used yet)
+  extendSession: () => {
+    const { user } = get();
+    if (!user) return;
+    const sessionExpiry = Date.now() + TWO_HOURS_MS;
+    try { localStorage.setItem(SESSION_KEY, String(sessionExpiry)); } catch {}
+    set({ sessionExpiry });
   },
 }));
+
+// --- Auto-expiry watchdog (runs once) ---
+let __sessionInterval;
+(function initSessionWatcher() {
+  const check = () => {
+    const { sessionExpiry, logout, user } = useAuthStore.getState();
+    if (!user || !sessionExpiry) return;
+    if (Date.now() > sessionExpiry) {
+      logout();
+    }
+  };
+  // Immediate check on load
+  check();
+  if (!__sessionInterval) {
+    __sessionInterval = setInterval(check, 60 * 1000); // every minute
+  }
+  // Also check when window regains focus (more responsive)
+  window.addEventListener('focus', check);
+})();
