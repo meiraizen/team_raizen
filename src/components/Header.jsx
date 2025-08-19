@@ -62,6 +62,7 @@ const getTitleFromPath = (pathname) => {
 export default function Header() {
   const user = useAuthStore(state => state.user);
   const logout = useAuthStore(state => state.logout);
+  const logoutAllDevices = useAuthStore(state => state.logoutAllDevices);
   const navigate = useNavigate();
   const location = useLocation();
   const isMobile = useMediaQuery('(max-width:600px)');
@@ -71,6 +72,13 @@ export default function Header() {
   const handleLogout = () => {
     logout();
     navigate('/login');
+  };
+
+  const handleLogoutAll = async () => {
+    if (window.confirm('Logout from all devices?')) {
+      try { await logoutAllDevices(); } catch {}
+      navigate('/login');
+    }
   };
 
   const currentTitle = getTitleFromPath(location.pathname);
@@ -93,6 +101,7 @@ export default function Header() {
             <Button color="inherit" component={Link} to="/home" sx={hoverColor}>Home</Button>
             <Button color="inherit" component={Link} to="/billbook" sx={hoverColor}>Billbook</Button>
             <Button color="inherit" component={Link} to="/contact" sx={hoverColor}>Contact</Button>
+            <Button color="inherit" onClick={handleLogoutAll} sx={hoverColor}>Logout All</Button>
             <Button color="inherit" onClick={handleLogout} sx={hoverColor}>Logout</Button>
           </Box>
         ) : (
