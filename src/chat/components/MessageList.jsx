@@ -1,12 +1,65 @@
 import { memo, useMemo } from 'react'
 
 const MessageBubble = memo(({ message, isOwn, onRetry }) => {
-  const time = useMemo(() => 
-    new Date(message.created_at).toLocaleTimeString([], { 
-      hour: '2-digit', 
-      minute: '2-digit' 
-    }), [message.created_at]
-  )
+  const timeLabel = useMemo(() => {
+    const dt = new Date(message.created_at)
+    const now = new Date()
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    const startOfMsg = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate())
+    const diffDays = Math.floor((startOfToday - startOfMsg) / 86400000)
+    const timePart = dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    if (diffDays === 0) return `Today ${timePart}`
+    if (diffDays === 1) return `Yesterday ${timePart}`
+    return `${dt.toLocaleDateString()} ${timePart}`
+  }, [message.created_at])
+
+  const linkifiedContent = useMemo(() => {
+    const text = message.content || ''
+    const parts = []
+    const urlRegex = /((https?:\/\/|www\.)[^\s<]+)(?![^<]*>)/gi
+    let lastIndex = 0, match
+    while ((match = urlRegex.exec(text)) !== null) {
+      const start = match.index
+      if (start > lastIndex) parts.push(text.slice(lastIndex, start))
+      let rawUrl = match[0]
+      // strip simple trailing punctuation
+      const trailingPuncMatch = rawUrl.match(/[),.!?]+$/)
+      let trailing = ''
+      if (trailingPuncMatch) {
+        trailing = trailingPuncMatch[0]
+        rawUrl = rawUrl.slice(0, -trailing.length)
+      }
+      const href = rawUrl.startsWith('http') ? rawUrl : `https://${rawUrl}`
+      parts.push(
+        <a 
+          key={`lnk-${parts.length}`} 
+            href={href} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="msg-link"
+        >
+          {rawUrl}
+        </a>
+      )
+      if (trailing) parts.push(trailing)
+      lastIndex = match.index + match[0].length
+    }
+    if (lastIndex < text.length) parts.push(text.slice(lastIndex))
+    // handle line breaks
+    const withBreaks = []
+    parts.forEach((p, idx) => {
+      if (typeof p === 'string') {
+        const lines = p.split('\n')
+        lines.forEach((line, i) => {
+          if (line) withBreaks.push(line)
+          if (i < lines.length - 1) withBreaks.push(<br key={`br-${idx}-${i}`} />)
+        })
+      } else {
+        withBreaks.push(p)
+      }
+    })
+    return withBreaks
+  }, [message.content])
 
   const renderStatus = () => {
     if (!isOwn) return null
@@ -22,9 +75,9 @@ const MessageBubble = memo(({ message, isOwn, onRetry }) => {
   return (
     <div className={`msg-wrapper ${isOwn ? 'msg-own' : 'msg-other'}`}>
       <div className={`msg-bubble ${isOwn ? 'msg-bubble-own' : 'msg-bubble-other'}`}>
-        <div className="msg-text">{message.content}</div>
+        <div className="msg-text">{linkifiedContent}</div>
         <div className="msg-meta">
-          <span className="msg-time">{time}</span>
+          <span className="msg-time">{timeLabel}</span>
           {renderStatus()}
         </div>
       </div>

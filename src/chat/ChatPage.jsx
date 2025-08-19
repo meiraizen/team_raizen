@@ -437,6 +437,20 @@ export default function ChatPage() {
         .msg-status.error { color: #dc3545; cursor: pointer; font-weight: 600; }
         .msg-status.error:hover { text-decoration: underline; }
 
+        /* Links inside messages */
+        .msg-link,
+        .msg-link:visited {
+          color: black;
+        }
+        .msg-link:hover {
+          text-decoration: underline;
+          opacity: 0.9;
+        }
+        .msg-link:focus {
+          outline: 2px solid rgba(0, 0, 0, 0.4);
+          outline-offset: 2px;
+        }
+
         /* Input Area */
         .input-container {
           padding: 16px 20px;
