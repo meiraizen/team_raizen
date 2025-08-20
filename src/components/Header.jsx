@@ -1,6 +1,8 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography, Button, IconButton, Box } from '@mui/material';
+import React, { useState, useMemo, useEffect } from 'react';
+import { AppBar, Toolbar, Typography, Button, IconButton, Box, Drawer, List, ListItemButton, ListItemText, Divider } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/auth';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -69,6 +71,13 @@ export default function Header() {
   const theme = useTheme();
   const hoverColor = getHoverColor(theme);
 
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const toggleMobile = () => setMobileOpen(o => !o);
+
+  // Close drawer on route change
+  useEffect(() => { setMobileOpen(false); }, [location.pathname]);
+
   const handleLogout = () => {
     logout();
     navigate('/login');
@@ -83,34 +92,125 @@ export default function Header() {
 
   const currentTitle = getTitleFromPath(location.pathname);
 
+  const menuItems = useMemo(() => {
+    if (!user) return [];
+    return [
+      { label: 'Home', path: '/home' },
+      { label: 'Billbook', path: '/billbook' },
+      { label: 'Contact', path: '/contact' },
+      { label: 'Logout All', action: handleLogoutAll },
+      { label: 'Logout', action: handleLogout },
+    ];
+  }, [user]);
+
+  const handleItemClick = (item) => {
+    if (item.path) navigate(item.path);
+    else if (item.action) item.action();
+  };
+
   return (
-    <AppBar position="fixed" sx={{ bgcolor: theme.palette.raizenColors.main, }}>
-      <Toolbar>
-        {isMobile && (
-          <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-            <MenuIcon />
-          </IconButton>
-        )}
-        <Typography variant="h6" sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-          {currentTitle === null
-            ? <img src=' public/raizenEagle.svg' style={{ height: 35, width: 60 }} alt="Raizen Eagle" />
-            // ? <img src='src/assets/RaizenEagle.svg' style={{ height: 35, width: 60 }} alt="Raizen Eagle" />
-           
-           
-            : currentTitle}
-        </Typography>
-        {user ? (
-          <Box sx={{ display: 'flex', gap: 5,  cursor: 'none' }}>
-            <Button color="inherit" component={Link} to="/home" sx={hoverColor}>Home</Button>
-            <Button color="inherit" component={Link} to="/billbook" sx={hoverColor}>Billbook</Button>
-            <Button color="inherit" component={Link} to="/contact" sx={hoverColor}>Contact</Button>
-            <Button color="inherit" onClick={handleLogoutAll} sx={hoverColor}>Logout All</Button>
-            <Button color="inherit" onClick={handleLogout} sx={hoverColor}>Logout</Button>
+    <>
+      <AppBar position="fixed" sx={{ bgcolor: theme.palette.raizenColors.main }}>
+        <Toolbar>
+          {isMobile && user && (
+            <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleMobile} sx={{ mr: 1 }}>
+              {mobileOpen ? <CloseIcon /> : <MenuIcon />}
+            </IconButton>
+          )}
+          <Typography
+            variant="h6"
+            sx={{
+              flexGrow: 1,
+              display: 'flex',
+              alignItems: 'center',
+              ml: isMobile && user ? 1 : 0,
+              minWidth: 0
+            }}
+          >
+            {currentTitle === null
+              ? (!isMobile && (
+                  <img
+                    src="/raizenEagle.svg"
+                    alt="Raizen Eagle"
+                    style={{
+                      height: 35,
+                      width: 60,
+                      transition: 'width .2s,height .2s'
+                    }}
+                  />
+                ))
+              : currentTitle}
+          </Typography>
+          {/* Mobile: place logo on the right when on home (currentTitle === null) */}
+          {isMobile && currentTitle === null && (
+            <Box sx={{ display: 'flex', alignItems: 'center', pl: 1 }}>
+              <img
+                src="/raizenEagle.svg"
+                alt="Raizen Eagle"
+                style={{ height: 30, width: 50 }}
+              />
+            </Box>
+          )}
+          {!isMobile && (
+            user ? (
+              <Box sx={{ display: 'flex', gap: 5, cursor: 'none' }}>
+                <Button color="inherit" component={Link} to="/home" sx={hoverColor}>Home</Button>
+                <Button color="inherit" component={Link} to="/billbook" sx={hoverColor}>Billbook</Button>
+                <Button color="inherit" component={Link} to="/contact" sx={hoverColor}>Contact</Button>
+                <Button color="inherit" onClick={handleLogoutAll} sx={hoverColor}>Logout All</Button>
+                <Button color="inherit" onClick={handleLogout} sx={hoverColor}>Logout</Button>
+              </Box>
+            ) : (
+              <Button color="inherit" component={Link} to="/login">Login</Button>
+            )
+          )}
+        </Toolbar>
+      </AppBar>
+
+      {/* Spacer to offset fixed AppBar height and prevent overlap */}
+      <Box sx={theme.mixins.toolbar} />
+
+      {/* Mobile Drawer */}
+      {isMobile && user && (
+        <Drawer
+          anchor="left"
+          open={mobileOpen}
+          onClose={toggleMobile}
+          ModalProps={{ keepMounted: true }}
+          PaperProps={{
+            sx: {
+              width: 240,
+              bgcolor: theme.palette.background.paper,
+              pt: 1
+            }
+          }}
+        >
+          <Box role="presentation">
+                       <Box sx={{ display: 'flex', alignItems: 'center', px: 1, pb: 1 }}>
+              <Button
+                onClick={toggleMobile}
+                // startIcon={<ArrowBackIcon />}
+                size="small"
+                sx={{ textTransform: 'none' }}
+              >
+                Back
+              </Button>
+            </Box>
+            <Divider />
+            <List>
+              {menuItems.map(item => (
+                <ListItemButton
+                  key={item.label}
+                  onClick={() => handleItemClick(item)}
+                  selected={!!item.path && location.pathname === item.path}
+                >
+                  <ListItemText primary={item.label} />
+                </ListItemButton>
+              ))}
+            </List>
           </Box>
-        ) : (
-          <Button color="inherit" component={Link} to="/login" sx={neonButtonSx}>Login</Button>
-        )}
-      </Toolbar>
-    </AppBar>
+        </Drawer>
+      )}
+    </>
   );
 }
