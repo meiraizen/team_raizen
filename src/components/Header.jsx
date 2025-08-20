@@ -5,7 +5,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/auth';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import raizenEagle from '../assets/raizenEagle.svg'; 
+
 // Styles
 const getHoverColor = (theme) => ({
   cursor: 'none',
@@ -31,17 +31,6 @@ const getHoverColor = (theme) => ({
     transform: 'scaleX(1)',
   }
 });
-
-// Inline fallback to avoid path resolution issues
-const RaizenEagleLogo = (props) => (
-  <svg {...props} viewBox="0 0 3918 1490" xmlns="http://www.w3.org/2000/svg">
-    <image
-      width="3918"
-      height="1490"
-      href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAD04AAAXSCAYAAAAlzi1EAAAACXBIWXMAAEzlAABM5QF1zvCVAAAGlmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNy4xLWMwMDAgNzkuZWRhMmIzZiwgMjAyMS8xMS8xNC0xMjozMDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIgeG1zOnN0RXZ0PSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VFdmVudCMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIzLjEgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAyMy0wNC0zMFQxNzowMzo0MyswNTozMCIgeG1wOk1vZGlmeURhdGU9IjIwMjUtMDgtMDVUMTg6MzQ6MDkrMDU6MzAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMjUtMDgtMDVUMTg6MzQ6MDkrMDU6MzAiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjMyYTljZDJkLTcyZTQtMWI0Mi1iYmQ2LTY4MjQ4MzMwNmI5OSIgeG1wTU06RG9jdW1lbnRJRD0iYWRvYmU6ZG9jaWQ6cGhvdG9zaG9wOjQyY2UyOTQ0LTE0MzMtZDE0Ni1iNmFjLTI5MzBhNzE2MmMzNCIgeG1wTU06T3JpZ2luYWxEb2N1bWVudElEPSJ4bXAuZGlkOmMwN2M2NmMwLWQ1MzAtYTk0Mi05YmQ2LTEyNmNjZmYwYWRiNSI+IDx4bXBNTTpIaXN0b3J5PiA8cmRmOlNlcT4gPHJkZjpsaSBzdEV2dDphY3Rpb249ImNyZWF0ZWQiIHN0RXZ0Omluc3RhbmNlSUQ9InhtcC5paWQ6YzA3YzY2YzAtZDUzMC1hOTQyLTliZDYtMTI2Y2NmZjBhZGI1IiBzdEV2dDp3aGVuPSIyMDIzLTA0LTMwVDE3OjAzOjQzKzA1OjMwIiBzdEV2dDpzb2Z0d2FyZUFnZW50PSJBZG9iZSBQaG90b3Nob3AgMjMuMSAoV2luZG93cykiLz4gPHJkZjpsaSBzdEV2dDphY3Rpb249InNhdmVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOmI2YmM0MDM0LTcxODgtZTI0MC04Yzg5LTI3MjQ4YjMwYjkxMSIgc3RFdnQ6d2hlbj0iMjAyNS0wOC0wNVQxODoyMjo1OCswNTozMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIDIzLjEgKFdpbmRvd3MpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDozMmE5Y2QyZC03MmU0LTFiNDItYmJkNi02ODI0ODMzMDZiOTkiIHN0RXZ0OndoZW49IjIwMjUtMDgtMDVUMTg6MzQ6MDkrMDU6MzAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCAyMy4xIChXaW5kb3dzKSIgc3RFdnQ6Y2hhbmdlZD0iLyIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4="
-    />
-  </svg>
-);
 
 // Map routes to titles
   // const routeTitles = {
@@ -104,12 +93,10 @@ export default function Header() {
         )}
         <Typography variant="h6" sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
           {currentTitle === null
-            ? <img
-            src={raizenEagle}
-            alt="Raizen Eagle"
-            height={35}
-            width={60} 
-            />
+            ? <img src=' public/raizenEagle.svg' style={{ height: 35, width: 60 }} alt="Raizen Eagle" />
+            // ? <img src='src/assets/RaizenEagle.svg' style={{ height: 35, width: 60 }} alt="Raizen Eagle" />
+           
+           
             : currentTitle}
         </Typography>
         {user ? (
