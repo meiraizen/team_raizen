@@ -1,9 +1,9 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState, useEffect } from 'react'
 import { useAuthStore, allowedAccounts } from '../store/auth'
 import { useNavigate } from 'react-router-dom'
 
 // Components
-import Sidebar from './components/ChatSidebar'
+import Sidebar from './components/Sidebar'
 import ContactList from './components/ContactList'
 import ChatHeader from './components/ChatHeader'
 import MessageList from './components/MessageList'
@@ -72,6 +72,21 @@ export default function ChatPage() {
   const handleSearch = useCallback((term) => {
     setSearchTerm(term)
   }, [])
+
+  // Ensure on mobile the sidebar is visible when no peer selected (prevents "Select a contact" dead state)
+  useEffect(() => {
+    if (!peer && isMobile && !showSidebar) {
+      setShowSidebar(true)
+    }
+  }, [peer, isMobile, showSidebar, setShowSidebar])
+
+  // (Optional) On desktop, if nothing selected, auto-select first contact to avoid empty pane
+  useEffect(() => {
+    if (!isMobile && !peer && contacts.length > 0) {
+      // Uncomment if you want auto-open first contact:
+      // setPeer(contacts[0].email)
+    }
+  }, [isMobile, peer, contacts])
 
   // Early return for better performance
   if (!user) {
