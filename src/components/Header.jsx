@@ -5,6 +5,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/auth';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import raizenEagle from '../assets/raizenEagle.svg';
 
 // Styles
 const getHoverColor = (theme) => ({
@@ -93,7 +94,7 @@ export default function Header() {
         )}
         <Typography variant="h6" sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
           {currentTitle === null
-            ? <img src='public\raizenEagle.svg' style={{ height: 35, width: 60 }} alt="Raizen Eagle" />
+            ? <img src={raizenEagle} style={{ height: 35, width: 60 }} alt="Raizen Eagle" />
             : currentTitle}
         </Typography>
         {user ? (
