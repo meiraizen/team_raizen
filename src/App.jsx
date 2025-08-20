@@ -11,8 +11,10 @@ import { publicRoutes, protectedRoutes, notFoundRoute } from './routes/routesCon
 
 function AppContent() {
   const user = useAuthStore((state) => state.user);
+  const sessionExpiry = useAuthStore((state) => state.sessionExpiry);
+  const isAuthenticated = !!user && !!sessionExpiry && Date.now() < sessionExpiry;
 
-  // Protected layout (Header + container + Outlet)
+  // Protected layout (shows Header and protected routes)
   const ProtectedLayout = () => (
     <>
       <Header />
@@ -27,23 +29,17 @@ function AppContent() {
         }}>
           <Suspense fallback={<div>Loading...</div>}>
             <Routes>
-              {/* Auth redirect root */}
-              <Route
-                path="/"
-                element={user ? <Navigate to="/home" replace /> : <Navigate to="/login" replace />}
-              />
-              {/* Public */}
-              {publicRoutes.map(({ path, component: C }) => (
-                <Route key={path} path={path} element={<C />} />
-              ))}
-              {/* Protected */}
+              {/* Always redirect / and /otp-verify to /home if authenticated */}
+              <Route path="/" element={<Navigate to="/home" replace />} />
+              <Route path="/otp-verify" element={<Navigate to="/home" replace />} />
+              {/* Protected routes */}
               <Route element={<ProtectedRoute />}>
                 {protectedRoutes.map(({ path, component: C }) => (
                   <Route key={path} path={path} element={<C />} />
                 ))}
+                {/* 404 for logged-in users */}
+                <Route path={notFoundRoute.path} element={<notFoundRoute.component />} />
               </Route>
-              {/* 404 */}
-              <Route path={notFoundRoute.path} element={<notFoundRoute.component />} />
             </Routes>
           </Suspense>
         </Box>
@@ -51,12 +47,39 @@ function AppContent() {
     </>
   );
 
+  // Public layout (no Header, only for unauthenticated users)
+  const PublicLayout = () => (
+    <Box sx={{ width: '100%', minHeight: '100vh' }}>
+      <Box sx={{
+        pt: { xs: 2, sm: 3, md: 6 },
+        pb: { xs: 2, sm: 3, md: 6 },
+        px: { xs: 1, sm: 2, md: 6 },
+        maxWidth: { xs: '100%', sm: '100%', md: '1200px', xl: '2048px' },
+        margin: '0 auto',
+        transition: 'all 0.3s',
+      }}>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            {/* Always redirect /home and protected routes to /login if not authenticated */}
+            <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route path="/home" element={<Navigate to="/login" replace />} />
+            {/* Public routes */}
+            {publicRoutes.map(({ path, component: C }) => (
+              <Route key={path} path={path} element={<C />} />
+            ))}
+            {/* 404 for not logged-in users */}
+            <Route path={notFoundRoute.path} element={<notFoundRoute.component />} />
+          </Routes>
+        </Suspense>
+      </Box>
+    </Box>
+  );
+
   return (
     <>
       <CustomContextMenu />
       <BrowserRouter>
-        {/* Entire routing handled inside ProtectedLayout (which adapts per auth) */}
-        <ProtectedLayout />
+        {isAuthenticated ? <ProtectedLayout /> : <PublicLayout />}
       </BrowserRouter>
     </>
   );
@@ -69,4 +92,3 @@ export default function App() {
     </ThemeProvider>
   );
 }
-     
