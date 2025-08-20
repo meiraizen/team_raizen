@@ -93,7 +93,7 @@ export default function Header() {
         )}
         <Typography variant="h6" sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
           {currentTitle === null
-            ? <img src='src/assets/RaizenEagle.svg' style={{ height: 35, width: 60 }} alt="Raizen Eagle" />
+            ? <img src='src/assets/raizenEagle.svg' style={{ height: 35, width: 60 }} alt="Raizen Eagle" />
             : currentTitle}
         </Typography>
         {user ? (
