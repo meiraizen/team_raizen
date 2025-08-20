@@ -20,7 +20,10 @@ const Sidebar = memo(({
   }, [onSearch])
 
   return (
-    <div className="sidebar">
+    <div 
+      className={`sidebar ${showSidebar ? 'open' : 'closed'}`}
+      aria-hidden={!showSidebar}
+    >
       <div className="sidebar-header">
         <button className="back-button" onClick={onBack}>
           ← Back

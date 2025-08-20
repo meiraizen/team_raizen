@@ -3,7 +3,7 @@ import { useAuthStore, allowedAccounts } from '../store/auth'
 import { useNavigate } from 'react-router-dom'
 
 // Components
-import Sidebar from './components/Sidebar'
+import Sidebar from './components/ChatSidebar'
 import ContactList from './components/ContactList'
 import ChatHeader from './components/ChatHeader'
 import MessageList from './components/MessageList'
@@ -528,22 +528,24 @@ export default function ChatPage() {
             position: absolute;
             z-index: 10;
             height: 100%;
-            transform: ${showSidebar ? 'translateX(0)' : 'translateX(-100%)'};
             transition: transform 0.2s ease;
           }
-          
+          .sidebar.closed {
+            transform: translateX(-100%);
+            pointer-events: none;
+          }
+          .sidebar.open {
+            transform: translateX(0);
+          }
           .chat-main {
             width: 100%;
           }
-          
           .mobile-back {
             display: block;
           }
-
           .messages-container {
             padding: 12px;
           }
-
           .input-container {
             padding: 12px 16px;
           }
