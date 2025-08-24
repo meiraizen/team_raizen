@@ -17,7 +17,14 @@ export const studentsData = [
     "guardian_contact": "98765000028",
     "emergency_contact": "98765000158",
     "fee_history": [
-      {"amount": 1500, "date": "2025-06-20", "method": "Cash"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-06-20", "present": true},
@@ -58,7 +65,14 @@ export const studentsData = [
     "guardian_contact": "98765000053",
     "emergency_contact": "98765000117",
     "fee_history": [
-      {"amount": 1500, "date": "2025-07-01", "method": "Cash"}
+      {"amount": 1500, "date": "2025-01-01", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-01", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // March unpaid
+      {"amount": 1500, "date": "2025-04-01", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-01", "method": "Cash", "paid": true},
+      {"amount": "", "date": "", "method": "UPI", "paid": false}, // June unpaid
+      {"amount": 1500, "date": "2025-07-01", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-08-01", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-07-01", "present": false},
@@ -99,7 +113,14 @@ export const studentsData = [
     "guardian_contact": "98765000083",
     "emergency_contact": "98765000174",
     "fee_history": [
-      {"amount": 1500, "date": "2025-05-22", "method": "Cash"}
+      {"amount": 1500, "date": "2025-01-22", "method": "Cash", "paid": true},
+      {"amount": "", "date": "", "method": "UPI", "paid": false}, // February unpaid
+      {"amount": 1500, "date": "2025-03-22", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-22", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-22", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-22", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-07-22", "method": "Cash", "paid": true},
+      {"amount": "", "date": "", "method": "UPI", "paid": false} // August unpaid
     ],
     "attendance": [
       {"date": "2025-05-22", "present": false},
@@ -140,7 +161,14 @@ export const studentsData = [
     "guardian_contact": "98765000093",
     "emergency_contact": "98765000184",
     "fee_history": [
-      {"amount": 1500, "date": "2025-06-10", "method": "UPI"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-06-10", "present": true},
@@ -181,7 +209,14 @@ export const studentsData = [
     "guardian_contact": "98765000094",
     "emergency_contact": "98765000185",
     "fee_history": [
-      {"amount": 1500, "date": "2025-04-15", "method": "Cash"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-04-15", "present": true},
@@ -222,7 +257,14 @@ export const studentsData = [
     "guardian_contact": "98765000095",
     "emergency_contact": "98765000186",
     "fee_history": [
-      {"amount": 1500, "date": "2025-05-10", "method": "UPI"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-05-10", "present": true},
@@ -257,8 +299,15 @@ export const studentsData = [
     "date_of_birth": "2013-08-21",
     "guardian_contact": "98765000096",
     "emergency_contact": "98765000187",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-06-01", "method": "Cash"}
+   "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-06-01", "present": true},
@@ -293,8 +342,15 @@ export const studentsData = [
     "date_of_birth": "2014-05-19",
     "guardian_contact": "98765000097",
     "emergency_contact": "98765000188",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-07-12", "method": "UPI"}
+   "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-07-12", "present": true},
@@ -330,7 +386,14 @@ export const studentsData = [
     "guardian_contact": "98765000098",
     "emergency_contact": "98765000189",
     "fee_history": [
-      {"amount": 1500, "date": "2025-01-10", "method": "Cash"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-01-10", "present": true},
@@ -371,7 +434,14 @@ export const studentsData = [
     "guardian_contact": "98765000099",
     "emergency_contact": "98765000200",
     "fee_history": [
-      {"amount": 1500, "date": "2025-03-05", "method": "UPI"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-03-05", "present": true},
@@ -412,7 +482,14 @@ export const studentsData = [
     "guardian_contact": "98765000201",
     "emergency_contact": "98765000312",
     "fee_history": [
-      {"amount": 1500, "date": "2025-05-15", "method": "Cash"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-05-15", "present": true},
@@ -452,8 +529,15 @@ export const studentsData = [
     "date_of_birth": "2010-06-30",
     "guardian_contact": "98765000202",
     "emergency_contact": "98765000313",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-02-20", "method": "UPI"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-02-20", "present": true},
@@ -494,7 +578,14 @@ export const studentsData = [
     "guardian_contact": "98765000203",
     "emergency_contact": "98765000314",
     "fee_history": [
-      {"amount": 1500, "date": "2025-07-01", "method": "Cash"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-07-01", "present": true},
@@ -534,8 +625,15 @@ export const studentsData = [
     "date_of_birth": "2011-02-20",
     "guardian_contact": "98765000204",
     "emergency_contact": "98765000315",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-06-10", "method": "UPI"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-06-10", "present": true},
@@ -575,8 +673,15 @@ export const studentsData = [
     "date_of_birth": "2009-09-11",
     "guardian_contact": "98765000205",
     "emergency_contact": "98765000316",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-01-15", "method": "Cash"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-01-15", "present": true},
@@ -616,8 +721,15 @@ export const studentsData = [
     "date_of_birth": "2013-07-07",
     "guardian_contact": "98765000206",
     "emergency_contact": "98765000317",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-05-20", "method": "UPI"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-05-20", "present": true},
@@ -658,7 +770,14 @@ export const studentsData = [
     "guardian_contact": "98765000207",
     "emergency_contact": "98765000318",
     "fee_history": [
-      {"amount": 1500, "date": "2025-06-15", "method": "Cash"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-06-15", "present": true},
@@ -698,8 +817,15 @@ export const studentsData = [
     "date_of_birth": "2014-04-18",
     "guardian_contact": "98765000208",
     "emergency_contact": "98765000319",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-07-10", "method": "UPI"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-07-10", "present": true},
@@ -739,8 +865,15 @@ export const studentsData = [
     "date_of_birth": "2011-05-15",
     "guardian_contact": "98765000209",
     "emergency_contact": "98765000320",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-04-10", "method": "Cash"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-04-10", "present": true},
@@ -780,8 +913,15 @@ export const studentsData = [
     "date_of_birth": "2010-08-20",
     "guardian_contact": "98765000210",
     "emergency_contact": "98765000321",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-03-15", "method": "UPI"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-03-15", "present": true},
@@ -821,8 +961,15 @@ export const studentsData = [
     "date_of_birth": "2013-10-15",
     "guardian_contact": "98765000211",
     "emergency_contact": "98765000322",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-06-20", "method": "Cash"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-06-20", "present": true},
@@ -863,7 +1010,14 @@ export const studentsData = [
     "guardian_contact": "98765000212",
     "emergency_contact": "98765000323",
     "fee_history": [
-      {"amount": 1500, "date": "2025-07-01", "method": "Cash"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-07-01", "present": false},
@@ -903,8 +1057,15 @@ export const studentsData = [
     "date_of_birth": "2011-07-18",
     "guardian_contact": "98765000213",
     "emergency_contact": "98765000324",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-05-22", "method": "Cash"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-05-22", "present": false},
@@ -944,8 +1105,15 @@ export const studentsData = [
     "date_of_birth": "2012-03-12",
     "guardian_contact": "98765000214",
     "emergency_contact": "98765000325",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-06-10", "method": "UPI"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-06-10", "present": true},
@@ -986,7 +1154,14 @@ export const studentsData = [
     "guardian_contact": "98765000215",
     "emergency_contact": "98765000326",
     "fee_history": [
-      {"amount": 1500, "date": "2025-04-15", "method": "Cash"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-04-15", "present": true},
@@ -1026,8 +1201,15 @@ export const studentsData = [
     "date_of_birth": "2012-12-01",
     "guardian_contact": "98765000216",
     "emergency_contact": "98765000327",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-05-10", "method": "UPI"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-05-10", "present": true},
@@ -1068,7 +1250,14 @@ export const studentsData = [
     "guardian_contact": "98765000217",
     "emergency_contact": "98765000328",
     "fee_history": [
-      {"amount": 1500, "date": "2025-06-01", "method": "Cash"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-06-01", "present": true},
@@ -1108,8 +1297,15 @@ export const studentsData = [
     "date_of_birth": "2014-05-19",
     "guardian_contact": "98765000218",
     "emergency_contact": "98765000329",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-07-12", "method": "UPI"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-07-12", "present": true},
@@ -1149,8 +1345,15 @@ export const studentsData = [
     "date_of_birth": "2012-10-10",
     "guardian_contact": "98765000219",
     "emergency_contact": "98765000330",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-06-15", "method": "Cash"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-06-15", "present": true},
@@ -1191,7 +1394,14 @@ export const studentsData = [
     "guardian_contact": "98765000220",
     "emergency_contact": "98765000331",
     "fee_history": [
-      {"amount": 1500, "date": "2025-07-01", "method": "Cash"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-07-01", "present": true},
@@ -1232,7 +1442,14 @@ export const studentsData = [
     "guardian_contact": "98765000221",
     "emergency_contact": "98765000332",
     "fee_history": [
-      {"amount": 1500, "date": "2025-06-10", "method": "UPI"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-06-10", "present": true},
@@ -1273,7 +1490,14 @@ export const studentsData = [
     "guardian_contact": "98765000222",
     "emergency_contact": "98765000333",
     "fee_history": [
-      {"amount": 1500, "date": "2025-01-15", "method": "Cash"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-01-15", "present": true},
@@ -1313,8 +1537,15 @@ export const studentsData = [
     "date_of_birth": "2013-10-15",
     "guardian_contact": "98765000223",
     "emergency_contact": "98765000334",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-06-20", "method": "Cash"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-06-20", "present": true},
@@ -1354,8 +1585,15 @@ export const studentsData = [
     "date_of_birth": "2015-02-04",
     "guardian_contact": "98765000224",
     "emergency_contact": "98765000335",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-07-01", "method": "Cash"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-07-01", "present": false},
@@ -1396,7 +1634,14 @@ export const studentsData = [
     "guardian_contact": "98765000225",
     "emergency_contact": "98765000336",
     "fee_history": [
-      {"amount": 1500, "date": "2025-05-22", "method": "Cash"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-05-22", "present": false},
@@ -1437,7 +1682,14 @@ export const studentsData = [
     "guardian_contact": "98765000226",
     "emergency_contact": "98765000337",
     "fee_history": [
-      {"amount": 1500, "date": "2025-06-10", "method": "UPI"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-06-10", "present": true},
@@ -1477,8 +1729,15 @@ export const studentsData = [
     "date_of_birth": "2014-09-10",
     "guardian_contact": "98765000227",
     "emergency_contact": "98765000338",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-04-15", "method": "Cash"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-04-15", "present": true},
@@ -1518,8 +1777,15 @@ export const studentsData = [
     "date_of_birth": "2012-12-01",
     "guardian_contact": "98765000228",
     "emergency_contact": "98765000339",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-05-20", "method": "UPI"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-05-20", "present": true},
@@ -1559,8 +1825,15 @@ export const studentsData = [
     "date_of_birth": "2013-10-15",
     "guardian_contact": "98765000229",
     "emergency_contact": "98765000340",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-06-20", "method": "Cash"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-06-20", "present": true},
@@ -1601,7 +1874,14 @@ export const studentsData = [
     "guardian_contact": "98765000230",
     "emergency_contact": "98765000341",
     "fee_history": [
-      {"amount": 1500, "date": "2025-07-01", "method": "Cash"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-07-01", "present": false},
@@ -1642,7 +1922,14 @@ export const studentsData = [
     "guardian_contact": "98765000231",
     "emergency_contact": "98765000342",
     "fee_history": [
-      {"amount": 1500, "date": "2025-05-22", "method": "Cash"}
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-05-22", "present": false},
@@ -1682,8 +1969,15 @@ export const studentsData = [
     "date_of_birth": "2012-03-12",
     "guardian_contact": "98765000232",
     "emergency_contact": "98765000343",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-06-10", "method": "UPI"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-06-10", "present": true},
@@ -1698,6 +1992,7 @@ export const studentsData = [
     "personal_goals": "Win competitions",
     "notes": "Shows leadership",
     "exam_records": [
+     
       {
         "date": "2025-08-10",
         "belt": "Blue",
@@ -1723,8 +2018,15 @@ export const studentsData = [
     "date_of_birth": "2014-09-10",
     "guardian_contact": "98765000233",
     "emergency_contact": "98765000344",
-    "fee_history": [
-      {"amount": 1500, "date": "2025-04-15", "method": "Cash"}
+     "fee_history": [
+      {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
+      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
       {"date": "2025-04-15", "present": true},
