@@ -5,9 +5,6 @@ import './CustomTable.css';
 import InfoIcon from '../assets/info.svg';
 import EditIcon from '../assets/edit.svg';
 import DeleteIcon from '../assets/delete.svg';
-import MaleIcon from '../assets/male.svg';
-import FemaleIcon from '../assets/female.svg';
-import KarateBeltIcon from '../assets/karate_belt.svg';
 import ContactIcon from '../assets/contact.svg';
 import LocationIcon from '../assets/location.svg';
 import DateIcon from '../assets/date.svg';
@@ -198,9 +195,9 @@ const CustomTable = ({ data = [] }) => {
       </div>
 
       {/* Results */}
-      <div className="results-info">
+      {/* <div className="results-info">
         Showing {paginatedData.length} of {filteredAndSortedData.length} students
-      </div>
+      </div> */}
 
       {/* Table */}
       <div className="table-container">
@@ -285,7 +282,27 @@ const CustomTable = ({ data = [] }) => {
                     </span>
                   </td>
                   <td>
-                    <span className={`status-badge ${student.fees_paid ? 'paid' : 'unpaid'}`}></span>
+                    {/* Fee Status for current month (last entry in fee_history) */}
+                    {(() => {
+                      const currentFee = student.fee_history && student.fee_history.length > 0
+                        ? student.fee_history[student.fee_history.length - 1]
+                        : null;
+                      if (!currentFee) return <span className="status-badge">N/A</span>;
+                      return (
+                        <span
+                          className={`status-badge`}
+                          style={{
+                            display: 'inline-block',
+                            width: '18px',
+                            height: '18px',
+                            borderRadius: '50%',
+                            background: currentFee.paid ? 'green' : 'red',
+                            border: '2px solid #eee',
+                          }}
+                          title={currentFee.paid ? 'Paid' : 'Unpaid'}
+                        ></span>
+                      );
+                    })()}
                   </td>
                   <td>
                     <div className="actions">
@@ -328,17 +345,39 @@ const CustomTable = ({ data = [] }) => {
                           </div>
                         </div>
                         
+                        {/* Fee History as colored boxes */}
                         {student.fee_history && student.fee_history.length > 0 && (
                           <div className="info-section">
                             <h4>Payment History</h4>
-                            <div className="payment-history">
-                              {student.fee_history.slice(0, 3).map((fee, index) => (
-                                <div key={index} className="payment-item">
-                                  <span>{fee.date}</span>
-                                  <span>₹{fee.amount}</span>
-                                  <span>{fee.method}</span>
-                                </div>
-                              ))}
+                            <div className="fee-history-boxes" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                              {student.fee_history.map((fee, idx) => {
+                                // Get month name from fee.date if available, else fallback to index
+                                let monthName = '';
+                                if (fee.date) {
+                                  const dateObj = new Date(fee.date);
+                                  monthName = dateObj.toLocaleString('default', { month: 'short' });
+                                } else {
+                                  // fallback: show "Month {idx+1}" if date is missing
+                                  monthName = `Month ${idx + 1}`;
+                                }
+                                const borderColor = fee.paid ? 'green' : 'red';
+                                return (
+                                  <div
+                                    key={idx}
+                                    style={{
+                                      border: `2px solid ${borderColor}`,
+                                      borderRadius: '8px',
+                                      padding: '8px',
+                                      minWidth: '50px',
+                                      textAlign: 'center',
+                                      background: '#fff'
+                                    }}
+                                  >
+                                    <div style={{ fontWeight: 'bold' }}>{monthName}</div>
+                                    <div style={{ fontSize: '10px', marginTop: '2px' }}>{fee.method}</div>
+                                  </div>
+                                );
+                              })}
                             </div>
                           </div>
                         )}

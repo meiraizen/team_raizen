@@ -23,8 +23,8 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
-      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": false}
     ],
     "attendance": [
       {"date": "2025-06-20", "present": true},
@@ -67,10 +67,10 @@ export const studentsData = [
     "fee_history": [
       {"amount": 1500, "date": "2025-01-01", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-02-01", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // March unpaid
-      {"amount": 1500, "date": "2025-04-01", "method": "UPI", "paid": true},
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // March unpaid
+      {"amount": 1500, "date": "2025-04-01", "method": "UPI", "paid": false},
       {"amount": 1500, "date": "2025-05-01", "method": "Cash", "paid": true},
-      {"amount": "", "date": "", "method": "UPI", "paid": false}, // June unpaid
+      {"amount": "", "date": "2025-07-28", "method": "UPI", "paid": false}, // June unpaid
       {"amount": 1500, "date": "2025-07-01", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-08-01", "method": "UPI", "paid": true}
     ],
@@ -114,13 +114,13 @@ export const studentsData = [
     "emergency_contact": "98765000174",
     "fee_history": [
       {"amount": 1500, "date": "2025-01-22", "method": "Cash", "paid": true},
-      {"amount": "", "date": "", "method": "UPI", "paid": false}, // February unpaid
+      {"amount": "", "date": "2025-07-28", "method": "UPI", "paid": false}, // February unpaid
       {"amount": 1500, "date": "2025-03-22", "method": "Cash", "paid": true},
-      {"amount": 1500, "date": "2025-04-22", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-04-22", "method": "UPI", "paid": false},
       {"amount": 1500, "date": "2025-05-22", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-22", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-07-22", "method": "Cash", "paid": true},
-      {"amount": "", "date": "", "method": "UPI", "paid": false} // August unpaid
+      {"amount": "", "date": "2025-07-28", "method": "UPI", "paid": false} // August unpaid
     ],
     "attendance": [
       {"date": "2025-05-22", "present": false},
@@ -167,7 +167,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -215,7 +215,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -263,7 +263,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -306,7 +306,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -349,7 +349,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -392,7 +392,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -440,7 +440,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -488,7 +488,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -536,7 +536,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -584,7 +584,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -632,7 +632,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -680,7 +680,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -728,7 +728,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -776,7 +776,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -824,7 +824,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -872,7 +872,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -920,7 +920,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -968,7 +968,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1016,7 +1016,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1064,7 +1064,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1112,7 +1112,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1160,7 +1160,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1208,7 +1208,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1256,7 +1256,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1304,7 +1304,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1352,7 +1352,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1400,7 +1400,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1448,7 +1448,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1496,7 +1496,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1544,7 +1544,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1592,7 +1592,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1640,7 +1640,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1688,7 +1688,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1736,7 +1736,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1784,7 +1784,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1832,7 +1832,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1880,7 +1880,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1925,10 +1925,10 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
-      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
-      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
+      {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": false},
+      {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": false},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -1971,12 +1971,12 @@ export const studentsData = [
     "emergency_contact": "98765000343",
      "fee_history": [
       {"amount": 1500, "date": "2025-01-20", "method": "Cash", "paid": true},
-      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": true},
+      {"amount": 1500, "date": "2025-02-20", "method": "UPI", "paid": false},
       {"amount": 1500, "date": "2025-03-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
@@ -2025,7 +2025,7 @@ export const studentsData = [
       {"amount": 1500, "date": "2025-04-20", "method": "UPI", "paid": true},
       {"amount": 1500, "date": "2025-05-20", "method": "Cash", "paid": true},
       {"amount": 1500, "date": "2025-06-20", "method": "UPI", "paid": true},
-      {"amount": "", "date": "", "method": "Cash", "paid": false}, // July unpaid
+      {"amount": "", "date": "2025-07-28", "method": "Cash", "paid": false}, // July unpaid
       {"amount": 1500, "date": "2025-08-20", "method": "UPI", "paid": true}
     ],
     "attendance": [
