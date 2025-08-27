@@ -87,17 +87,46 @@ export default function BillbookFormHandler() {
       });
       return;
     }
+
+if (field === 'studentName') {
+  const rawValue = event.target.value;
+
+  if (/^[A-Za-z\s]*$/.test(rawValue)) {
+    const formattedName = rawValue
+      .replace(/\s+/g, ' ') 
+      .split(' ')
+      .map(
+        (word) =>
+          word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+      )
+      .join(' ');
+
+    value = formattedName;
+  } else {
+    return; 
+  }
+}
+
+
+
+
+  if (field === 'feePaid') {
+  if (!/^[0-9]*$/.test(event.target.value)) return;
+}
+
     setForm((prev) => ({ ...prev, [field]: value }));
   };
+
+ 
 
   const handleDateChange = (e) => {
     setForm((prev) => ({ ...prev, date: e.target.value }));
   };
 
   // 🆕 Updated clearForm to accept next receipt number
-  const clearForm = (nextReceiptNo = '') => {
+  const clearForm = () => {
     setForm({
-      receiptNo: nextReceiptNo,
+      // receiptNo: String(nextReceipt),
       date: dayjs().format('YYYY-MM-DD'),
       currentDate: false,
       studentName: '',
@@ -110,6 +139,7 @@ export default function BillbookFormHandler() {
     });
     setSuccess(false);
     setError('');
+    
   };
 
   const isFormFilled =
@@ -166,7 +196,7 @@ export default function BillbookFormHandler() {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-            <Typography variant="subtitle1" sx={{ color: 'black', border: '1px solid black', borderRadius: 2, px: 2, py: 1, bgcolor: 'background.paper', width: '100%' }}>
+            <Typography variant="subtitle1" sx={{ color: 'black', border: '1px solid black', borderRadius: 1, px: 2, py: 1, bgcolor: 'background.paper',width: '100%' }}>
               Receipt No: <span style={{fontWeight: 600, color: 'black'}}>{form.receiptNo || '...'}</span>
             </Typography>
           </Box>
@@ -191,7 +221,7 @@ export default function BillbookFormHandler() {
           </Box>
         </Grid>
         <Grid item xs={12}>
-          <TextField label="Student Name" fullWidth required value={form.studentName} onChange={handleChange('studentName')} InputProps={{ sx: { borderColor: 'black' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'black' }, '&.Mui-focused fieldset': { borderColor: 'black' } }, '& .MuiInputLabel-root.Mui-focused': { color: 'black' } }} />
+          <TextField label="Student Name" fullWidth required value={form.studentName} onChange={handleChange('studentName')}  InputProps={{ sx: { borderColor: 'black' } }} sx={{'& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'black' }, '&.Mui-focused fieldset': { borderColor: 'black' } }, '& .MuiInputLabel-root.Mui-focused': { color: 'black' } }} />
         </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'black' }, '&.Mui-focused fieldset': { borderColor: 'black' } }, '& .MuiInputLabel-root.Mui-focused': { color: 'black' } }}>
@@ -301,7 +331,7 @@ export default function BillbookFormHandler() {
               variant="outlined"
               fullWidth
               onClick={clearForm}
-              sx={{ borderColor: 'red', color: 'red', fontWeight: 600, borderRadius: 2, boxShadow: 0, background: 'none', transition: 'none', '&.Mui-disabled': { color: '#aaa', borderColor: '#eee' } }}
+              sx={{ borderColor: 'red', color: 'red', fontWeight: 600, borderRadius: 2, boxShadow: 0, background: 'none', transition: 'none', '&.Mui-disabled': { color: '#aaa', borderColor: '#eee' }, '&:hover': { bgcolor: 'red', color: 'white', borderColor: 'red' } }}
             >
               Clear
             </Button>
