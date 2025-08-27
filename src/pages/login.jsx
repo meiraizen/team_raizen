@@ -38,7 +38,7 @@ export default function Login() {
       setError(result.error);
     } else {
       setLoading(false);
-      setError('Use Raizen Gmail');
+      setError('Use Your Raizen Gmail');
     }
   };
 
