@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useMemo, useCallback } from 'react';
 import { Box, TextField, Checkbox, FormControlLabel, MenuItem, Select, InputLabel, FormControl, OutlinedInput, ListItemText, Chip, Button, Grid, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import { supabase } from '../../chat/supabaseClient';
 import { useAuthStore } from '../../store/auth';
+
 
 const paidForOptions = [
   { label: 'Register Fee', value: 'Register Fee', amount: 500 },
@@ -19,24 +20,32 @@ const batchOptions = ['MWF 6-7.30', 'TT 5-6', 'TT 6-7.30', 'SS 4-5', 'SS 5-6', '
 
 export default function BillbookFormHandler() {
   const user = useAuthStore((s) => s.user);
+
   const [form, setForm] = useState({
     receiptNo: '',
     date: dayjs().format('YYYY-MM-DD'),
     currentDate: false,
     studentName: '',
     paidFor: [],
-    feePaid: '',
     remarks: '',
     paidTo: '',
     payment: [],
     batch: '',
   });
+
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
-  // 🆕 Fetch the latest receipt number
-  const fetchNextReceiptNo = async () => {
+  // 🧠 Memoize total fee based on selected services
+  const totalFee = useMemo(() => {
+    return paidForOptions
+      .filter((opt) => form.paidFor.includes(opt.value))
+      .reduce((sum, opt) => sum + opt.amount, 0);
+  }, [form.paidFor]);
+
+  // 🔢 Fetch next receipt number
+  const fetchNextReceiptNo = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from('raizen-bill-book')
@@ -47,91 +56,30 @@ export default function BillbookFormHandler() {
       if (!error && data && data.length > 0) {
         const last = parseInt(data[0].receipt_no, 10);
         return isNaN(last) ? '1' : String(last + 1);
-      } else {
-        return '1';
       }
     } catch (err) {
       console.error('❌ Fetch receipt number failed:', err);
-      return '1';
     }
-  };
+    return '1';
+  }, []);
 
+  // ⏳ On mount: fetch initial receipt number
   useEffect(() => {
     (async () => {
       const next = await fetchNextReceiptNo();
       setForm((prev) => ({ ...prev, receiptNo: next }));
     })();
-  }, []);
+  }, [fetchNextReceiptNo]);
 
-  const handleChange = (field) => (event) => {
-    let value = event.target.value;
-    if (field === 'currentDate') {
-      value = event.target.checked;
-      setForm((prev) => ({
-        ...prev,
-        currentDate: value,
-        date: value ? dayjs().format('YYYY-MM-DD') : prev.date,
-      }));
-      return;
-    }
-    if (field === 'paidFor') {
-      setForm((prev) => {
-        const total = paidForOptions
-          .filter((opt) => value.includes(opt.value))
-          .reduce((sum, opt) => sum + opt.amount, 0);
-        return {
-          ...prev,
-          paidFor: value,
-          feePaid: total ? total : '',
-        };
-      });
-      return;
-    }
-
-if (field === 'studentName') {
-  const rawValue = event.target.value;
-
-  if (/^[A-Za-z\s]*$/.test(rawValue)) {
-    const formattedName = rawValue
-      .replace(/\s+/g, ' ') 
-      .split(' ')
-      .map(
-        (word) =>
-          word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-      )
-      .join(' ');
-
-    value = formattedName;
-  } else {
-    return; 
-  }
-}
-
-
-
-
-  if (field === 'feePaid') {
-  if (!/^[0-9]*$/.test(event.target.value)) return;
-}
-
-    setForm((prev) => ({ ...prev, [field]: value }));
-  };
-
- 
-
-  const handleDateChange = (e) => {
-    setForm((prev) => ({ ...prev, date: e.target.value }));
-  };
-
-  // 🆕 Updated clearForm to accept next receipt number
-  const clearForm = () => {
+  // 🧽 Clear form
+  const clearForm = useCallback(async () => {
+    const nextReceipt = await fetchNextReceiptNo();
     setForm({
-      // receiptNo: String(nextReceipt),
+      receiptNo: nextReceipt,
       date: dayjs().format('YYYY-MM-DD'),
       currentDate: false,
       studentName: '',
       paidFor: [],
-      feePaid: '',
       remarks: '',
       paidTo: '',
       payment: [],
@@ -139,31 +87,69 @@ if (field === 'studentName') {
     });
     setSuccess(false);
     setError('');
-    
-  };
+  }, [fetchNextReceiptNo]);
 
-  const isFormFilled =
-    form.receiptNo &&
-    form.date &&
-    form.studentName &&
-    form.paidFor.length > 0 &&
-    form.feePaid &&
-    form.paidTo &&
-    form.payment.length > 0 &&
-    form.batch;
+  const handleChange = useCallback((field) => (event) => {
+    let value = event.target.value;
 
+    if (field === 'currentDate') {
+      const checked = event.target.checked;
+      setForm((prev) => ({
+        ...prev,
+        currentDate: checked,
+        date: checked ? dayjs().format('YYYY-MM-DD') : prev.date,
+      }));
+      return;
+    }
+
+    if (field === 'studentName') {
+      const rawValue = event.target.value;
+      if (!/^[A-Za-z\s]*$/.test(rawValue)) return;
+
+      value = rawValue
+        .replace(/\s+/g, ' ')
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+    }
+
+    setForm((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  }, []);
+
+  const handleDateChange = useCallback((e) => {
+    setForm((prev) => ({ ...prev, date: e.target.value }));
+  }, []);
+
+  const isFormFilled = useMemo(() => {
+    return (
+      form.receiptNo &&
+      form.date &&
+      form.studentName &&
+      form.paidFor.length > 0 &&
+      totalFee > 0 &&
+      form.paidTo &&
+      form.payment.length > 0 &&
+      form.batch
+    );
+  }, [form, totalFee]);
+
+  // 📨 Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     setSuccess(false);
+
     try {
       const payload = {
-        receipt_no: String(form.receiptNo),
+        receipt_no: form.receiptNo,
         date: form.date,
         student_name: form.studentName,
         paid_for: form.paidFor.join(', '),
-        fee_paid: String(form.feePaid),
+        fee_paid: String(totalFee),
         batch: form.batch,
         remarks: form.remarks,
         paid_to: form.paidTo,
@@ -171,32 +157,30 @@ if (field === 'studentName') {
         created_by: user?.email || '',
         created_at: dayjs().toISOString(),
       };
+
       const { error: supaError } = await supabase.from('raizen-bill-book').insert([payload]);
+
       if (supaError) {
         setError(supaError.message || 'Failed to save bill.');
-        console.error('Supabase insert error:', supaError);
         return;
       }
 
-      // 🆕 After successful insert, get next receipt number
-      const nextReceipt = await fetchNextReceiptNo();
       setSuccess(true);
-      clearForm(nextReceipt); // 🧼 Reset with updated receipt number
+      await clearForm(); // refresh receipt number too
+
     } catch (err) {
-      setError(err.message || 'Failed to save bill. Please try again.');
-      console.error('Billbook save error:', err);
+      setError(err.message || 'Failed to save bill.');
     } finally {
       setLoading(false);
     }
   };
-
 
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3, p: 2, borderRadius: 2, boxShadow: 1, bgcolor: 'background.paper', border: '1px solid #eee' }}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-            <Typography variant="subtitle1" sx={{ color: 'black', border: '1px solid black', borderRadius: 1, px: 2, py: 1, bgcolor: 'background.paper',width: '100%' }}>
+            <Typography variant="subtitle1" sx={{ cursor:'not-allowed',color: 'black', border: '1px solid black', borderRadius: 1, px: 2, py: 1, bgcolor: 'background.paper',width: '100%' }}>
               Receipt No: <span style={{fontWeight: 600, color: 'black'}}>{form.receiptNo || '...'}</span>
             </Typography>
           </Box>
@@ -214,10 +198,10 @@ if (field === 'studentName') {
               sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'black' }, '&.Mui-focused fieldset': { borderColor: 'black' } }, '& .MuiInputLabel-root.Mui-focused': { color: 'black' }, mr: 2 }}
               disabled={form.currentDate}
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox checked={form.currentDate} onChange={handleChange('currentDate')} sx={{ color: 'black', '&.Mui-checked': { color: 'black' } }} />}
               label="Today"
-            />
+            /> */}
           </Box>
         </Grid>
         <Grid item xs={12}>
@@ -256,7 +240,7 @@ if (field === 'studentName') {
         </Grid>
         
         <Grid item xs={12} sm={6}>
-          <TextField label="Fee Paid" fullWidth required value={form.feePaid} onChange={handleChange('feePaid')} InputProps={{ sx: { borderColor: 'black' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'black' }, '&.Mui-focused fieldset': { borderColor: 'black' } }, '& .MuiInputLabel-root.Mui-focused': { color: 'black' } }} />
+          <TextField label="Fee Paid" fullWidth required value={totalFee} onChange={handleChange('feePaid')} InputProps={{ sx: { borderColor: 'black' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'black' }, '&.Mui-focused fieldset': { borderColor: 'black' } }, '& .MuiInputLabel-root.Mui-focused': { color: 'black' } }} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'black' }, '&.Mui-focused fieldset': { borderColor: 'black' } }, '& .MuiInputLabel-root.Mui-focused': { color: 'black' } }}>
