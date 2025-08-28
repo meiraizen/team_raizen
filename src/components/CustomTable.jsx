@@ -32,15 +32,12 @@ const CustomTable = ({ data = [] }) => {
   }, []);
 
   // 2. Merge the student data with the new attendance data.
-  // This version ensures that ONLY data from AttendanceData is used.
   const mergedData = useMemo(() => {
     if (!data || data.length === 0) return [];
     return data.map(student => {
       const newAttendance = attendanceMap.get(student.id);
       return {
         ...student,
-        // Use the new attendance if found, otherwise default to an empty array.
-        // This completely ignores the old "student.attendance" property.
         attendance: newAttendance || [],
       };
     });
@@ -49,7 +46,6 @@ const CustomTable = ({ data = [] }) => {
   // 3. Update the attendance calculation to handle the new format.
   const getAttendanceRate = useCallback((attendance) => {
     if (!attendance || attendance.length === 0) return 0;
-    // This checks for both 'present: true' and 'status: "Present"'
     const presentDays = attendance.filter(day => day.present || day.status === 'Present').length;
     return Math.round((presentDays / attendance.length) * 100);
   }, []);
@@ -159,35 +155,12 @@ const CustomTable = ({ data = [] }) => {
 
   return (
     <div className="student-management">
-      {/* Header */}
-      {/* <div className="header">
-        <h1 className="title">Student Management System</h1>
-        <div className="stats">
-          <div className="stat-card">
-            <div className="stat-number">{analytics.totalStudents}</div>
-            <div className="stat-label">Total Students</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-number">₹{analytics.totalRevenue.toLocaleString()}</div>
-            <div className="stat-label">Total Revenue</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-number">{analytics.avgAttendance}%</div>
-            <div className="stat-label">Avg Attendance</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-number">{analytics.feesPaid}</div>
-            <div className="stat-label">Fees Paid</div>
-          </div>
-        </div>
-      </div> */}
-
       {/* Filters */}
       <div className="filters">
         <div className="filter-row">
           <input
             type="text"
-            placeholder="Search by ID, Student ID, Roll Number, or Name..."
+            placeholder="Search by ID, Name, etc..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
@@ -220,12 +193,7 @@ const CustomTable = ({ data = [] }) => {
           </div>
         </div>
       </div>
-
-      {/* Results */}
-      {/* <div className="results-info">
-        Showing {paginatedData.length} of {filteredAndSortedData.length} students
-      </div> */}
-
+      
       {/* Table */}
       <div className="table-container">
         <table className="data-table">
@@ -252,7 +220,8 @@ const CustomTable = ({ data = [] }) => {
             {paginatedData.map((student) => (
               <React.Fragment key={student.id}>
                 <tr className="student-row">
-                  <td>
+                  {/* Added data-label attributes for responsive design */}
+                  <td data-label="Expand">
                     <button
                       className="expand-btn"
                       onClick={() => toggleRowExpansion(student.id)}
@@ -260,16 +229,16 @@ const CustomTable = ({ data = [] }) => {
                       {expandedRows.has(student.id) ? '−' : '+'}
                     </button>
                   </td>
-                  <td>
+                  <td data-label="Name">
                     <div className="student-info">
                       <div className="student-name">{student.name}</div>
                       <div className="student-email">{student.email}</div>
                     </div>
                   </td>
-                  <td>
+                  <td data-label="Age">
                     <span className="student-age">{student.age}</span>
                   </td>
-                  <td>
+                  <td data-label="Gender">
                     <div className="gender-icon">
                       {student.gender === 'Male' ? (
                         <span alt="Male" className="gender-svg">M</span>
@@ -278,7 +247,7 @@ const CustomTable = ({ data = [] }) => {
                       )}
                     </div>
                   </td>
-                  <td>
+                  <td data-label="Belt">
                     <div className={`belt-icon ${student.belt_level.toLowerCase()}`}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -297,18 +266,17 @@ const CustomTable = ({ data = [] }) => {
                       </svg>
                     </div>
                   </td>
-                  <td>
+                  <td data-label="Batch">
                     <span className="student-batch">{student.batch_time}</span>
                   </td>
-                  <td>
+                  <td data-label="Attendance">
                     <span className={`attendance-badge ${getAttendanceRate(student.attendance) >= 80 ? 'good' :
                         getAttendanceRate(student.attendance) >= 60 ? 'average' : 'poor'
                       }`}>
                       {getAttendanceRate(student.attendance)}%
                     </span>
                   </td>
-                  <td>
-                    {/* Fee Status for current month (last entry in fee_history) */}
+                  <td data-label="Fee Status">
                     {(() => {
                       const currentFee = student.fee_history && student.fee_history.length > 0
                         ? student.fee_history[student.fee_history.length - 1]
@@ -330,7 +298,7 @@ const CustomTable = ({ data = [] }) => {
                       );
                     })()}
                   </td>
-                  <td>
+                  <td data-label="Actions">
                     <div className="actions">
                       <button onClick={() => toggleRowExpansion(student.id)} className="action-btn view">
                         <img src={InfoIcon} alt="View" className="action-icon" />
@@ -370,45 +338,7 @@ const CustomTable = ({ data = [] }) => {
                             </div>
                           </div>
                         </div>
-   <AttendanceCalendar student={student}/> 
-                        {/* Fee History as colored boxes */}
-                        {/* {student.fee_history && student.fee_history.length > 0 && (
-                          <>
-                            <div className="info-section">
-                              <h4>Payment History</h4>
-                              <div className="fee-history-boxes" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                                {student.fee_history.map((fee, idx) => {
-                                  // Get month name from fee.date if available, else fallback to index
-                                  let monthName = '';
-                                  if (fee.date) {
-                                    const dateObj = new Date(fee.date);
-                                    monthName = dateObj.toLocaleString('default', { month: 'short' });
-                                  } else {
-                                    // fallback: show "Month {idx+1}" if date is missing
-                                    monthName = `Month ${idx + 1}`;
-                                  }
-                                  const borderColor = fee.paid ? 'green' : 'red';
-                                  return (
-                                    <div
-                                      key={idx}
-                                      style={{
-                                        border: `2px solid ${borderColor}`,
-                                        borderRadius: '8px',
-                                        padding: '8px',
-                                        minWidth: '50px',
-                                        textAlign: 'center',
-                                        background: '#fff'
-                                      }}
-                                    >
-                                      <div style={{ fontWeight: 'bold' }}>{monthName}</div>
-                                      <div style={{ fontSize: '10px', marginTop: '2px' }}>{fee.method}</div>
-                                    </div>
-                                  );
-                                })}
-                              </div>
-                            </div>
-                                                  </>
-                        )} */}
+                        <AttendanceCalendar student={student}/>
                       </div>
                     </td>
                   </tr>
