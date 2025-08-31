@@ -21,22 +21,23 @@ const BackButton = () => {
           // padding: 1em 2em;
            // border-radius: 10em;
           cursor: pointer;
-          transition: all 0.2s ease-in-out;
+          // transition: all 0.2s ease-in-out;
           border: 1px solid black;
-          box-shadow: 0 0 0 0 black;
+          // box-shadow: 0 0 0 0 black;
           display: flex;
           align-items: center;
         }
 
         button:hover {
-          transform: translateY(-4px) translateX(-2px);
-          box-shadow: 2px 2px 0 0 black;
-          background-color: white;
+          // transform: translateY(-4px) translateX(-2px);
+          // box-shadow: 2px 2px 0 0 black;
+          background-color: black;
+          color: white;
         }
 
         button:active {
-          transform: translateY(2px) translateX(1px);
-          box-shadow: 0 0 0 0 black;
+          // transform: translateY(2px) translateX(1px);
+          // box-shadow: 0 0 0 0 black;
         }
       `}</style>
       Back

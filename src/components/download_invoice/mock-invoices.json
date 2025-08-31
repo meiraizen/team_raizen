@@ -1,0 +1,777 @@
+[
+  {
+    "id": 101,
+    "customer_name": "Amalesh",
+    "customer_email": "amalesh@example.com",
+    "amount": 250.75,
+    "date": "2025-08-01",
+    "items": [
+      {
+        "name": "Website Design",
+        "quantity": 1,
+        "price": 200
+      },
+      {
+        "name": "Hosting",
+        "quantity": 1,
+        "price": 50.75
+      }
+    ],
+    "notes": "Payment due in 15 days."
+  },
+  {
+    "id": 102,
+    "customer_name": "Bala",
+    "customer_email": "bala@example.com",
+    "amount": 180,
+    "date": "2025-08-02",
+    "items": [
+      {
+        "name": "Consultation",
+        "quantity": 3,
+        "price": 60
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": 103,
+    "customer_name": "Daniel",
+    "customer_email": "daniel@example.com",
+    "amount": 999.99,
+    "date": "2025-08-03",
+    "items": [
+      {
+        "name": "Enterprise License",
+        "quantity": 1,
+        "price": 999.99
+      }
+    ],
+    "notes": "Annual subscription."
+  },
+  {
+    "id": 104,
+    "customer_name": "Ebi",
+    "customer_email": "ebi@example.com",
+    "amount": 320,
+    "date": "2025-08-04",
+    "items": [
+      {
+        "name": "Marketing Services",
+        "quantity": 2,
+        "price": 160
+      }
+    ],
+    "notes": "Includes social media setup."
+  },
+  {
+    "id": 105,
+    "customer_name": "Mei",
+    "customer_email": "mei@example.com",
+    "amount": 75.5,
+    "date": "2025-08-05",
+    "items": [
+      {
+        "name": "Domain Registration",
+        "quantity": 1,
+        "price": 15.5
+      },
+      {
+        "name": "Email Setup",
+        "quantity": 1,
+        "price": 60
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": 106,
+    "customer_name": "Muthu",
+    "customer_email": "muthu@example.com",
+    "amount": 405.25,
+    "date": "2025-08-06",
+    "items": [
+      {
+        "name": "SEO Audit",
+        "quantity": 1,
+        "price": 120
+      },
+      {
+        "name": "Blog Writing",
+        "quantity": 5,
+        "price": 57.05
+      }
+    ],
+    "notes": "Monthly content plan."
+  },
+  {
+    "id": 107,
+    "customer_name": "Yuvaraj",
+    "customer_email": "yuvaraj@example.com",
+    "amount": 650,
+    "date": "2025-08-07",
+    "items": [
+      {
+        "name": "Cloud Services",
+        "quantity": 2,
+        "price": 325
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": 108,
+    "customer_name": "Yugapriyan",
+    "customer_email": "yugapriyan@example.com",
+    "amount": 230.4,
+    "date": "2025-08-08",
+    "items": [
+      {
+        "name": "App Design",
+        "quantity": 1,
+        "price": 200
+      },
+      {
+        "name": "Prototype Feedback",
+        "quantity": 1,
+        "price": 30.4
+      }
+    ],
+    "notes": "Deliverables sent via email."
+  },
+  {
+    "id": 109,
+    "customer_name": "Surya",
+    "customer_email": "surya@example.com",
+    "amount": 142.9,
+    "date": "2025-08-09",
+    "items": [
+      {
+        "name": "Analytics Setup",
+        "quantity": 1,
+        "price": 100
+      },
+      {
+        "name": "Tracking Code",
+        "quantity": 1,
+        "price": 42.9
+      }
+    ],
+    "notes": "GTM & GA4 included."
+  },
+  {
+    "id": 110,
+    "customer_name": "Ravi Krishna",
+    "customer_email": "ravi.krishna@example.com",
+    "amount": 780,
+    "date": "2025-08-10",
+    "items": [
+      {
+        "name": "App Development",
+        "quantity": 1,
+        "price": 780
+      }
+    ],
+    "notes": "Beta version ready."
+  },
+  {
+    "id": 111,
+    "customer_name": "Timon",
+    "customer_email": "timon@example.com",
+    "amount": 55.75,
+    "date": "2025-08-11",
+    "items": [
+      {
+        "name": "Graphic Design",
+        "quantity": 2,
+        "price": 27.875
+      }
+    ],
+    "notes": "Logo and business card design."
+  },
+  {
+    "id": 112,
+    "customer_name": "Pumba",
+    "customer_email": "pumba@example.com",
+    "amount": 1200,
+    "date": "2025-08-12",
+    "items": [
+      {
+        "name": "Custom Software",
+        "quantity": 1,
+        "price": 1200
+      }
+    ],
+    "notes": "Phase 1 completion."
+  },
+  {
+    "id": 113,
+    "customer_name": "Mani",
+    "customer_email": "mani@example.com",
+    "amount": 350,
+    "date": "2025-08-13",
+    "items": [
+      {
+        "name": "IT Support",
+        "quantity": 5,
+        "price": 70
+      }
+    ],
+    "notes": "Retainer agreement."
+  },
+  {
+    "id": 114,
+    "customer_name": "Sanjay Kumar",
+    "customer_email": "sanjay.k@example.com",
+    "amount": 88.6,
+    "date": "2025-08-14",
+    "items": [
+      {
+        "name": "Content Editing",
+        "quantity": 4,
+        "price": 22.15
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": 115,
+    "customer_name": "Priya Sharma",
+    "customer_email": "priya.s@example.com",
+    "amount": 25,
+    "date": "2025-08-15",
+    "items": [
+      {
+        "name": "Social Media Post",
+        "quantity": 10,
+        "price": 2.5
+      }
+    ],
+    "notes": "Instagram campaign."
+  },
+  {
+    "id": 116,
+    "customer_name": "Ramesh Rao",
+    "customer_email": "ramesh.r@example.com",
+    "amount": 950.5,
+    "date": "2025-08-16",
+    "items": [
+      {
+        "name": "E-commerce Platform Setup",
+        "quantity": 1,
+        "price": 950.5
+      }
+    ],
+    "notes": "Includes payment gateway integration."
+  },
+  {
+    "id": 117,
+    "customer_name": "Ayesha Khan",
+    "customer_email": "ayesha.k@example.com",
+    "amount": 150.99,
+    "date": "2025-08-17",
+    "items": [
+      {
+        "name": "Email Marketing Campaign",
+        "quantity": 1,
+        "price": 150.99
+      }
+    ],
+    "notes": "A/B testing included."
+  },
+  {
+    "id": 118,
+    "customer_name": "Deepak Reddy",
+    "customer_email": "deepak.r@example.com",
+    "amount": 200,
+    "date": "2025-08-18",
+    "items": [
+      {
+        "name": "Photography Session",
+        "quantity": 1,
+        "price": 200
+      }
+    ],
+    "notes": "Product photos for website."
+  },
+  {
+    "id": 119,
+    "customer_name": "Kavya Singh",
+    "customer_email": "kavya.s@example.com",
+    "amount": 600,
+    "date": "2025-08-19",
+    "items": [
+      {
+        "name": "API Integration",
+        "quantity": 1,
+        "price": 600
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": 120,
+    "customer_name": "Anil Kumar",
+    "customer_email": "anil.k@example.com",
+    "amount": 345.5,
+    "date": "2025-08-20",
+    "items": [
+      {
+        "name": "Video Production",
+        "quantity": 1,
+        "price": 345.5
+      }
+    ],
+    "notes": "Promotional video."
+  },
+  {
+    "id": 121,
+    "customer_name": "Shreya Jain",
+    "customer_email": "shreya.j@example.com",
+    "amount": 75,
+    "date": "2025-08-21",
+    "items": [
+      {
+        "name": "Social Media Management",
+        "quantity": 1,
+        "price": 75
+      }
+    ],
+    "notes": "First month's service."
+  },
+  {
+    "id": 122,
+    "customer_name": "Arjun Patel",
+    "customer_email": "arjun.p@example.com",
+    "amount": 1050,
+    "date": "2025-08-22",
+    "items": [
+      {
+        "name": "UI/UX Design",
+        "quantity": 1,
+        "price": 1050
+      }
+    ],
+    "notes": "Mobile app redesign."
+  },
+  {
+    "id": 123,
+    "customer_name": "Pooja Hegde",
+    "customer_email": "pooja.h@example.com",
+    "amount": 550.25,
+    "date": "2025-08-23",
+    "items": [
+      {
+        "name": "Network Setup",
+        "quantity": 1,
+        "price": 550.25
+      }
+    ],
+    "notes": "For new office."
+  },
+  {
+    "id": 124,
+    "customer_name": "Girish Rao",
+    "customer_email": "girish.r@example.com",
+    "amount": 110.15,
+    "date": "2025-08-24",
+    "items": [
+      {
+        "name": "Cybersecurity Audit",
+        "quantity": 1,
+        "price": 110.15
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": 125,
+    "customer_name": "Nandini Iyer",
+    "customer_email": "nandini.i@example.com",
+    "amount": 420,
+    "date": "2025-08-25",
+    "items": [
+      {
+        "name": "IT Consulting",
+        "quantity": 3,
+        "price": 140
+      }
+    ],
+    "notes": "Focus on data security."
+  },
+  {
+    "id": 126,
+    "customer_name": "Vikram Singh",
+    "customer_email": "vikram.s@example.com",
+    "amount": 680.75,
+    "date": "2025-08-26",
+    "items": [
+      {
+        "name": "Project Management",
+        "quantity": 1,
+        "price": 680.75
+      }
+    ],
+    "notes": "For ongoing software development."
+  },
+  {
+    "id": 127,
+    "customer_name": "Sneha Reddy",
+    "customer_email": "sneha.r@example.com",
+    "amount": 250,
+    "date": "2025-08-27",
+    "items": [
+      {
+        "name": "Technical Writing",
+        "quantity": 5,
+        "price": 50
+      }
+    ],
+    "notes": "User manuals and documentation."
+  },
+  {
+    "id": 128,
+    "customer_name": "Rohan Deshmukh",
+    "customer_email": "rohan.d@example.com",
+    "amount": 900,
+    "date": "2025-08-28",
+    "items": [
+      {
+        "name": "Data Analytics Service",
+        "quantity": 1,
+        "price": 900
+      }
+    ],
+    "notes": "Quarterly report generation."
+  },
+  {
+    "id": 129,
+    "customer_name": "Kiran Rao",
+    "customer_email": "kiran.r@example.com",
+    "amount": 195.8,
+    "date": "2025-08-29",
+    "items": [
+      {
+        "name": "Social Media Advertising",
+        "quantity": 1,
+        "price": 195.8
+      }
+    ],
+    "notes": "Facebook and Instagram ads."
+  },
+  {
+    "id": 130,
+    "customer_name": "Nisha Shah",
+    "customer_email": "nisha.s@example.com",
+    "amount": 330,
+    "date": "2025-08-30",
+    "items": [
+      {
+        "name": "Cloud Storage",
+        "quantity": 6,
+        "price": 55
+      }
+    ],
+    "notes": "Six-month prepayment."
+  },
+  {
+    "id": 131,
+    "customer_name": "Rahul Kapoor",
+    "customer_email": "rahul.k@example.com",
+    "amount": 550,
+    "date": "2025-09-01",
+    "items": [
+      {
+        "name": "Website Maintenance",
+        "quantity": 1,
+        "price": 550
+      }
+    ],
+    "notes": "Monthly service."
+  },
+  {
+    "id": 132,
+    "customer_name": "Preeti Singh",
+    "customer_email": "preeti.s@example.com",
+    "amount": 180,
+    "date": "2025-09-02",
+    "items": [
+      {
+        "name": "SEO Report",
+        "quantity": 1,
+        "price": 180
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": 133,
+    "customer_name": "Aditya Singh",
+    "customer_email": "aditya.s@example.com",
+    "amount": 775.2,
+    "date": "2025-09-03",
+    "items": [
+      {
+        "name": "Enterprise Support",
+        "quantity": 1,
+        "price": 775.2
+      }
+    ],
+    "notes": "Annual plan."
+  },
+  {
+    "id": 134,
+    "customer_name": "Karthik Reddy",
+    "customer_email": "karthik.r@example.com",
+    "amount": 99.5,
+    "date": "2025-09-04",
+    "items": [
+      {
+        "name": "Ad Campaign Management",
+        "quantity": 1,
+        "price": 99.5
+      }
+    ],
+    "notes": "Google Ads."
+  },
+  {
+    "id": 135,
+    "customer_name": "Meena Sharma",
+    "customer_email": "meena.s@example.com",
+    "amount": 250,
+    "date": "2025-09-05",
+    "items": [
+      {
+        "name": "Custom Illustration",
+        "quantity": 2,
+        "price": 125
+      }
+    ],
+    "notes": "For blog articles."
+  },
+  {
+    "id": 136,
+    "customer_name": "Siddharth Verma",
+    "customer_email": "siddharth.v@example.com",
+    "amount": 490,
+    "date": "2025-09-06",
+    "items": [
+      {
+        "name": "Web Application Security",
+        "quantity": 1,
+        "price": 490
+      }
+    ],
+    "notes": "Penetration testing."
+  },
+  {
+    "id": 137,
+    "customer_name": "Divya Gupta",
+    "customer_email": "divya.g@example.com",
+    "amount": 160.75,
+    "date": "2025-09-07",
+    "items": [
+      {
+        "name": "Content Calendar",
+        "quantity": 1,
+        "price": 160.75
+      }
+    ],
+    "notes": "Q4 planning."
+  },
+  {
+    "id": 138,
+    "customer_name": "Naveen Kumar",
+    "customer_email": "naveen.k@example.com",
+    "amount": 850,
+    "date": "2025-09-08",
+    "items": [
+      {
+        "name": "Network Upgrade",
+        "quantity": 1,
+        "price": 850
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": 139,
+    "customer_name": "Ananya Sharma",
+    "customer_email": "ananya.s@example.com",
+    "amount": 225,
+    "date": "2025-09-09",
+    "items": [
+      {
+        "name": "IT Training",
+        "quantity": 5,
+        "price": 45
+      }
+    ],
+    "notes": "Employee workshop."
+  },
+  {
+    "id": 140,
+    "customer_name": "Pranav Rao",
+    "customer_email": "pranav.r@example.com",
+    "amount": 1350,
+    "date": "2025-09-10",
+    "items": [
+      {
+        "name": "Server Migration",
+        "quantity": 1,
+        "price": 1350
+      }
+    ],
+    "notes": "To new cloud provider."
+  },
+  {
+    "id": 141,
+    "customer_name": "Ishita Desai",
+    "customer_email": "ishita.d@example.com",
+    "amount": 75.5,
+    "date": "2025-09-11",
+    "items": [
+      {
+        "name": "Software Licensing",
+        "quantity": 1,
+        "price": 75.5
+      }
+    ],
+    "notes": "Annual fee."
+  },
+  {
+    "id": 142,
+    "customer_name": "Hariharan",
+    "customer_email": "hariharan@example.com",
+    "amount": 310,
+    "date": "2025-09-12",
+    "items": [
+      {
+        "name": "Database Management",
+        "quantity": 1,
+        "price": 310
+      }
+    ],
+    "notes": "Monthly service."
+  },
+  {
+    "id": 143,
+    "customer_name": "Priyanka Patel",
+    "customer_email": "priyanka.p@example.com",
+    "amount": 425.8,
+    "date": "2025-09-13",
+    "items": [
+      {
+        "name": "Mobile App Development",
+        "quantity": 1,
+        "price": 425.8
+      }
+    ],
+    "notes": "Initial consultation and wireframing."
+  },
+  {
+    "id": 144,
+    "customer_name": "Arun Kumar",
+    "customer_email": "arun.k@example.com",
+    "amount": 150,
+    "date": "2025-09-14",
+    "items": [
+      {
+        "name": "Content Strategy",
+        "quantity": 1,
+        "price": 150
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": 145,
+    "customer_name": "Deepika Singh",
+    "customer_email": "deepika.s@example.com",
+    "amount": 950.5,
+    "date": "2025-09-15",
+    "items": [
+      {
+        "name": "Website Redesign",
+        "quantity": 1,
+        "price": 950.5
+      }
+    ],
+    "notes": "Modernizing the look and feel."
+  },
+  {
+    "id": 146,
+    "customer_name": "Rohit Das",
+    "customer_email": "rohit.d@example.com",
+    "amount": 280,
+    "date": "2025-09-16",
+    "items": [
+      {
+        "name": "Social Media Campaign",
+        "quantity": 1,
+        "price": 280
+      }
+    ],
+    "notes": "Launch of a new product."
+  },
+  {
+    "id": 147,
+    "customer_name": "Sneha Kumari",
+    "customer_email": "sneha.k@example.com",
+    "amount": 55,
+    "date": "2025-09-17",
+    "items": [
+      {
+        "name": "SEO Keywords",
+        "quantity": 5,
+        "price": 11
+      }
+    ],
+    "notes": "Keyword research for a new site."
+  },
+  {
+    "id": 148,
+    "customer_name": "Ashwin Raj",
+    "customer_email": "ashwin.r@example.com",
+    "amount": 600,
+    "date": "2025-09-18",
+    "items": [
+      {
+        "name": "Business Automation",
+        "quantity": 1,
+        "price": 600
+      }
+    ],
+    "notes": "Automating marketing workflows."
+  },
+  {
+    "id": 149,
+    "customer_name": "Ritu Sharma",
+    "customer_email": "ritu.s@example.com",
+    "amount": 180.25,
+    "date": "2025-09-19",
+    "items": [
+      {
+        "name": "Email Template Design",
+        "quantity": 3,
+        "price": 60.08
+      }
+    ],
+    "notes": "For marketing campaigns."
+  },
+  {
+    "id": 150,
+    "customer_name": "Gaurav Mehta",
+    "customer_email": "gaurav.m@example.com",
+    "amount": 875,
+    "date": "2025-09-20",
+    "items": [
+      {
+        "name": "Custom CRM",
+        "quantity": 1,
+        "price": 875
+      }
+    ],
+    "notes": "Initial setup."
+  }
+]

@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
+import './ReceiptTable.css';
+import BackButton from '../BackButton';
+import { IconButton } from '@mui/material';
+import { Link } from 'react-router';
+import invoice from '../../assets/invoice.svg';
+import BulkDownloader from '../download_invoice/BulkDownloader' 
+import { ModalProvider, useModal } from './ModalContext';
+
 
 const sampleData = [
   {
@@ -124,6 +131,7 @@ const sampleData = [
   },
 ];
 
+
 const ReceiptTable = () => {
   const [filters, setFilters] = useState({
     receiptNo: '',
@@ -175,102 +183,117 @@ const ReceiptTable = () => {
     ...new Set(sampleData.map((item) => item[key])),
   ];
 
-  return (
-    <div className="receipt-container">
-      <div className="filter-bar">
-        <input
-          type="text"
-          name="receiptNo"
-          value={filters.receiptNo}
-          onChange={handleFilterChange}
-          placeholder="Enter Receipt No"
-        />
-        <input
-          type="text"
-          name="studentName"
-          value={filters.studentName}
-          onChange={handleFilterChange}
-          placeholder="Search by Name"
-        />
-        <select
-          name="paidFor"
-          value={filters.paidFor}
-          onChange={handleFilterChange}
-        >
-          <option value="">Paid For</option>
-          {uniqueValues('paidFor').map((val) => (
-            <option key={val} value={val}>
-              {val}
-            </option>
-          ))}
-        </select>
-        <select
-          name="batch"
-          value={filters.batch}
-          onChange={handleFilterChange}
-        >
-          <option value="">Batch</option>
-          {uniqueValues('batch').map((val) => (
-            <option key={val} value={val}>
-              {val}
-            </option>
-          ))}
-        </select>
-        <select
-          name="paidTo"
-          value={filters.paidTo}
-          onChange={handleFilterChange}
-        >
-          <option value="">Paid To</option>
-          {uniqueValues('paidTo').map((val) => (
-            <option key={val} value={val}>
-              {val}
-            </option>
-          ))}
-        </select>
-        <button onClick={reloadData}>Reload</button>
-        <button onClick={resetFilters}>Reset</button>
-      </div>
+  const { openModal } = useModal();
 
-      <div className="table-wrapper">
-        <table className="receipt-table">
-          <thead>
-            <tr>
-              <th>Receipt No</th>
-              <th>Date</th>
-              <th>Student Name</th>
-              <th>Paid For</th>
-              <th>Fee Paid</th>
-              <th>Batch</th>
-              <th>Remarks</th>
-              <th>Paid To</th>
-              <th>Payment Method</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.length === 0 ? (
+ const handleGenerateReceipt = () => {
+    openModal(<BulkDownloader />);
+  };
+
+  return (
+    <> <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between' }}> <BackButton /> <IconButton  onClick={handleGenerateReceipt}  sx={{
+    '&:hover': {
+      backgroundColor: 'white', 
+       },'&:hover img': {
+      filter: 'brightness(0) saturate(100%) invert(36%) sepia(79%) saturate(575%) hue-rotate(180deg) brightness(95%) contrast(90%)',
+    },
+  }}>
+  <img src={invoice} alt="Table Icon" style={{ width: 30, height: 30 }} /> </IconButton></div>
+      <div className="receipt-container">
+        <div className="filter-bar">
+          <input
+            type="text"
+            name="receiptNo"
+            value={filters.receiptNo}
+            onChange={handleFilterChange}
+            placeholder="Enter Receipt No"
+          />
+          <input
+            type="text"
+            name="studentName"
+            value={filters.studentName}
+            onChange={handleFilterChange}
+            placeholder="Search by Name"
+          />
+          <select
+            name="paidFor"
+            value={filters.paidFor}
+            onChange={handleFilterChange}
+          >
+            <option value="">Paid For</option>
+            {uniqueValues('paidFor').map((val) => (
+              <option key={val} value={val}>
+                {val}
+              </option>
+            ))}
+          </select>
+          <select
+            name="batch"
+            value={filters.batch}
+            onChange={handleFilterChange}
+          >
+            <option value="">Batch</option>
+            {uniqueValues('batch').map((val) => (
+              <option key={val} value={val}>
+                {val}
+              </option>
+            ))}
+          </select>
+          <select
+            name="paidTo"
+            value={filters.paidTo}
+            onChange={handleFilterChange}
+          >
+            <option value="">Paid To</option>
+            {uniqueValues('paidTo').map((val) => (
+              <option key={val} value={val}>
+                {val}
+              </option>
+            ))}
+          </select>
+          <button onClick={reloadData}>Reload</button>
+          <button onClick={resetFilters}>Reset</button>
+        </div>
+
+        <div className="table-wrapper">
+          <table className="receipt-table">
+            <thead>
               <tr>
-                <td colSpan="9">No data found</td>
+                <th>Receipt No</th>
+                <th>Date</th>
+                <th>Student Name</th>
+                <th>Paid For</th>
+                <th>Fee Paid</th>
+                <th>Batch</th>
+                <th>Remarks</th>
+                <th>Paid To</th>
+                <th>Payment Method</th>
               </tr>
-            ) : (
-              filteredData.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.receiptNo}</td>
-                  <td>{item.date}</td>
-                  <td>{item.studentName}</td>
-                  <td>{item.paidFor}</td>
-                  <td>{item.feePaid}</td>
-                  <td>{item.batch}</td>
-                  <td>-</td>
-                  <td>{item.paidTo}</td>
-                  <td>{item.paymentMethod}</td>
+            </thead>
+            <tbody>
+              {filteredData.length === 0 ? (
+                <tr>
+                  <td colSpan="9">No data found</td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                filteredData.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.receiptNo}</td>
+                    <td>{item.date}</td>
+                    <td>{item.studentName}</td>
+                    <td>{item.paidFor}</td>
+                    <td>{item.feePaid}</td>
+                    <td>{item.batch}</td>
+                    <td>-</td>
+                    <td>{item.paidTo}</td>
+                    <td>{item.paymentMethod}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
