@@ -23,6 +23,7 @@ export const protectedRoutes = [
       </ModalProvider>
     ),
   },
+   { path: '/attendance', component: lazy(() => import('../components/attendance/MockAttendance.jsx')) },
 ];
 
 export const notFoundRoute = { path: '*', component: lazy(() => import('../pages/NotFound')) };
