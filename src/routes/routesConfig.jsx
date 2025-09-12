@@ -16,6 +16,7 @@ export const protectedRoutes = [
   { path: '/verify-certificate', component: lazy(() => import('../pages/VerifyCertificate')) },
   { path: '/students-info', component: lazy(() => import('../pages/StudentsInfo')) },
   { path: '/chat', component: lazy(() => import('../chat/ChatPage.jsx')) },
+  { path: '/onlinedojo', component: lazy(() => import('../components/course/VideoPlaylist')) },
   {
     path: '/receipttable', component: (props) => (
       <ModalProvider>
