@@ -1,426 +1,399 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { studentsData } from './tempDatabase';
+import React, { useState, useMemo, useCallback } from 'react';
 import './CustomStudentTable.css';
+import AttendanceCalendar from './AttendanceCalendar';
+import { AttendanceData } from './tempDatabase';
 
-const StudentDataGrid = () => {
-  const [data, setData] = useState(studentsData);
-  const [filteredData, setFilteredData] = useState(studentsData);
-  const [selectedRows, setSelectedRows] = useState(new Set());
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+// Import SVG icons
+import InfoIcon from '../assets/info.svg';
+import EditIcon from '../assets/edit.svg';
+import DeleteIcon from '../assets/delete.svg';
+import ContactIcon from '../assets/contact.svg';
+import LocationIcon from '../assets/location.svg';
+import DateIcon from '../assets/date.svg';
+
+const CustomStudentTable = ({ data = [] }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('All');
+  const [genderFilter, setGenderFilter] = useState('');
+  const [beltFilter, setBeltFilter] = useState('');
+  const [feesFilter, setFeesFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [rowsPerPage] = useState(10);
+  const [sortField, setSortField] = useState('name');
+  const [sortDirection, setSortDirection] = useState('asc');
   const [expandedRows, setExpandedRows] = useState(new Set());
 
-  // Filter and search logic
-  useEffect(() => {
-    let filtered = [...studentsData];
-
-    // Apply search filter
-    if (searchTerm) {
-      filtered = filtered.filter(student =>
-        student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        student.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        student.address.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    // Apply status filter (using belt_level as status)
-    if (statusFilter !== 'All') {
-      filtered = filtered.filter(student => student.belt_level === statusFilter);
-    }
-
-    setFilteredData(filtered);
-    setCurrentPage(1); // Reset to first page when data changes
-  }, [searchTerm, statusFilter]);
-
-  // Sorting logic
-  const sortedData = useMemo(() => {
-    if (!sortConfig.key) return filteredData;
-
-    return [...filteredData].sort((a, b) => {
-      const aValue = a[sortConfig.key];
-      const bValue = b[sortConfig.key];
-
-      if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
-      if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
-      return 0;
+  // 1. Create a memoized map of the new attendance data for efficient lookup.
+  const attendanceMap = useMemo(() => {
+    const map = new Map();
+    AttendanceData.students.forEach(student => {
+      map.set(student.id, student.attendance);
     });
-  }, [filteredData, sortConfig]);
+    return map;
+  }, []);
 
-  // Pagination logic
-  const totalPages = Math.ceil(sortedData.length / rowsPerPage);
-  const startIndex = (currentPage - 1) * rowsPerPage;
-  const endIndex = startIndex + rowsPerPage;
-  const displayedData = sortedData.slice(startIndex, endIndex);
+  // 2. Merge the student data with the new attendance data.
+  const mergedData = useMemo(() => {
+    if (!data || data.length === 0) return [];
+    return data.map(student => {
+      const newAttendance = attendanceMap.get(student.id);
+      return {
+        ...student,
+        attendance: newAttendance || [],
+      };
+    });
+  }, [data, attendanceMap]);
 
-  const uniqueBeltLevels = [...new Set(studentsData.map(s => s.belt_level))];
+  // 3. Update the attendance calculation to handle the new format.
+  const getAttendanceRate = useCallback((attendance) => {
+    if (!attendance || attendance.length === 0) return 0;
+    const presentDays = attendance.filter(day => day.present || day.status === 'Present').length;
+    return Math.round((presentDays / attendance.length) * 100);
+  }, []);
 
-  const handleSort = (key) => {
-    setSortConfig(prev => ({
-      key,
-      direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc'
-    }));
-  };
-
-  const handleSelectAll = () => {
-    if (selectedRows.size === displayedData.length) {
-      setSelectedRows(new Set());
-    } else {
-      setSelectedRows(new Set(displayedData.map(student => student.id)));
+  // Analytics
+  const analytics = useMemo(() => {
+    if (!mergedData || mergedData.length === 0) {
+      return { totalStudents: 0, feesPaid: 0, avgAttendance: 0, totalRevenue: 0 };
     }
-  };
 
-  const handleRowSelect = (id) => {
-    const newSelected = new Set(selectedRows);
-    if (newSelected.has(id)) {
-      newSelected.delete(id);
-    } else {
-      newSelected.add(id);
+    const totalStudents = mergedData.length;
+    const feesPaid = mergedData.filter(s => s.fees_paid).length;
+    const avgAttendance = Math.round(
+      mergedData.reduce((sum, s) => sum + getAttendanceRate(s.attendance), 0) / totalStudents
+    );
+    const totalRevenue = mergedData.reduce((sum, s) =>
+      sum + (s.fee_history?.reduce((feeSum, f) => feeSum + f.amount, 0) || 0), 0
+    );
+
+    return { totalStudents, feesPaid, avgAttendance, totalRevenue };
+  }, [mergedData, getAttendanceRate]);
+
+  // Filter options
+  const uniqueValues = useMemo(() => {
+    if (!mergedData || mergedData.length === 0) return { genders: [], belts: [] };
+    return {
+      genders: [...new Set(mergedData.map(student => student.gender))],
+      belts: [...new Set(mergedData.map(student => student.belt_level))],
+    };
+  }, [mergedData]);
+
+  // Filtered and sorted data
+  const filteredAndSortedData = useMemo(() => {
+    if (!mergedData || mergedData.length === 0) return [];
+
+    let filtered = mergedData.filter(student => {
+      const matchesSearch = searchTerm === '' ||
+        student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (student.id && student.id.toString().includes(searchTerm)) ||
+        (student.student_id && student.student_id.toString().includes(searchTerm)) ||
+        (student.roll_number && student.roll_number.toString().includes(searchTerm));
+
+      const matchesGender = genderFilter === '' || student.gender === genderFilter;
+      const matchesBelt = beltFilter === '' || student.belt_level === beltFilter;
+      const matchesFees = feesFilter === '' ||
+        (feesFilter === 'paid' && student.fees_paid) ||
+        (feesFilter === 'unpaid' && !student.fees_paid);
+
+      return matchesSearch && matchesGender && matchesBelt && matchesFees;
+    });
+
+    if (sortField) {
+      filtered.sort((a, b) => {
+        let aVal = a[sortField];
+        let bVal = b[sortField];
+
+        if (sortField === 'attendance') {
+          aVal = getAttendanceRate(a.attendance);
+          bVal = getAttendanceRate(b.attendance);
+        }
+
+        if (typeof aVal === 'string') {
+          aVal = aVal.toLowerCase();
+          bVal = bVal.toLowerCase();
+        }
+
+        return sortDirection === 'asc' ? (aVal > bVal ? 1 : -1) : (aVal < bVal ? 1 : -1);
+      });
     }
-    setSelectedRows(newSelected);
-  };
 
-  const handleRowExpand = (id) => {
-    const newExpanded = new Set(expandedRows);
-    if (newExpanded.has(id)) {
-      newExpanded.delete(id);
-    } else {
-      newExpanded.add(id);
-    }
-    setExpandedRows(newExpanded);
-  };
+    return filtered;
+  }, [mergedData, searchTerm, genderFilter, beltFilter, feesFilter, sortField, sortDirection, getAttendanceRate]);
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
+  // Pagination
+  const totalPages = Math.ceil(filteredAndSortedData.length / rowsPerPage);
+  const paginatedData = useMemo(() => {
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    return filteredAndSortedData.slice(startIndex, startIndex + rowsPerPage);
+  }, [filteredAndSortedData, currentPage, rowsPerPage]);
 
-  const handleRowsPerPageChange = (newRowsPerPage) => {
-    setRowsPerPage(newRowsPerPage);
+  // Event handlers
+  const clearFilters = useCallback(() => {
+    setSearchTerm('');
+    setGenderFilter('');
+    setBeltFilter('');
+    setFeesFilter('');
     setCurrentPage(1);
-  };
+  }, []);
 
-  // Generate page numbers for pagination
-  const getPageNumbers = () => {
-    const pages = [];
-    const maxVisiblePages = 5;
-    
-    if (totalPages <= maxVisiblePages) {
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
+  const handleSort = useCallback((field) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     } else {
-      let startPage = Math.max(1, currentPage - 2);
-      let endPage = Math.min(totalPages, currentPage + 2);
-      
-      if (currentPage <= 3) {
-        endPage = maxVisiblePages;
-      }
-      
-      if (currentPage > totalPages - 3) {
-        startPage = totalPages - maxVisiblePages + 1;
-      }
-      
-      for (let i = startPage; i <= endPage; i++) {
-        pages.push(i);
-      }
+      setSortField(field);
+      setSortDirection('asc');
     }
-    
-    return pages;
-  };
+  }, [sortField, sortDirection]);
+
+  const toggleRowExpansion = useCallback((id) => {
+    setExpandedRows(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) newSet.delete(id);
+      else newSet.add(id);
+      return newSet;
+    });
+  }, []);
 
   return (
-    <div className="table-view">
-      {/* Filter Section */}
-      <div className="filter">
-        <div className="filter-search">
+    <div className="student-management">
+      {/* Filters */}
+      <div className="filters">
+        <div className="filter-row">
           <input
             type="text"
-            name="search"
-            placeholder="Search students..."
+            placeholder="Search by ID, Name, etc..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
           />
-          <svg className="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" strokeWidth="2"/>
-          </svg>
-        </div>
 
-        <div className="filter__controls">
-          <div className="filter-selection">
-            <div className="filter-selection__label">Belt Level</div>
-            <div className={`filter-select ${isFilterOpen ? 'active' : ''}`} onClick={() => setIsFilterOpen(!isFilterOpen)}>
-              <input readOnly type="text" name="status" value={statusFilter} />
-              <svg className="select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2"/>
-              </svg>
-              
-              <ul className="filter-select__options">
-                <li className={statusFilter === 'All' ? 'selected' : ''} onClick={() => setStatusFilter('All')}>All</li>
-                {uniqueBeltLevels.map(level => (
-                  <li key={level} className={statusFilter === level ? 'selected' : ''} onClick={() => setStatusFilter(level)}>
-                    {level}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          <div className="filter-controls">
+            <select value={genderFilter} onChange={(e) => setGenderFilter(e.target.value)}>
+              <option value="">All Genders</option>
+              {uniqueValues.genders.map(gender => (
+                <option key={gender} value={gender}>{gender}</option>
+              ))}
+            </select>
 
-          <div className="filter-selection">
-            <div className="filter-selection__label">Per Page</div>
-            <div className="rows-per-page-select">
-              <select 
-                value={rowsPerPage} 
-                onChange={(e) => handleRowsPerPageChange(Number(e.target.value))}
-              >
-                <option value={5}>5</option>
-                <option value={10}>10</option>
-                <option value={20}>20</option>
-                <option value={50}>50</option>
-              </select>
-            </div>
-          </div>
+            <select value={beltFilter} onChange={(e) => setBeltFilter(e.target.value)}>
+              <option value="">All Belts</option>
+              {uniqueValues.belts.map(belt => (
+                <option key={belt} value={belt}>{belt}</option>
+              ))}
+            </select>
 
-          <div className="filter-export">
-            <span>Export</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.7893 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" strokeWidth="2"/>
-            </svg>
+            <select value={feesFilter} onChange={(e) => setFeesFilter(e.target.value)}>
+              <option value="">All Status</option>
+              <option value="paid">Paid</option>
+              <option value="unpaid">Unpaid</option>
+            </select>
+
+            <button onClick={clearFilters} className="clear-btn">
+              Clear
+            </button>
           </div>
         </div>
       </div>
-
+      
       {/* Table */}
-      <div className="table">
-        <div className="table__inner">
-          <div className="table__scroll">
-            {/* Table Header */}
-            <div className="table__head">
-              <div className="table__tr">
-                <div className="table__td table__th fixed">
-                  <div className="table-checkbox">
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={selectedRows.size === displayedData.length && displayedData.length > 0}
-                        onChange={handleSelectAll}
-                      />
-                    </label>
-                  </div>
-                </div>
-                <div className="table__td table__th expand-column">
-                  <span>Details</span>
-                </div>
-                <div className="table__td table__th fixed">
-                  <div className="table-control" onClick={() => handleSort('name')}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                      <path d="M7 14L12 9L17 14" stroke="currentColor" strokeWidth="2"/>
-                    </svg>
-                    <span>Name</span>
-                  </div>
-                </div>
-                <div className="table__td table__th">
-                  <div className="table-control" onClick={() => handleSort('age')}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                      <path d="M7 14L12 9L17 14" stroke="currentColor" strokeWidth="2"/>
-                    </svg>
-                    <span>Age</span>
-                  </div>
-                </div>
-                <div className="table__td table__th">
-                  <div className="table-control" onClick={() => handleSort('gender')}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                      <path d="M7 14L12 9L17 14" stroke="currentColor" strokeWidth="2"/>
-                    </svg>
-                    <span>Gender</span>
-                  </div>
-                </div>
-                <div className="table__td table__th">
-                  <div className="table-control" onClick={() => handleSort('belt_level')}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                      <path d="M7 14L12 9L17 14" stroke="currentColor" strokeWidth="2"/>
-                    </svg>
-                    <span>Belt Level</span>
-                  </div>
-                </div>
-                <div className="table__td table__th">
-                  <div className="table-control">
-                    <span>Contact</span>
-                  </div>
-                </div>
-                <div className="table__td table__th">
-                  <div className="table-control">
-                    <span>Email</span>
-                  </div>
-                </div>
-                <div className="table__td table__th">
-                  <div className="table-control">
-                    <span>Address</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Table Body */}
-            <div className="table__body">
-              {displayedData.length === 0 ? (
-                <div className="table-empty">
-                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-                    <path d="M16 16S14 14 12 14 8 16 8 16" stroke="currentColor" strokeWidth="2"/>
-                    <line x1="9" y1="9" x2="9.01" y2="9" stroke="currentColor" strokeWidth="2"/>
-                    <line x1="15" y1="9" x2="15.01" y2="9" stroke="currentColor" strokeWidth="2"/>
-                  </svg>
-                  <div className="table-empty__data">
-                    <div className="table-empty__title">No students found</div>
-                    <div className="table-empty__text">Try adjusting your search or filter criteria</div>
-                  </div>
-                </div>
-              ) : (
-                displayedData.map((student, index) => (
-                  <React.Fragment key={student.id}>
-                    <div className="table__tr animate" style={{animationDelay: `${index * 0.1}s`}}>
-                      <div className="table__td fixed">
-                        <div className="table-checkbox">
-                          <label>
-                            <input
-                              type="checkbox"
-                              checked={selectedRows.has(student.id)}
-                              onChange={() => handleRowSelect(student.id)}
-                            />
-                          </label>
-                        </div>
-                      </div>
-                      <div className="table__td expand-column">
-                        <button 
-                          className="expand-button"
-                          onClick={() => handleRowExpand(student.id)}
-                        >
-                          <svg 
-                            width="16" 
-                            height="16" 
-                            viewBox="0 0 24 24" 
-                            fill="none"
-                            style={{
-                              transform: expandedRows.has(student.id) ? 'rotate(180deg)' : 'rotate(0deg)',
-                              transition: 'transform 0.3s ease'
-                            }}
-                          >
-                            <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2"/>
-                          </svg>
-                        </button>
-                      </div>
-                      <div className="table__td fixed">
-                        <div className="table-text student-name">{student.name}</div>
-                      </div>
-                      <div className="table__td">
-                        <div className="table-text">{student.age}</div>
-                      </div>
-                      <div className="table__td">
-                        <div className="table-text">{student.gender}</div>
-                      </div>
-                      <div className="table__td">
-                        <div className={`table-status ${student.belt_level.toLowerCase().replace(' ', '-')}`}>
-                          {student.belt_level}
-                        </div>
-                      </div>
-                      <div className="table__td">
-                        <div className="table-text">{student.contact_number}</div>
-                      </div>
-                      <div className="table__td">
-                        <div className="table-text">{student.email}</div>
-                      </div>
-                      <div className="table__td">
-                        <div className="table-text details">{student.address}</div>
-                      </div>
+      <div className="table-container">
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th width="40"></th>
+              <th className="sortable" onClick={() => handleSort('name')}>
+                Name {sortField === 'name' && (sortDirection === 'asc' ? '↑' : '↓')}
+              </th>
+              <th className="sortable" onClick={() => handleSort('age')}>
+                Age {sortField === 'age' && (sortDirection === 'asc' ? '↑' : '↓')}
+              </th>
+              <th>Gender</th>
+              <th>Belt</th>
+              <th>Batch</th>
+              <th className="sortable" onClick={() => handleSort('attendance')}>
+                Attendance {sortField === 'attendance' && (sortDirection === 'asc' ? '↑' : '↓')}
+              </th>
+              <th>Fee Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginatedData.map((student) => (
+              <React.Fragment key={student.id}>
+                <tr className="student-row">
+                  {/* Added data-label attributes for responsive design */}
+                  <td data-label="Expand">
+                    <button
+                      className="expand-btn"
+                      onClick={() => toggleRowExpansion(student.id)}
+                    >
+                      {expandedRows.has(student.id) ? '−' : '+'}
+                    </button>
+                  </td>
+                  <td data-label="Name">
+                    <div className="student-info">
+                      <div className="student-name">{student.name}</div>
+                      <div className="student-email">{student.email}</div>
                     </div>
-                    
-                    {/* Expanded Row for Fee History */}
-                    {expandedRows.has(student.id) && (
-                      <div className="table__tr expanded-row">
-                        <div className="table__td" style={{ width: '100%', padding: '20px' }}>
-                          <div className="fee-history">
-                            <h4>Fee History</h4>
-                            <div className="fee-history-table">
-                              <div className="fee-history-header">
-                                <span>Date</span>
-                                <span>Amount</span>
-                                <span>Method</span>
-                              </div>
-                              {student.fee_history && student.fee_history.length > 0 ? (
-                                student.fee_history.map((fee, idx) => (
-                                  <div key={idx} className="fee-history-row">
-                                    <span>{fee.date}</span>
-                                    <span>${fee.amount}</span>
-                                    <span>{fee.method}</span>
-                                  </div>
-                                ))
-                              ) : (
-                                <div className="no-fee-history">No fee history available</div>
-                              )}
+                  </td>
+                  <td data-label="Age">
+                    <span className="student-age">{student.age}</span>
+                  </td>
+                  <td data-label="Gender">
+                    <div className="gender-icon">
+                      {student.gender === 'Male' ? (
+                        <span alt="Male" className="gender-svg">M</span>
+                      ) : (
+                        <span alt="Female" className="gender-svg female">F</span>
+                      )}
+                    </div>
+                  </td>
+                  <td data-label="Belt">
+                    <div className={`belt-icon ${student.belt_level.toLowerCase()}`}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="-5.0 -10.0 110.0 135.0"
+                        className="belt-svg"
+                        width="20"
+                        height="20"
+                      >
+                        <path d="m80.555 49.262v-8.082h-19.301v0.87891l12.531 7.2031z" fill="#8b4513" stroke="#654321" strokeWidth="0.5" />
+                        <path d="m41.152 41.18h-20.91v8.082h6.7422z" fill="#8b4513" stroke="#654321" strokeWidth="0.5" />
+                        <path d="m44.344 49.262 5.25-3.2383-7.332-4.3789-13.352 7.6172-0.83594 0.47656-0.83594 0.48047-11.613 6.625 4.3359 6.7852 22.25-13.051 0.58594-0.35938 0.77344-0.48047z" fill="#8b4513" stroke="#654321" strokeWidth="0.5" />
+                        <path d="m73.527 50.219-0.83203-0.47656-0.82812-0.47656-10.613-6.1016v8.5469c0 0.054687-0.007812 0.10547-0.023437 0.15234l19.148 11.438 3.9961-6.8477z" fill="#8b4513" stroke="#654321" strokeWidth="0.5" />
+                        <path d="m49.512 36.41-0.070313-0.039062-6.8086 3.8516-0.45703 0.25781 0.37109 0.22266 0.19922 0.11719 0.46875 0.28125 0.12891 0.078126 7.1641 4.2773 2.0898-1.2891v-5.9844l-3.0469-1.75z" fill="#8b4513" stroke="#654321" strokeWidth="0.5" />
+                        <path d="m50.973 46.293-0.45703 0.28125-4.3555 2.6875-0.77344 0.47656-0.77344 0.48047-1.4961 0.92188 0.011718 0.003906 5.8477 4.6367 3.6211-2.3203v-8.1719l-1.1641 0.71875z" fill="#8b4513" stroke="#654321" strokeWidth="0.5" />
+                        <path d="m59.039 40.223-5.4844-2.7266v16.543l5.7031-2.2422 0.55859-0.22266 0.48047-0.19141v-10.531z" fill="#8b4513" stroke="#654321" strokeWidth="0.5" />
+                      </svg>
+                    </div>
+                  </td>
+                  <td data-label="Batch">
+                    <span className="student-batch">{student.batch_time}</span>
+                  </td>
+                  <td data-label="Attendance">
+                    <span className={`attendance-badge ${getAttendanceRate(student.attendance) >= 80 ? 'good' :
+                        getAttendanceRate(student.attendance) >= 60 ? 'average' : 'poor'
+                      }`}>
+                      {getAttendanceRate(student.attendance)}%
+                    </span>
+                  </td>
+                  <td data-label="Fee Status">
+                    {(() => {
+                      const currentFee = student.fee_history && student.fee_history.length > 0
+                        ? student.fee_history[student.fee_history.length - 1]
+                        : null;
+                      if (!currentFee) return <span className="status-badge">N/A</span>;
+                      return (
+                        <span
+                          className={`status-badge`}
+                          style={{
+                            display: 'inline-block',
+                            width: '18px',
+                            height: '18px',
+                            borderRadius: '50%',
+                            background: currentFee.paid ? 'green' : 'red',
+                            border: '2px solid #eee',
+                          }}
+                          title={currentFee.paid ? 'Paid' : 'Unpaid'}
+                        ></span>
+                      );
+                    })()}
+                  </td>
+                  <td data-label="Actions">
+                    <div className="actions">
+                      <button onClick={() => toggleRowExpansion(student.id)} className="action-btn view">
+                        <img src={InfoIcon} alt="View" className="action-icon" />
+                      </button>
+                      <button className="action-btn edit">
+                        <img src={EditIcon} alt="Edit" className="action-icon" />
+                      </button>
+                      <button className="action-btn delete">
+                        <img src={DeleteIcon} alt="Delete" className="action-icon" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                {expandedRows.has(student.id) && (
+                  <tr className="expanded-row">
+                    <td colSpan="9">
+                      <div className="expanded-content">
+                        <div className="info-section">
+                          <h4>Personal Information</h4>
+                          <div className="info-grid">
+                            <div className="info-item">
+                              <img src={ContactIcon} alt="Contact" className="info-icon" />
+                              {student.contact_number}
+                            </div>
+                            <div className="info-item">
+                              <img src={LocationIcon} alt="Address" className="info-icon" />
+                              {student.address}
+                            </div>
+                            <div className="info-item">
+                              <img src={ContactIcon} alt="Guardian" className="info-icon" />
+                              {student.guardian_name}
+                            </div>
+                            <div className="info-item">
+                              <img src={DateIcon} alt="Joining Date" className="info-icon" />
+                              {student.joining_date}
                             </div>
                           </div>
                         </div>
+                        <AttendanceCalendar student={student}/>
                       </div>
-                    )}
-                  </React.Fragment>
-                ))
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Table Footer with Pagination */}
-        <div className="table__footer">
-          <div className="table-info">
-            <span className="table-counter__label">Showing</span>
-            <span>{startIndex + 1}-{Math.min(endIndex, sortedData.length)}</span>
-            <span>of</span>
-            <span>{sortedData.length}</span>
-            <span>entries</span>
-          </div>
-
-          {totalPages > 1 && (
-            <div className="pagination">
-              <button 
-                className="pagination-btn" 
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                  <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2"/>
-                </svg>
-              </button>
-
-              {getPageNumbers().map(page => (
-                <button
-                  key={page}
-                  className={`pagination-btn ${currentPage === page ? 'active' : ''}`}
-                  onClick={() => handlePageChange(page)}
-                >
-                  {page}
-                </button>
-              ))}
-
-              <button 
-                className="pagination-btn" 
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                  <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2"/>
-                </svg>
-              </button>
-            </div>
-          )}
-
-          <div className="table-info"></div>
-        </div>
+                    </td>
+                  </tr>
+                )}
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button
+            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+            disabled={currentPage === 1}
+            className="page-btn"
+          >
+            Previous
+          </button>
+
+          <div className="page-numbers">
+            {Array.from({ length: totalPages }, (_, i) => i + 1)
+              .filter(page =>
+                page === 1 ||
+                page === totalPages ||
+                Math.abs(page - currentPage) <= 1
+              )
+              .map((page, index, array) => (
+                <React.Fragment key={page}>
+                  {index > 0 && array[index - 1] < page - 1 && (
+                    <span className="page-ellipsis">...</span>
+                  )}
+                  <button
+                    onClick={() => setCurrentPage(page)}
+                    className={`page-btn ${currentPage === page ? 'active' : ''}`}
+                  >
+                    {page}
+                  </button>
+                </React.Fragment>
+              ))
+            }
+          </div>
+
+          <button
+            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+            disabled={currentPage === totalPages}
+            className="page-btn"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };
 
-export default StudentDataGrid;
+export default CustomStudentTable;

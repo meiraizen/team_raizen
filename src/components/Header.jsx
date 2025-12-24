@@ -98,8 +98,8 @@ export default function Header() {
       { label: 'Home', path: '/home' },
       { label: 'Billbook', path: '/billbook' },
       { label: 'Contact', path: '/contact' },
-      { label: 'Logout All', action: handleLogoutAll },
-      { label: 'Logout', action: handleLogout },
+      { label: 'Logout', action: handleLogoutAll }, //Logout from all devices
+      // { label: 'Logout', action: handleLogout }, //Logout from current device
     ];
   }, [user]);
 
@@ -157,8 +157,8 @@ export default function Header() {
                 <Button color="inherit" component={Link} to="/home" sx={hoverColor}>Home</Button>
                 <Button color="inherit" component={Link} to="/billbook" sx={hoverColor}>Billbook</Button>
                 <Button color="inherit" component={Link} to="/contact" sx={hoverColor}>Contact</Button>
-                <Button color="inherit" onClick={handleLogoutAll} sx={hoverColor}>Logout All</Button>
-                <Button color="inherit" onClick={handleLogout} sx={hoverColor}>Logout</Button>
+                <Button color="inherit" onClick={handleLogoutAll} sx={hoverColor}>Logout</Button>
+                    {/* <Button color="inherit" onClick={handleLogout} sx={hoverColor}>Logout</Button> */} 
               </Box>
             ) : (
               <Button color="inherit" component={Link} to="/login">Login</Button>

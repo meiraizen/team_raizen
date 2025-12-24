@@ -1,7 +1,7 @@
 import React from 'react';
-import CustomTable from './CustomTable';
+import CustomStudentTable from './CustomStudentTable';
 import { studentsData } from './tempDatabase';
 
 export default function StudentDataGrid() {
-  return <CustomTable data={studentsData} />;
+  return <CustomStudentTable data={studentsData} />;
 }
