@@ -4,6 +4,8 @@ import { ModalProvider } from '../components/billbook/ModalContext.jsx';
 export const publicRoutes = [
   { path: '/login', component: lazy(() => import('../pages/login')) },
   { path: '/otp-verify', component: lazy(() => import('../pages/OtpVerify.jsx')) },
+  { path: '/meidiet', component: lazy(() => import('../components/Diet/Diet.jsx')) },
+
 ];
 
 const ReceiptTableLazy = lazy(() => import('../components/billbook/ReceiptTable.jsx'));
