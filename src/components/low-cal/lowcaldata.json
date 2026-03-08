@@ -1,0 +1,897 @@
+[
+    {
+        "category": "Vegetable",
+        "name": "Asparagus",
+        "calories_kcal": 20,
+        "carbohydrates_g": 3.9,
+        "fiber_g": 2.1,
+        "protein_g": 2.2,
+        "fat_g": 0.1,
+        "micronutrients": [
+            "Folate",
+            "Vitamin K"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Vegetable",
+        "name": "Bell pepper",
+        "calories_kcal": 20,
+        "carbohydrates_g": 4.6,
+        "fiber_g": 1.7,
+        "protein_g": 0.9,
+        "fat_g": 0.2,
+        "micronutrients": [
+            "Vitamin C",
+            "Vitamin A"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Vegetable",
+        "name": "Bottle gourd",
+        "calories_kcal": 14,
+        "carbohydrates_g": 3.4,
+        "fiber_g": 0.5,
+        "protein_g": 0.6,
+        "fat_g": 0.1,
+        "micronutrients": [
+            "Vitamin C",
+            "Potassium"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Vegetable",
+        "name": "Broccoli",
+        "calories_kcal": 34,
+        "carbohydrates_g": 7.0,
+        "fiber_g": 2.6,
+        "protein_g": 2.8,
+        "fat_g": 0.4,
+        "micronutrients": [
+            "Vitamin C",
+            "Vitamin K"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Vegetable",
+        "name": "Brussels Sprouts",
+        "calories_kcal": 43,
+        "carbohydrates_g": 9.0,
+        "fiber_g": 3.8,
+        "protein_g": 3.4,
+        "fat_g": 0.3,
+        "micronutrients": [
+            "Vitamin K",
+            "Vitamin C",
+            "Alpha-Lipoic Acid"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Vegetable",
+        "name": "Cabbage",
+        "calories_kcal": 25,
+        "carbohydrates_g": 5.8,
+        "fiber_g": 2.5,
+        "protein_g": 1.3,
+        "fat_g": 0.1,
+        "micronutrients": [
+            "Vitamin C",
+            "Vitamin K"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Vegetable",
+        "name": "Carrot",
+        "calories_kcal": 41,
+        "carbohydrates_g": 10.0,
+        "fiber_g": 2.8,
+        "protein_g": 0.9,
+        "fat_g": 0.2,
+        "micronutrients": [
+            "Vitamin A",
+            "Potassium"
+        ],
+        "glycemic_index": 16
+    },
+    {
+        "category": "Vegetable",
+        "name": "Cauliflower",
+        "calories_kcal": 25,
+        "carbohydrates_g": 5.0,
+        "fiber_g": 2.0,
+        "protein_g": 1.9,
+        "fat_g": 0.3,
+        "micronutrients": [
+            "Vitamin C",
+            "Folate"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Vegetable",
+        "name": "Celery",
+        "calories_kcal": 16,
+        "carbohydrates_g": 3.0,
+        "fiber_g": 1.6,
+        "protein_g": 0.7,
+        "fat_g": 0.2,
+        "micronutrients": [
+            "Vitamin K",
+            "Potassium"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Vegetable",
+        "name": "Cucumber",
+        "calories_kcal": 15,
+        "carbohydrates_g": 3.6,
+        "fiber_g": 0.5,
+        "protein_g": 0.7,
+        "fat_g": 0.1,
+        "micronutrients": [
+            "Vitamin K",
+            "Potassium"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Vegetable",
+        "name": "Eggplant",
+        "calories_kcal": 25,
+        "carbohydrates_g": 6.0,
+        "fiber_g": 3.0,
+        "protein_g": 1.0,
+        "fat_g": 0.2,
+        "micronutrients": [
+            "Potassium",
+            "Antioxidants"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Vegetable",
+        "name": "Green peas",
+        "calories_kcal": 81,
+        "carbohydrates_g": 14.0,
+        "fiber_g": 5.7,
+        "protein_g": 5.4,
+        "fat_g": 0.4,
+        "micronutrients": [
+            "Vitamin C",
+            "Vitamin K"
+        ],
+        "glycemic_index": 22
+    },
+    {
+        "category": "Vegetable",
+        "name": "Kale",
+        "calories_kcal": 49,
+        "carbohydrates_g": 8.8,
+        "fiber_g": 3.6,
+        "protein_g": 4.3,
+        "fat_g": 0.9,
+        "micronutrients": [
+            "Vitamin A",
+            "Vitamin K",
+            "Lutein"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Vegetable",
+        "name": "Lettuce",
+        "calories_kcal": 15,
+        "carbohydrates_g": 2.9,
+        "fiber_g": 1.3,
+        "protein_g": 1.4,
+        "fat_g": 0.2,
+        "micronutrients": [
+            "Vitamin A",
+            "Folate"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Vegetable",
+        "name": "Mushrooms",
+        "calories_kcal": 22,
+        "carbohydrates_g": 3.3,
+        "fiber_g": 1.0,
+        "protein_g": 3.1,
+        "fat_g": 0.3,
+        "micronutrients": "" ,
+        "glycemic_index": 10
+    },
+    {
+        "category": "Vegetable",
+        "name": "Potato",
+        "calories_kcal": 77,
+        "carbohydrates_g": 17.0,
+        "fiber_g": 2.2,
+        "protein_g": 2.0,
+        "fat_g": 0.1,
+        "micronutrients": [
+            "Potassium",
+            "Vitamin C"
+        ],
+        "glycemic_index": 69
+    },
+    {
+        "category": "Vegetable",
+        "name": "Psyllium husk",
+        "calories_kcal": 200,
+        "carbohydrates_g": 88.0,
+        "fiber_g": 78.0,
+        "protein_g": 0.0,
+        "fat_g": 0.0,
+        "micronutrients": [
+            "Fiber"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Vegetable",
+        "name": "Radish",
+        "calories_kcal": 16,
+        "carbohydrates_g": 3.4,
+        "fiber_g": 1.6,
+        "protein_g": 0.7,
+        "fat_g": 0.1,
+        "micronutrients": [
+            "Vitamin C",
+            "Potassium"
+        ],
+        "glycemic_index": 8
+    },
+    {
+        "category": "Vegetable",
+        "name": "Spinach",
+        "calories_kcal": 23,
+        "carbohydrates_g": 3.6,
+        "fiber_g": 2.2,
+        "protein_g": 2.9,
+        "fat_g": 0.4,
+        "micronutrients": [
+            "Iron",
+            "Folate",
+            "Vitamin K"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Vegetable",
+        "name": "Sweet corn",
+        "calories_kcal": 86,
+        "carbohydrates_g": 19.0,
+        "fiber_g": 2.7,
+        "protein_g": 3.2,
+        "fat_g": 1.2,
+        "micronutrients": [
+            "Vitamin C",
+            "Magnesium"
+        ],
+        "glycemic_index": 52
+    },
+    {
+        "category": "Vegetable",
+        "name": "Sweet potato",
+        "calories_kcal": 86,
+        "carbohydrates_g": 20.0,
+        "fiber_g": 3.0,
+        "protein_g": 1.6,
+        "fat_g": 0.1,
+        "micronutrients": [
+            "Vitamin A",
+            "Potassium"
+        ],
+        "glycemic_index": 54
+    },
+    {
+        "category": "Vegetable",
+        "name": "Tomato",
+        "calories_kcal": 18,
+        "carbohydrates_g": 3.9,
+        "fiber_g": 1.2,
+        "protein_g": 0.9,
+        "fat_g": 0.2,
+        "micronutrients": [
+            "Vitamin C",
+            "Lycopene"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Vegetable",
+        "name": "Turnip",
+        "calories_kcal": 28,
+        "carbohydrates_g": 6.4,
+        "fiber_g": 1.8,
+        "protein_g": 0.9,
+        "fat_g": 0.1,
+        "micronutrients": [
+            "Vitamin C",
+            "Potassium"
+        ],
+        "glycemic_index": 40
+    },
+    {
+        "category": "Vegetable",
+        "name": "Zucchini",
+        "calories_kcal": 17,
+        "carbohydrates_g": 3.1,
+        "fiber_g": 1.0,
+        "protein_g": 1.2,
+        "fat_g": 0.3,
+        "micronutrients": [
+            "Vitamin C",
+            "Potassium"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Fruit",
+        "name": "Apple",
+        "calories_kcal": 52,
+        "carbohydrates_g": 14.0,
+        "fiber_g": 2.4,
+        "protein_g": 0.3,
+        "fat_g": 0.2,
+        "micronutrients": [
+            "Vitamin C",
+            "Quercetin"
+        ],
+        "glycemic_index": 36
+    },
+    {
+        "category": "Fruit",
+        "name": "Avocado",
+        "calories_kcal": 160,
+        "carbohydrates_g": 9.0,
+        "fiber_g": 6.7,
+        "protein_g": 2.0,
+        "fat_g": 15.0,
+        "micronutrients": [
+            "Potassium",
+            "Vitamin E"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Fruit",
+        "name": "Banana",
+        "calories_kcal": 89,
+        "carbohydrates_g": 23.0,
+        "fiber_g": 2.6,
+        "protein_g": 1.1,
+        "fat_g": 0.3,
+        "micronutrients": "" ,
+        "glycemic_index": 51
+    },
+    {
+        "category": "Fruit",
+        "name": "Blackberries",
+        "calories_kcal": 43,
+        "carbohydrates_g": 10.0,
+        "fiber_g": 5.0,
+        "protein_g": 1.4,
+        "fat_g": 0.5,
+        "micronutrients": [
+            "Vitamin C",
+            "Vitamin K"
+        ],
+        "glycemic_index": 25
+    },
+    {
+        "category": "Fruit",
+        "name": "Blueberries",
+        "calories_kcal": 57,
+        "carbohydrates_g": 14.0,
+        "fiber_g": 2.4,
+        "protein_g": 0.7,
+        "fat_g": 0.3,
+        "micronutrients": [
+            "Vitamin C",
+            "Vitamin K",
+            "Anthocyanins"
+        ],
+        "glycemic_index": 53
+    },
+    {
+        "category": "Fruit",
+        "name": "Grapefruit",
+        "calories_kcal": 42,
+        "carbohydrates_g": 11.0,
+        "fiber_g": 1.6,
+        "protein_g": 0.8,
+        "fat_g": 0.1,
+        "micronutrients": [
+            "Vitamin C",
+            "Vitamin A"
+        ],
+        "glycemic_index": 25
+    },
+    {
+        "category": "Fruit",
+        "name": "Guava",
+        "calories_kcal": 68,
+        "carbohydrates_g": 14.0,
+        "fiber_g": 5.4,
+        "protein_g": 2.6,
+        "fat_g": 1.0,
+        "micronutrients": [
+            "Vitamin C",
+            "Vitamin A",
+            "Potassium"
+        ],
+        "glycemic_index": 12
+    },
+    {
+        "category": "Fruit",
+        "name": "Honeydew melon",
+        "calories_kcal": 36,
+        "carbohydrates_g": 9.1,
+        "fiber_g": 0.8,
+        "protein_g": 0.5,
+        "fat_g": 0.1,
+        "micronutrients": [
+            "Vitamin C",
+            "Potassium"
+        ],
+        "glycemic_index": 60
+    },
+    {
+        "category": "Fruit",
+        "name": "Kiwi",
+        "calories_kcal": 61,
+        "carbohydrates_g": 15.0,
+        "fiber_g": 3.0,
+        "protein_g": 1.1,
+        "fat_g": 0.5,
+        "micronutrients": [
+            "Vitamin C",
+            "Vitamin E"
+        ],
+        "glycemic_index": 50
+    },
+    {
+        "category": "Fruit",
+        "name": "Mango",
+        "calories_kcal": 60,
+        "carbohydrates_g": 15.0,
+        "fiber_g": 1.6,
+        "protein_g": 0.8,
+        "fat_g": 0.4,
+        "micronutrients": [
+            "Vitamin C",
+            "Vitamin A"
+        ],
+        "glycemic_index": 51
+    },
+    {
+        "category": "Fruit",
+        "name": "Muskmelon",
+        "calories_kcal": 34,
+        "carbohydrates_g": 8.2,
+        "fiber_g": 0.9,
+        "protein_g": 0.8,
+        "fat_g": 0.2,
+        "micronutrients": [
+            "Vitamin A",
+            "Vitamin C"
+        ],
+        "glycemic_index": 65
+    },
+    {
+        "category": "Fruit",
+        "name": "Orange",
+        "calories_kcal": 47,
+        "carbohydrates_g": 12.0,
+        "fiber_g": 2.4,
+        "protein_g": 0.9,
+        "fat_g": 0.1,
+        "micronutrients": [
+            "Vitamin C",
+            "Folate"
+        ],
+        "glycemic_index": 43
+    },
+    {
+        "category": "Fruit",
+        "name": "Papaya",
+        "calories_kcal": 43,
+        "carbohydrates_g": 11.0,
+        "fiber_g": 1.7,
+        "protein_g": 0.5,
+        "fat_g": 0.3,
+        "micronutrients": [
+            "Vitamin C",
+            "Vitamin A"
+        ],
+        "glycemic_index": 59
+    },
+    {
+        "category": "Fruit",
+        "name": "Peach",
+        "calories_kcal": 39,
+        "carbohydrates_g": 9.5,
+        "fiber_g": 1.5,
+        "protein_g": 0.9,
+        "fat_g": 0.3,
+        "micronutrients": [
+            "Vitamin A",
+            "Potassium"
+        ],
+        "glycemic_index": 42
+    },
+    {
+        "category": "Fruit",
+        "name": "Pear",
+        "calories_kcal": 57,
+        "carbohydrates_g": 15.0,
+        "fiber_g": 3.1,
+        "protein_g": 0.4,
+        "fat_g": 0.1,
+        "micronutrients": [
+            "Vitamin C",
+            "Potassium"
+        ],
+        "glycemic_index": 38
+    },
+    {
+        "category": "Fruit",
+        "name": "Pineapple",
+        "calories_kcal": 50,
+        "carbohydrates_g": 13.0,
+        "fiber_g": 1.4,
+        "protein_g": 0.5,
+        "fat_g": 0.1,
+        "micronutrients": [
+            "Vitamin C",
+            "Manganese"
+        ],
+        "glycemic_index": 59
+    },
+    {
+        "category": "Fruit",
+        "name": "Raspberries",
+        "calories_kcal": 52,
+        "carbohydrates_g": 11.9,
+        "fiber_g": 6.5,
+        "protein_g": 1.2,
+        "fat_g": 0.7,
+        "micronutrients": [
+            "Vitamin C",
+            "Vitamin K"
+        ],
+        "glycemic_index": 26
+    },
+    {
+        "category": "Fruit",
+        "name": "Strawberries",
+        "calories_kcal": 32,
+        "carbohydrates_g": 7.7,
+        "fiber_g": 2.0,
+        "protein_g": 0.7,
+        "fat_g": 0.3,
+        "micronutrients": [
+            "Vitamin C",
+            "Manganese"
+        ],
+        "glycemic_index": 40
+    },
+    {
+        "category": "Fruit",
+        "name": "Watermelon",
+        "calories_kcal": 30,
+        "carbohydrates_g": 7.6,
+        "fiber_g": 0.4,
+        "protein_g": 0.6,
+        "fat_g": 0.2,
+        "micronutrients": [
+            "L-Citrulline",
+            "Vitamin A"
+        ],
+        "glycemic_index": 72
+    },
+    {
+        "category": "Protein",
+        "name": "Almonds",
+        "calories_kcal": 579,
+        "carbohydrates_g": 22.0,
+        "fiber_g": 12.5,
+        "protein_g": 21.0,
+        "fat_g": 50.0,
+        "micronutrients": [
+            "Vitamin E",
+            "Magnesium"
+        ],
+        "glycemic_index": 0
+    },
+    {
+        "category": "Protein",
+        "name": "Black beans",
+        "calories_kcal": 132,
+        "carbohydrates_g": 24.0,
+        "fiber_g": 8.7,
+        "protein_g": 8.9,
+        "fat_g": 0.5,
+        "micronutrients": [
+            "Magnesium",
+            "Folate"
+        ],
+        "glycemic_index": 30
+    },
+    {
+        "category": "Protein",
+        "name": "Brown rice",
+        "calories_kcal": 111,
+        "carbohydrates_g": 23.0,
+        "fiber_g": 1.8,
+        "protein_g": 2.6,
+        "fat_g": 0.9,
+        "micronutrients": "" ,
+        "glycemic_index": 55
+    },
+    {
+        "category": "Protein",
+        "name": "Chia seeds",
+        "calories_kcal": 486,
+        "carbohydrates_g": 42.0,
+        "fiber_g": 34.0,
+        "protein_g": 17.0,
+        "fat_g": 31.0,
+        "micronutrients": [
+            "Omega-3",
+            "Calcium",
+            "Magnesium"
+        ],
+        "glycemic_index": 4
+    },
+    {
+        "category": "Protein",
+        "name": "Chicken breast",
+        "calories_kcal": 165,
+        "carbohydrates_g": 0.0,
+        "fiber_g": 0.0,
+        "protein_g": 31.0,
+        "fat_g": 3.6,
+        "micronutrients": "" ,
+        "glycemic_index": 0
+    },
+    {
+        "category": "Protein",
+        "name": "Chickpeas",
+        "calories_kcal": 164,
+        "carbohydrates_g": 27.0,
+        "fiber_g": 7.6,
+        "protein_g": 9.0,
+        "fat_g": 2.6,
+        "micronutrients": [
+            "Iron",
+            "Magnesium"
+        ],
+        "glycemic_index": 28
+    },
+    {
+        "category": "Protein",
+        "name": "Cod",
+        "calories_kcal": 82,
+        "carbohydrates_g": 0.0,
+        "fiber_g": 0.0,
+        "protein_g": 20.0,
+        "fat_g": 0.7,
+        "micronutrients": "" ,
+        "glycemic_index": 0
+    },
+    {
+        "category": "Protein",
+        "name": "Cottage cheese (low fat)",
+        "calories_kcal": 98,
+        "carbohydrates_g": 3.4,
+        "fiber_g": 0.0,
+        "protein_g": 11.0,
+        "fat_g": 4.3,
+        "micronutrients": [
+            "Calcium",
+            "Phosphorus"
+        ],
+        "glycemic_index": 10
+    },
+    {
+        "category": "Protein",
+        "name": "Edamame",
+        "calories_kcal": 121,
+        "carbohydrates_g": 11.0,
+        "fiber_g": 5.0,
+        "protein_g": 11.0,
+        "fat_g": 5.0,
+        "micronutrients": [
+            "Folate",
+            "Vitamin K"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Protein",
+        "name": "Egg",
+        "calories_kcal": 155,
+        "carbohydrates_g": 1.1,
+        "fiber_g": 0.0,
+        "protein_g": 13.0,
+        "fat_g": 11.0,
+        "micronutrients": "" ,
+        "glycemic_index": 0
+    },
+    {
+        "category": "Protein",
+        "name": "Egg white",
+        "calories_kcal": 52,
+        "carbohydrates_g": 0.7,
+        "fiber_g": 0.0,
+        "protein_g": 11.0,
+        "fat_g": 0.2,
+        "micronutrients": "" ,
+        "glycemic_index": 0
+    },
+    {
+        "category": "Protein",
+        "name": "Flax seeds",
+        "calories_kcal": 534,
+        "carbohydrates_g": 29.0,
+        "fiber_g": 27.0,
+        "protein_g": 18.0,
+        "fat_g": 42.0,
+        "micronutrients": [
+            "Omega-3",
+            "Lignans"
+        ],
+        "glycemic_index": 35
+    },
+    {
+        "category": "Protein",
+        "name": "Greek yogurt",
+        "calories_kcal": 59,
+        "carbohydrates_g": 3.6,
+        "fiber_g": 0.0,
+        "protein_g": 10.0,
+        "fat_g": 0.4,
+        "micronutrients": [
+            "Calcium",
+            "Probiotics"
+        ],
+        "glycemic_index": 14
+    },
+    {
+        "category": "Protein",
+        "name": "Kidney beans",
+        "calories_kcal": 127,
+        "carbohydrates_g": 23.0,
+        "fiber_g": 6.4,
+        "protein_g": 8.7,
+        "fat_g": 0.5,
+        "micronutrients": [
+            "Iron",
+            "Potassium"
+        ],
+        "glycemic_index": 24
+    },
+    {
+        "category": "Protein",
+        "name": "Lentils",
+        "calories_kcal": 116,
+        "carbohydrates_g": 20.0,
+        "fiber_g": 7.9,
+        "protein_g": 9.0,
+        "fat_g": 0.4,
+        "micronutrients": [
+            "Iron",
+            "Folate"
+        ],
+        "glycemic_index": 28
+    },
+    {
+        "category": "Protein",
+        "name": "Oats",
+        "calories_kcal": 389,
+        "carbohydrates_g": 66.0,
+        "fiber_g": 10.6,
+        "protein_g": 17.0,
+        "fat_g": 7.0,
+        "micronutrients": "" ,
+        "glycemic_index": 55
+    },
+    {
+        "category": "Protein",
+        "name": "Quinoa",
+        "calories_kcal": 120,
+        "carbohydrates_g": 21.0,
+        "fiber_g": 2.8,
+        "protein_g": 4.4,
+        "fat_g": 1.9,
+        "micronutrients": [
+            "Magnesium",
+            "Iron"
+        ],
+        "glycemic_index": 53
+    },
+    {
+        "category": "Protein",
+        "name": "Seitan",
+        "calories_kcal": 370,
+        "carbohydrates_g": 14.0,
+        "fiber_g": 2.0,
+        "protein_g": 75.0,
+        "fat_g": 2.0,
+        "micronutrients": "" ,
+        "glycemic_index": 0
+    },
+    {
+        "category": "Protein",
+        "name": "Shrimp",
+        "calories_kcal": 99,
+        "carbohydrates_g": 0.2,
+        "fiber_g": 0.0,
+        "protein_g": 24.0,
+        "fat_g": 0.3,
+        "micronutrients": "" ,
+        "glycemic_index": 0
+    },
+    {
+        "category": "Protein",
+        "name": "Tempeh",
+        "calories_kcal": 195,
+        "carbohydrates_g": 9.0,
+        "fiber_g": 0.0,
+        "protein_g": 19.0,
+        "fat_g": 11.0,
+        "micronutrients": [
+            "Iron",
+            "Calcium",
+            "Probiotics"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Protein",
+        "name": "Tofu",
+        "calories_kcal": 76,
+        "carbohydrates_g": 1.9,
+        "fiber_g": 0.3,
+        "protein_g": 8.0,
+        "fat_g": 4.8,
+        "micronutrients": [
+            "Iron",
+            "Calcium",
+            "Isoflavones"
+        ],
+        "glycemic_index": 15
+    },
+    {
+        "category": "Protein",
+        "name": "Tuna (fresh)",
+        "calories_kcal": 132,
+        "carbohydrates_g": 0.0,
+        "fiber_g": 0.0,
+        "protein_g": 29.0,
+        "fat_g": 1.0,
+        "micronutrients": "" ,
+        "glycemic_index": 0
+    },
+    {
+        "category": "Protein",
+        "name": "Turkey breast",
+        "calories_kcal": 135,
+        "carbohydrates_g": 0.0,
+        "fiber_g": 0.0,
+        "protein_g": 30.0,
+        "fat_g": 1.0,
+        "micronutrients": "" ,
+        "glycemic_index": 0
+    }
+]

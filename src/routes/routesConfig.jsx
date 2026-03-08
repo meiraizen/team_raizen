@@ -5,6 +5,8 @@ export const publicRoutes = [
   { path: '/login', component: lazy(() => import('../pages/login')) },
   { path: '/otp-verify', component: lazy(() => import('../pages/OtpVerify.jsx')) },
   { path: '/meidiet', component: lazy(() => import('../components/Diet/Diet.jsx')) },
+  { path: '/lowcal', component: lazy(() => import('../components/low-cal/LowCal.jsx')) },
+
 
 ];
 
