@@ -1,43 +1,84 @@
 :root {
-  /* Theme Variables - Optimized for eye strain */
-  --raizen-bg-main: #f8f9fa; /* Ash White */
-  --raizen-bg-card: #ffffff; /* Pure White */
-  --raizen-text-main: #1f2937; /* Charcoal Black */
-  --raizen-text-muted: #6b7280; /* Ash Grey */
-  --raizen-accent-red: #d32f2f; /* Karate Red */
-  --raizen-accent-red-hover: #b71c1c;
-  --raizen-border-color: #e5e7eb;
+  /* Precise Brand Theme Variables */
+  --raizen-accent-red: #da0a1c; 
+  --raizen-brand-black: #000000; 
+  --raizen-brand-grey: #666666; 
+  --raizen-accent-green : #35a73a; 
+
+  /* Theme Defaults - Light Mode */
+  --raizen-bg-main: #fcfcfc; 
+  --raizen-bg-card: #ffffff; 
+  --raizen-text-main: #1a1a1a; 
+  --raizen-text-muted: #555555; 
+  --raizen-accent-red-hover: #b71c1c; 
+  --raizen-border-color: #e5e7eb; 
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --raizen-bg-main: #121212; /* Deep Black */
-    --raizen-bg-card: #1e1e1e; /* Dark Grey */
-    --raizen-text-main: #f3f4f6; /* Ash White */
-    --raizen-text-muted: #9ca3af; /* Light Ash */
-    --raizen-accent-red: #ef5350; /* Softer Red for Dark */
-    --raizen-accent-red-hover: #e53935;
-    --raizen-border-color: #374151;
+    /* Theme Defaults - Dark Mode */
+    --raizen-bg-main: #121212; 
+    --raizen-bg-card: #1f1f1f; 
+    --raizen-text-main: #f0f0f0; 
+    --raizen-text-muted: #aaaaaa; 
+    --raizen-accent-red: #da0a1c; 
+    --raizen-border-color: #333333; 
   }
 }
 
-/* Base reset applied inside container to prevent global leakage */
-.raizen-app-container {
+/* Base reset applied only inside the app wrapper to prevent conflicts */
+.raizen-app-wrapper {
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: system-ui, -apple-system, sans-serif; 
   background-color: var(--raizen-bg-main);
   color: var(--raizen-text-main);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; 
   align-items: center;
-  padding: 20px;
+  padding: 20px 10px; 
   transition: background-color 0.3s, color 0.3s;
 }
 
-.raizen-app-container * {
+.raizen-app-wrapper * {
   box-sizing: border-box;
+  text-transform: uppercase; 
+  font-weight: 700; 
+}
+
+/* Allow lowercase only for inputs and dynamic detail texts */
+.raizen-input-group__field, 
+.raizen-details-list li span:first-child,
+.raizen-success-box span {
+  text-transform: none;
+  font-weight: 400; 
+}
+
+/* Logo container and responsive image styling */
+.raizen-logo-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3rem; 
+}
+
+.raizen-logo {
+  max-width: 200px; 
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); 
+}
+
+/* Responsive breakpoint for small mobiles */
+@media (max-width: 400px) {
+  .raizen-logo {
+    max-width: 150px;
+  }
+  .raizen-app-wrapper {
+      padding: 10px 5px;
+  }
 }
 
 /* Scoped Components */
@@ -50,6 +91,7 @@
   width: 100%;
   max-width: 500px;
   transition: transform 0.2s;
+  text-align: center;
 }
 
 .raizen-card--centered {
@@ -58,10 +100,10 @@
 
 .raizen-title {
   font-size: 1.75rem;
-  font-weight: 800;
+  font-weight: 900; 
   text-align: center;
   margin-bottom: 1.5rem;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.05em; 
 }
 
 /* Form Elements */
@@ -74,9 +116,10 @@
 
 .raizen-input-group__label {
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 0.5rem;
   color: var(--raizen-text-main);
+  text-transform: uppercase; 
 }
 
 .raizen-input-group__field {
@@ -87,6 +130,8 @@
   color: var(--raizen-text-main);
   font-size: 1rem;
   transition: all 0.2s;
+  /* Added to fix native select dropdown styling on mobile */
+  appearance: auto; 
 }
 
 .raizen-input-group__field:focus {
@@ -102,7 +147,7 @@
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 900; 
   cursor: pointer;
   transition: all 0.2s;
   margin-top: 1rem;
@@ -110,6 +155,8 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase; 
 }
 
 .raizen-btn--primary {
@@ -146,6 +193,7 @@
   margin-bottom: 1rem;
   background: transparent;
   color: var(--raizen-text-muted);
+  text-transform: none; 
 }
 .raizen-btn--icon-only:hover {
   color: var(--raizen-text-main);
@@ -173,8 +221,9 @@
   cursor: pointer;
   background: var(--raizen-bg-card);
   color: var(--raizen-text-main);
-  font-weight: 600;
+  font-weight: 700;
   transition: all 0.2s;
+  text-transform: uppercase;
 }
 
 .raizen-time-slot:hover:not(.raizen-time-slot--booked):not(.raizen-time-slot--selected) {
@@ -199,7 +248,7 @@
 .raizen-error-text {
   color: var(--raizen-accent-red);
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-top: 0.75rem;
   text-align: center;
   padding: 0.5rem;
@@ -241,5 +290,44 @@
 }
 .raizen-details-list span:last-child {
   color: var(--raizen-text-main);
-  font-weight: 700;
+  font-weight: 900; 
+}
+
+/* --- SPLASH SCREEN ANIMATION --- */
+.raizen-splash-overlay {
+  position: fixed;
+  inset: 0; 
+  z-index: 9999; 
+  display: flex;
+  pointer-events: none; 
+}
+
+.raizen-splash-door {
+  width: 50%;
+  height: 100vh;
+  background-color: #ffffff; 
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1); 
+  will-change: transform;
+}
+
+.raizen-splash-door--left.is-open {
+  transform: translateX(-100%);
+}
+
+.raizen-splash-door--right.is-open {
+  transform: translateX(100%);
+}
+
+.raizen-splash-logo-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
+  transition: opacity 0.4s ease, transform 0.8s ease;
+}
+
+.raizen-splash-logo-wrapper.is-open {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.8);
 }
