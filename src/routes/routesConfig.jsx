@@ -2,7 +2,8 @@ import React, { lazy } from 'react';
 import { ModalProvider } from '../components/billbook/ModalContext.jsx';
 
 export const publicRoutes = [
-  { path: '/login', component: lazy(() => import('../pages/login')) },
+  // { path: '/login', component: lazy(() => import('../pages/login')) },
+  { path: '/login', component: lazy(() => import("../components/summer-camp-booking/CampBooking.jsx")) },
   { path: '/otp-verify', component: lazy(() => import('../pages/OtpVerify.jsx')) },
   { path: '/meidiet', component: lazy(() => import('../components/Diet/Diet.jsx')) },
   { path: '/lowcal', component: lazy(() => import('../components/low-cal/LowCal.jsx')) },
