@@ -316,3 +316,52 @@
     display: inline-block;
   }
 }
+
+/* Styling for the new action buttons */
+.camp-admin-header-actions .camp-admin-icon-btn {
+  background-color: var(--camp-admin-bg-card);
+  border: 1px solid var(--camp-admin-border-color);
+  transition: all 0.2s ease;
+}
+
+.camp-admin-header-actions .camp-admin-icon-btn:hover {
+  background-color: var(--camp-admin-accent-red);
+  color: white;
+  border-color: var(--camp-admin-accent-red);
+}
+
+/* Ensure the grid header text transformation as requested */
+.camp-admin-grid-header div {
+  text-transform: capitalize; /* Headings are capitalized */
+  font-weight: 900;
+}
+
+/* Normal cell text */
+.camp-admin-cell {
+  text-transform: none; 
+  font-weight: normal;
+}
+
+.camp-admin-grid-header {
+  display: grid;
+  /* --- CHANGED TO 7 COLUMNS TO FIT GENDER --- */
+  grid-template-columns: 1fr 1.5fr 0.75fr 1.25fr 1.5fr 1.25fr 1fr; 
+  background-color: rgba(0,0,0,0.03);
+  border-bottom: 2px solid var(--camp-admin-border-color);
+  font-weight: 900;
+  color: var(--camp-admin-text-muted);
+  font-size: 0.75rem;
+  padding: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .camp-admin-grid-header { background-color: rgba(255,255,255,0.03); }
+}
+
+.camp-admin-grid-row {
+  display: grid;
+  /* --- CHANGED TO 7 COLUMNS TO FIT GENDER --- */
+  grid-template-columns: 1fr 1.5fr 0.75fr 1.25fr 1.5fr 1.25fr 1fr;
+  border-bottom: 1px solid var(--camp-admin-border-color);
+  transition: background-color 0.2s;
+}

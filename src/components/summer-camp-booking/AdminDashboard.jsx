@@ -1,42 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import { Search, LogOut, RefreshCw, Calendar, Users, Phone } from 'lucide-react';
+import { 
+  Search, LogOut, RefreshCw, Calendar, Users, 
+  Phone, Download, Cloud, ArrowDown, ArrowUp, Filter
+} from 'lucide-react';
 import './camp-booking-admin.css';
 
-// Initialize Supabase
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
   import.meta.env.VITE_SUPABASE_ANON_KEY
 );
 
-const ADMIN_PIN = '2026';
+const ADMIN_PIN = '2233';
 
 export default function AdminDashboard({ onClose }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [pinInput, setPinInput] = useState('');
   const [pinError, setPinError] = useState('');
-
+  
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
-  // Filters
+  
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterSlot, setFilterSlot] = useState('All');
+  const [filterSource, setFilterSource] = useState('All');
+  const [filterGender, setFilterGender] = useState('All');
+  const [sortOrder, setSortOrder] = useState('desc'); 
 
-  const availableSlots = [
-    'All',
-    '06:00 AM - 07:00 AM',
-    '07:00 AM - 08:00 AM',
-    '05:00 PM - 06:00 PM',
-    '06:00 PM - 07:00 PM',
-  ];
+  const availableSources = ['All', ...new Set(bookings.map(b => b.referral_source || 'N/A'))];
 
-  // Fetch data only when authenticated
   useEffect(() => {
-    if (isAuthenticated) {
-      fetchBookings();
-    }
+    if (isAuthenticated) fetchBookings();
   }, [isAuthenticated]);
 
   const handleLogin = (e) => {
@@ -52,61 +46,114 @@ export default function AdminDashboard({ onClose }) {
 
   const fetchBookings = async () => {
     setLoading(true);
-    setError('');
-    
     const { data, error: dbError } = await supabase
       .from('camp_bookings')
       .select('*')
       .order('created_at', { ascending: false });
 
-    if (dbError) {
-      setError('Failed to fetch data from database.');
-    } else {
-      setBookings(data || []);
-    }
+    if (dbError) setError('Failed to fetch data.');
+    else setBookings(data || []);
     setLoading(false);
   };
 
-  const filteredBookings = bookings.filter((booking) => {
-    const matchesSearch = 
-      booking.student_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      booking.parent_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      booking.mobile.includes(searchTerm) ||
-      booking.email.toLowerCase().includes(searchTerm.toLowerCase());
-      
-    const matchesSlot = filterSlot === 'All' || booking.time_slot === filterSlot;
+  const generateCSV = (data) => {
+    const headers = ["DATE BOOKED", "STUDENT NAME", "GENDER", "PARENT NAME", "MOBILE", "EMAIL", "TIME SLOT", "SOURCE"];
+    const rows = data.map(b => [
+      new Date(b.created_at).toLocaleDateString('en-IN'),
+      b.student_name,
+      b.gender || 'N/A', 
+      b.parent_name,
+      b.mobile,
+      b.email,
+      b.time_slot,
+      b.referral_source || 'N/A'
+    ]);
 
-    return matchesSearch && matchesSlot;
-  });
+    const csvContent = [
+      headers.join(","), 
+      ...rows.map(row => row.join(","))
+    ].join("\n");
+
+    return csvContent;
+  };
+
+  const handleDownloadCSV = () => {
+    const csv = generateCSV(filteredAndSortedBookings);
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", `raizen_Camp_data_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const toggleSort = () => {
+    setSortOrder(prev => (prev === 'desc' ? 'asc' : 'desc'));
+  };
+
+  const resetFilters = () => {
+    setSearchTerm('');
+    setFilterSource('All');
+    setFilterGender('All');
+  };
+
+  const filteredAndSortedBookings = bookings
+    .filter((booking) => {
+      const matchesSearch = 
+        booking.student_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        booking.parent_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        booking.mobile.includes(searchTerm);
+        
+      const source = booking.referral_source || 'N/A';
+      const matchesSource = filterSource === 'All' || source === filterSource;
+
+      let matchesGender = true;
+      if (filterGender !== 'All') {
+        const bgender = (booking.gender || '').toLowerCase();
+        if (filterGender === 'M') {
+          matchesGender = bgender === 'male' || bgender === 'm';
+        } else if (filterGender === 'F') {
+          matchesGender = bgender === 'female' || bgender === 'f';
+        }
+      }
+      
+      return matchesSearch && matchesSource && matchesGender;
+    })
+    .sort((a, b) => {
+      const dateA = new Date(a.created_at).getTime();
+      const dateB = new Date(b.created_at).getTime();
+      return sortOrder === 'desc' ? dateB - dateA : dateA - dateB;
+    });
+
+  const handleCloseClick = () => {
+    const confirmClose = window.confirm("Are you sure you want to close this tab?");
+    if (confirmClose) {
+      window.close();
+    }
+  };
 
   if (!isAuthenticated) {
     return (
       <div className="camp-admin-auth-wrapper">
         <div className="camp-admin-auth-card">
           <h2 className="camp-admin-title">Admin Access</h2>
-          <p className="camp-admin-subtitle">Enter PIN to view camp bookings</p>
-          
           <form onSubmit={handleLogin}>
-            <div style={{ marginBottom: '1.25rem' }}>
-              <input 
-                type="password" 
-                className="camp-admin-input" 
-                placeholder="Enter PIN" 
-                value={pinInput}
-                onChange={(e) => setPinInput(e.target.value)}
-                maxLength={4}
-                required
-              />
-            </div>
+            <input 
+              type="password" 
+              className="camp-admin-input" 
+              placeholder="Enter PIN" 
+              value={pinInput}
+              onChange={(e) => setPinInput(e.target.value)}
+              maxLength={4}
+              required
+            />
             {pinError && <p className="camp-admin-error">{pinError}</p>}
-            <button type="submit" className="camp-admin-btn camp-admin-btn--primary">
+            <button type="submit" className="camp-admin-btn camp-admin-btn--primary" style={{marginTop: '1rem'}}>
               Unlock Dashboard
             </button>
           </form>
-          
-          <button onClick={onClose} className="camp-admin-btn camp-admin-btn--secondary" style={{marginTop: '1rem'}}>
-            Back to Site
-          </button>
         </div>
       </div>
     );
@@ -116,15 +163,18 @@ export default function AdminDashboard({ onClose }) {
     <div className="camp-admin-dashboard">
       <div className="camp-admin-header">
         <div>
-          <h1 className="camp-admin-title" style={{marginBottom: 0, textAlign: 'left'}}>Camp Roster</h1>
-          <p className="camp-admin-subtitle" style={{marginBottom: 0}}>Total Bookings: <strong style={{color: 'var(--camp-admin-text-main)'}}>{filteredBookings.length}</strong></p>
+          <h1 className="camp-admin-title" style={{margin: 0}}>Camp Details</h1>
+          <p className="camp-admin-subtitle">Total: {filteredAndSortedBookings.length}</p>
         </div>
         <div className="camp-admin-header-actions">
-          <button onClick={fetchBookings} className="camp-admin-icon-btn" title="Refresh Data">
+          <button onClick={handleDownloadCSV} className="camp-admin-icon-btn" title="Download CSV">
+            <Download size={20} />
+          </button>
+          <button onClick={fetchBookings} className="camp-admin-icon-btn" title="Refresh">
             <RefreshCw size={20} className={loading ? 'camp-admin-spin' : ''} />
           </button>
-          <button onClick={onClose} className="camp-admin-btn camp-admin-btn--secondary">
-            <LogOut size={16} /> Exit Admin
+          <button onClick={handleCloseClick} className="camp-admin-btn camp-admin-btn--secondary">
+            <LogOut size={16} /> Exit
           </button>
         </div>
       </div>
@@ -135,76 +185,105 @@ export default function AdminDashboard({ onClose }) {
           <input 
             type="text" 
             className="camp-admin-input" 
-            placeholder="Search name, phone, email..." 
+            placeholder="Search..." 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
+        
         <div className="camp-admin-select-box">
           <select 
             className="camp-admin-input" 
-            value={filterSlot} 
-            onChange={(e) => setFilterSlot(e.target.value)}
+            value={filterSource} 
+            onChange={(e) => setFilterSource(e.target.value)}
           >
-            {availableSlots.map(slot => (
-              <option key={slot} value={slot}>{slot === 'All' ? 'All Time Slots' : slot}</option>
+            {availableSources.map(source => (
+              <option key={source} value={source}>
+                {source === 'All' ? 'Filter by Source' : source}
+              </option>
             ))}
           </select>
         </div>
       </div>
 
-      {error && <p className="camp-admin-error">{error}</p>}
-
       <div className="camp-admin-table-container">
-        {loading && bookings.length === 0 ? (
-          <div className="camp-admin-empty">Loading roster...</div>
-        ) : filteredBookings.length === 0 ? (
-          <div className="camp-admin-empty">No bookings found matching your filters.</div>
+        {filteredAndSortedBookings.length === 0 ? (
+          
+          /* --- NEW ALERT UI FOR EMPTY STATE --- */
+          <div className="camp-admin-empty" style={{ padding: '4rem 1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
+            <div className="camp-admin-error" style={{ margin: 0, padding: '1rem 2rem', border: '1px solid var(--camp-admin-accent-red)', fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              ⚠️ No records found matching your current filters.
+            </div>
+            <button 
+              onClick={resetFilters} 
+              className="camp-admin-btn camp-admin-btn--secondary" 
+              style={{ width: 'auto', padding: '0.5rem 1.5rem' }}
+            >
+              Clear All Filters
+            </button>
+          </div>
+
         ) : (
           <div className="camp-admin-grid">
-            {/* Desktop Header Row (6 Columns) */}
             <div className="camp-admin-grid-header">
-              <div>Date Booked</div>
+              <div 
+                onClick={toggleSort} 
+                style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', userSelect: 'none' }}
+                title="Click to sort by date"
+              >
+                Date Booked
+                {sortOrder === 'desc' ? (
+                  <ArrowDown size={14} style={{ color: 'var(--camp-admin-accent-red)' }} />
+                ) : (
+                  <ArrowUp size={14} style={{ color: 'var(--camp-admin-accent-red)' }} />
+                )}
+              </div>
+              
               <div>Student</div>
-              <div>Parent Info</div>
+              
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                Gender
+                <select 
+                  value={filterGender} 
+                  onChange={(e) => setFilterGender(e.target.value)}
+                  style={{ 
+                    background: 'transparent', 
+                    border: 'none', 
+                    cursor: 'pointer', 
+                    outline: 'none', 
+                    fontWeight: '900', 
+                    color: 'var(--camp-admin-accent-red)',
+                    padding: 0,
+                    fontSize: '0.75rem',
+                    fontFamily: 'inherit'
+                  }}
+                  title="Filter by Gender"
+                >
+                  <option value="All">(ALL)</option>
+                  <option value="M">(M)</option>
+                  <option value="F">(F)</option>
+                </select>
+              </div>
+
+              <div>Parent</div>
               <div>Contact</div>
-              <div>Time Slot</div>
+              <div>Slot</div>
               <div>Source</div>
             </div>
-
-            {/* Data Rows (6 Columns) */}
-            {filteredBookings.map((booking) => (
+            
+            {filteredAndSortedBookings.map((booking) => (
               <div key={booking.id} className="camp-admin-grid-row">
-                <div className="camp-admin-cell" data-label="Date Booked">
-                  <Calendar size={14} className="camp-admin-cell-icon"/>
+                <div className="camp-admin-cell" data-label="Date">
                   {new Date(booking.created_at).toLocaleDateString('en-IN', {
                     day: 'numeric', month: 'short', year: 'numeric'
                   })}
                 </div>
-                
-                <div className="camp-admin-cell camp-admin-cell--strong" data-label="Student">
-                  <Users size={14} className="camp-admin-cell-icon desktop-hide"/>
-                  {booking.student_name}
-                </div>
-                
-                <div className="camp-admin-cell" data-label="Parent">
-                  {booking.parent_name}
-                </div>
-                
-                <div className="camp-admin-cell" data-label="Contact">
-                  <div style={{display: 'flex', flexDirection: 'column', gap: '4px'}}>
-                    <span style={{display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 'bold'}}><Phone size={12}/> {booking.mobile}</span>
-                    <span style={{fontSize: '0.8rem', color: 'var(--camp-admin-text-muted)', textTransform: 'none'}}>{booking.email}</span>
-                  </div>
-                </div>
-                
-                <div className="camp-admin-cell" data-label="Time Slot">
-                  <span className="camp-admin-badge">{booking.time_slot}</span>
-                </div>
-
-                <div className="camp-admin-cell" data-label="Source" style={{ fontSize: '0.8rem', color: 'var(--camp-admin-text-muted)', textTransform: 'none' }}>
-                  {booking.referral_source || 'N/A'}
-                </div>
+                <div className="camp-admin-cell camp-admin-cell--strong" data-label="Student">{booking.student_name}</div>
+                <div className="camp-admin-cell" data-label="Gender" style={{textTransform: 'capitalize'}}>{booking.gender || 'N/A'}</div>
+                <div className="camp-admin-cell" data-label="Parent">{booking.parent_name}</div>
+                <div className="camp-admin-cell" data-label="Contact">{booking.mobile}</div>
+                <div className="camp-admin-cell" data-label="Slot"><span className="camp-admin-badge">{booking.time_slot}</span></div>
+                <div className="camp-admin-cell" data-label="Source">{booking.referral_source || 'N/A'}</div>
               </div>
             ))}
           </div>

@@ -7,7 +7,7 @@ export const publicRoutes = [
   { path: '/otp-verify', component: lazy(() => import('../pages/OtpVerify.jsx')) },
   { path: '/meidiet', component: lazy(() => import('../components/Diet/Diet.jsx')) },
   { path: '/lowcal', component: lazy(() => import('../components/low-cal/LowCal.jsx')) },
-  { path: '/camp', component: lazy(() => import('../components/summer-camp-booking/AdminDashboard.jsx')) },
+  { path: '/admin', component: lazy(() => import('../components/summer-camp-booking/AdminDashboard.jsx')) },
 
 
 
