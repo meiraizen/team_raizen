@@ -291,7 +291,7 @@ function BookingFlow({ setView, setConfirmedBooking }) {
             </div>
 
             <div className="raizen-input-group">
-              <label className="raizen-input-group__label">Mobile Number</label>
+              <label className="raizen-input-group__label">What's App Number</label>
               <input className="raizen-input-group__field" required type="tel" name="mobile" value={formData.mobile} onChange={handleInputChange}  pattern="[0-9]{10}" title="Ten digit phone number" />
             </div>
             <div className="raizen-input-group">
