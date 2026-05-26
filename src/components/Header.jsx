@@ -97,8 +97,7 @@ export default function Header() {
     return [
       { label: 'Home', path: '/home' },
       { label: 'Billbook', path: '/billbook' },
-      { label: 'Contact', path: '/contact' },
-      { label: 'Logout', action: handleLogoutAll }, //Logout from all devices
+           { label: 'Logout', action: handleLogoutAll }, //Logout from all devices
       // { label: 'Logout', action: handleLogout }, //Logout from current device
     ];
   }, [user]);
