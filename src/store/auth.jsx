@@ -1,22 +1,13 @@
 import { create } from 'zustand';
 import emailjs from '@emailjs/browser';
-import { supabase } from '../chat/supabaseClient';
-
-export const allowedAccounts = [
-  { id:'1', email: 'bala.raizen@gmail.com',name: 'Bala' },
-  { id:'2', email: 'amalesh.raizen@gmail.com',name: 'Amalesh' },
-  { id:'3', email: 'samebinezer.raizen@gmail.com',name: 'Ebi' },
-  { id:'4', email: 'danjr.raizen@gmail.com',name: 'Dan' },
-  { id:'5', email: 'meii.raizen@gmail.com',name: 'Mei' },
-  { id:'6', email: 'muthu.raizen@gmail.com',name: 'Muthu' },
-  { id:'7', email: 'bsmeiyarasu@gmail.com',name: 'MEi OG' }
-];
+import { supabase, getProfile, getUserRole, getUserRoles, getUserPermissions } from '../services/supabase';
+import { buildPermissionsMap } from '../services/permissions';
+import { logLoginHistory } from '../services/audit';
 
 const getStoredUser = () => {
   try { return JSON.parse(localStorage.getItem('auth_user')) || null; } catch { return null; }
 };
 
-// OTP
 const generateOtp = () => String(Math.floor(100000 + Math.random() * 900000));
 
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
@@ -26,18 +17,14 @@ const EMAILJS_USER_ID = import.meta.env.VITE_EMAILJS_USER_ID;
 const sendOtpEmail = (email, otp) =>
   emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, { passcode: otp, email }, EMAILJS_USER_ID);
 
-// Session / multi‑device
 const SESSION_KEY = 'auth_session_expiry';
 const SESSION_TOKEN_KEY = 'auth_session_token';
+const ROLE_KEY = 'auth_user_role';
+const PERMS_KEY = 'auth_user_permissions';
 const FIVE_HOURS_MS = 5 * 60 * 60 * 1000;
 
 const getStoredSessionExpiry = () => {
-  try {
-    const v = localStorage.getItem(SESSION_KEY);
-    return v ? Number(v) : null;
-  } catch {
-    return null;
-  }
+  try { const v = localStorage.getItem(SESSION_KEY); return v ? Number(v) : null; } catch { return null; }
 };
 
 const getStoredSessionToken = () => {
@@ -62,24 +49,35 @@ export const useAuthStore = create((set, get) => ({
   sessionExpiry: getStoredSessionExpiry(),
   sessionToken: getStoredSessionToken(),
   logoutChannel: null,
+  userRole: localStorage.getItem(ROLE_KEY) || null,
+  permissions: (() => { try { return JSON.parse(localStorage.getItem(PERMS_KEY)) } catch { return null } })(),
 
   login: async (email) => {
-    const found = allowedAccounts.find(a => a.email === email);
-    if (!found) return false;
+    // Check if profile exists in database
+    const { data: profile, error } = await getProfile(email);
+
+    if (error || !profile || !profile.is_active) {
+      await logLoginHistory({ email, success: false, failure_reason: 'Profile not found or inactive' });
+      return { error: 'Access denied. This email is not registered or is inactive.' };
+    }
+
     const otp = generateOtp();
     const expiry = Date.now() + 2 * 60 * 1000; // 2 minutes OTP validity
-    try { await sendOtpEmail(email, otp); }
-    catch {
+
+    try {
+      await sendOtpEmail(email, otp);
+    } catch {
       set({ otpSent: false, otp: null, otpExpiry: null });
       return { error: 'Failed to send OTP. Please try again.' };
     }
-    const user = { email, name: found.name };
+
+    const user = { email, name: profile.full_name, id: profile.id };
     localStorage.setItem('auth_user', JSON.stringify(user));
     set({ user, otpSent: true, otp, otpExpiry: expiry });
     return 'otp';
   },
 
-  verifyOtp: (inputOtp) => {
+  verifyOtp: async (inputOtp) => {
     const { otp, otpExpiry, user } = get();
     if (!/^[0-9]{6}$/.test(inputOtp || '')) return { error: 'OTP must be a 6-digit number.' };
     if (!otp || !otpExpiry || Date.now() > otpExpiry) {
@@ -88,7 +86,7 @@ export const useAuthStore = create((set, get) => ({
     }
     if (inputOtp !== otp) return { error: 'Invalid OTP.' };
 
-    // Success
+    // Success - create session
     const sessionExpiry = Date.now() + FIVE_HOURS_MS;
     const sessionToken = createSessionToken();
     try {
@@ -96,9 +94,31 @@ export const useAuthStore = create((set, get) => ({
       localStorage.setItem(SESSION_TOKEN_KEY, sessionToken);
     } catch {}
 
+    // Fetch role and permissions
+    let roleName = null;
+    let permsArray = [];
+
+    if (user?.email) {
+      const { data: roleData, error: roleError } = await getUserRole(user.email);
+      if (roleError) console.error('[Auth] getUserRole error:', roleError);
+      if (roleData && roleData.length > 0) {
+        roleName = roleData[0].role_name || null;
+        localStorage.setItem(ROLE_KEY, roleName || '');
+      } else {
+        console.warn('[Auth] No role found via RPC for', user.email);
+      }
+
+      const { data: permsData, error: permsError } = await getUserPermissions(user.email);
+      if (permsError) console.error('[Auth] getUserPermissions error:', permsError);
+      if (permsData) permsArray = permsData;
+      localStorage.setItem(PERMS_KEY, JSON.stringify(buildPermissionsMap(permsArray)));
+    }
+
     const logoutChannel = subscribeLogoutChannel(user?.email, () => {
       get().logout({ internal: true });
     });
+
+    await logLoginHistory({ email: user?.email, success: true });
 
     set({
       otpSent: false,
@@ -106,39 +126,33 @@ export const useAuthStore = create((set, get) => ({
       otpExpiry: null,
       sessionExpiry,
       sessionToken,
-      logoutChannel
+      logoutChannel,
+      userRole: roleName,
+      permissions: buildPermissionsMap(permsArray),
     });
 
     return true;
   },
 
-  logout: ({ internal } = {}) => {
-    const { logoutChannel } = get();
-    if (logoutChannel) {
-      try { supabase.removeChannel(logoutChannel); } catch {}
+  logout: async ({ internal } = {}) => {
+    const { user, logoutChannel } = get();
+    if (!internal && user?.email) {
+      try {
+        supabase.channel(`logout_all:${user.email}`)
+          .send({ type: 'broadcast', event: 'logout', payload: { ts: Date.now() } });
+      } catch {}
     }
+    if (logoutChannel) { try { supabase.removeChannel(logoutChannel); } catch {} }
     try { localStorage.removeItem('auth_user'); } catch {}
     try { localStorage.removeItem(SESSION_KEY); } catch {}
     try { localStorage.removeItem(SESSION_TOKEN_KEY); } catch {}
+    try { localStorage.removeItem(ROLE_KEY); } catch {}
+    try { localStorage.removeItem(PERMS_KEY); } catch {}
     set({
-      user: null,
-      otpSent: false,
-      otp: null,
-      otpExpiry: null,
-      sessionExpiry: null,
-      sessionToken: null,
-      logoutChannel: null
+      user: null, otpSent: false, otp: null, otpExpiry: null,
+      sessionExpiry: null, sessionToken: null, logoutChannel: null,
+      userRole: null, permissions: null,
     });
-  },
-
-  logoutAllDevices: async () => {
-    const { user } = get();
-    if (!user?.email) return;
-    try {
-      supabase.channel(`logout_all:${user.email}`)
-        .send({ type: 'broadcast', event: 'logout', payload: { ts: Date.now() } });
-    } catch {}
-    get().logout({ internal: true });
   },
 
   extendSession: () => {
@@ -148,9 +162,26 @@ export const useAuthStore = create((set, get) => ({
     try { localStorage.setItem(SESSION_KEY, String(sessionExpiry)); } catch {}
     set({ sessionExpiry });
   },
+
+  refreshPermissions: async () => {
+    const { user } = get();
+    if (!user?.email) return;
+    const { data: roleData } = await getUserRole(user.email);
+    if (roleData && roleData.length > 0) {
+      const roleName = roleData[0].role_name || null;
+      localStorage.setItem(ROLE_KEY, roleName || '');
+      set({ userRole: roleName });
+    }
+    const { data: permsData } = await getUserPermissions(user.email);
+    if (permsData) {
+      const perms = buildPermissionsMap(permsData);
+      localStorage.setItem(PERMS_KEY, JSON.stringify(perms));
+      set({ permissions: perms });
+    }
+  },
 }));
 
-// --- Session expiry watchdog (auto logout when expired) ---
+// Session expiry watchdog
 let __sessionExpiryInterval;
 (function initSessionExpiryWatch() {
   const check = () => {
@@ -166,7 +197,7 @@ let __sessionExpiryInterval;
   window.addEventListener('focus', check);
 })();
 
-// --- Rehydrate logout channel after refresh if needed ---
+// Rehydrate logout channel after refresh
 (function rehydrateLogoutChannel() {
   const { user, sessionToken, logoutChannel } = useAuthStore.getState();
   if (user?.email && sessionToken && !logoutChannel) {
@@ -179,4 +210,3 @@ let __sessionExpiryInterval;
     useAuthStore.setState({ logoutChannel: channel });
   }
 })();
-

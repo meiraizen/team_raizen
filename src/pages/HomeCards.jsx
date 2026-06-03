@@ -21,7 +21,10 @@ export default function HomeCards() {
         <CardLink title="Chat" description="Message your teammates." to="/chat" />
       </Grid>
          <Grid item xs={12} sm={6} md={4}>
-        <CardLink title="Online Dojo" description="Join our online coding sessions." to="/online-dojo" />
+        <CardLink title="Online Dojo" description="Join our online coding sessions." to="/onlinedojo" />
+      </Grid>
+      <Grid item xs={12} sm={6} md={4}>
+        <CardLink title="Register Student" description="Register a new student." to="/student-registration" />
       </Grid>
     </Grid>
   );

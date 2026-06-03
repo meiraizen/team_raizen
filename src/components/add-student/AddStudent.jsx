@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { supabase } from '../../chat/supabaseClient'; // Adjust path based on where your client file is
+import { createStudent } from '../../services/supabase';
 import styles from './AddStudent.module.css';
 
 const AddStudent = () => {

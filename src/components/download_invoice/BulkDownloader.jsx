@@ -1,26 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import mockData from './mock-invoices.json';
-import { useInvoiceValidator } from './useInvoiceValidator';
 import { useCancelableTask } from './useCancelableTask';
 import { exportInvoices } from './invoiceExporter';
 import styles from './BulkDownloader.module.css';
 
-export default function BulkDownloader() {
+export default function BulkDownloader({ receipts = [] }) {
   const [form, setForm] = useState({ startId: '', endId: '', bulkMode: false });
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState({ current: 0, total: 0 });
+  const [errors, setErrors] = useState({});
 
-  const { errors, validate, resetErrors } = useInvoiceValidator();
   const { cancelRef, start, cancel } = useCancelableTask();
 
-  // Warn before unload if downloading
   useEffect(() => {
     const beforeUnload = (e) => {
-      if (loading) {
-        e.preventDefault();
-        e.returnValue =
-          'Download is in progress. Are you sure you want to leave?';
-      }
+      if (loading) { e.preventDefault(); e.returnValue = 'Download in progress.'; }
     };
     window.addEventListener('beforeunload', beforeUnload);
     return () => window.removeEventListener('beforeunload', beforeUnload);
@@ -29,18 +22,33 @@ export default function BulkDownloader() {
   const resetForm = () => {
     setForm({ startId: '', endId: '', bulkMode: false });
     setProgress({ current: 0, total: 0 });
-    resetErrors();
+    setErrors({});
+  };
+
+  const validate = () => {
+    const errs = {};
+    if (!form.startId.trim()) errs.startId = 'Start ID is required';
+    if (form.bulkMode && !form.endId.trim()) errs.endId = 'End ID is required';
+    if (form.bulkMode && form.startId && form.endId && parseInt(form.endId) < parseInt(form.startId)) {
+      errs.endId = 'End ID must be >= Start ID';
+    }
+    setErrors(errs);
+    return Object.keys(errs).length === 0;
   };
 
   const handleDownload = async () => {
-    if (!validate(form)) return;
+    if (!validate()) return;
 
     const from = parseInt(form.startId, 10);
     const to = form.bulkMode && form.endId ? parseInt(form.endId, 10) : from;
 
-    const invoices = mockData.filter((inv) => inv.id >= from && inv.id <= to);
+    const invoices = receipts.filter((r) => {
+      const num = parseInt(r.receipt_no, 10);
+      return !isNaN(num) && num >= from && num <= to;
+    });
+
     if (invoices.length === 0) {
-      alert('No invoice(s) found for that ID or range.');
+      alert('No receipt(s) found for that ID range.');
       return;
     }
 
@@ -61,42 +69,32 @@ export default function BulkDownloader() {
 
   return (
     <div className={styles.wrapper}>
-      <h2 className={styles.heading}>Invoice Downloader</h2>
+      <h2 className={styles.heading}>Receipt Downloader</h2>
+
+      <p style={{ fontSize: '0.85rem', color: '#666', marginBottom: '0.5rem' }}>
+        {receipts.length} receipts available (Receipt #{receipts[0]?.receipt_no || 'N/A'} - #{receipts[receipts.length - 1]?.receipt_no || 'N/A'})
+      </p>
 
       <label className={styles.label}>
-        <input
-          type="checkbox"
-          checked={form.bulkMode}
+        <input type="checkbox" checked={form.bulkMode}
           onChange={() => setForm((f) => ({ ...f, bulkMode: !f.bulkMode }))}
-          disabled={loading}
-          className={styles.checkbox}
-        />
+          disabled={loading} className={styles.checkbox} />
         Enable Bulk Mode
       </label>
 
       <div className={styles.inputGroup}>
-        <input
-          type="number"
-          placeholder="Start ID"
+        <input type="number" placeholder="Receipt No (Start)"
           value={form.startId}
           onChange={(e) => setForm((f) => ({ ...f, startId: e.target.value }))}
-          disabled={loading}
-          className={styles.input}
-        />
+          disabled={loading} className={styles.input} />
         {errors.startId && <p className={styles.error}>{errors.startId}</p>}
 
         {form.bulkMode && (
           <>
-            <input
-              type="number"
-              placeholder="End ID"
+            <input type="number" placeholder="Receipt No (End)"
               value={form.endId}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, endId: e.target.value }))
-              }
-              disabled={loading}
-              className={styles.input}
-            />
+              onChange={(e) => setForm((f) => ({ ...f, endId: e.target.value }))}
+              disabled={loading} className={styles.input} />
             {errors.endId && <p className={styles.error}>{errors.endId}</p>}
           </>
         )}
@@ -104,33 +102,18 @@ export default function BulkDownloader() {
 
       <div className={styles.buttonGroup}>
         {!loading ? (
-          <button
-            onClick={handleDownload}
-            className={`${styles.button} ${styles.success}`}
-          >
+          <button onClick={handleDownload}
+            className={`${styles.button} ${styles.success}`}>
             {form.bulkMode ? 'Download ZIP' : 'Download Image'}
           </button>
         ) : (
           <>
-            <p className={styles.progress}>
-              ⏳ Generating {progress.current}/{progress.total}...
-            </p>
-            <button
-              onClick={cancel}
-              className={`${styles.button} ${styles.danger}`}
-            >
-              Cancel
-            </button>
+            <p className={styles.progress}>Generating {progress.current}/{progress.total}...</p>
+            <button onClick={cancel} className={`${styles.button} ${styles.danger}`}>Cancel</button>
           </>
         )}
-
         {!loading && (
-          <button
-            onClick={resetForm}
-            className={`${styles.button} ${styles.gray}`}
-          >
-            Reset
-          </button>
+          <button onClick={resetForm} className={`${styles.button} ${styles.gray}`}>Reset</button>
         )}
       </div>
     </div>

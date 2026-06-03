@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState, useEffect } from 'react'
-import { useAuthStore, allowedAccounts } from '../store/auth'
+import { useAuthStore } from '../store/auth'
 import { useNavigate } from 'react-router-dom'
+import { getAllProfiles } from '../services/supabase'
 
 // Components
 import Sidebar from './components/Sidebar'
@@ -24,11 +25,19 @@ export default function ChatPage() {
   const { messages, loading, send, messagesRef, retry, refreshing } = useChat(peer)
   const { isMobile, showSidebar, setShowSidebar } = useResponsive(peer)
   const onlineUsers = usePresence()
+  const [profileContacts, setProfileContacts] = useState([])
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await getAllProfiles()
+      if (data) setProfileContacts(data.filter(p => p.is_active !== false))
+    })()
+  }, [])
 
   // Memoized values to prevent unnecessary recalculations
   const contacts = useMemo(() => 
-    allowedAccounts.filter(c => c.email !== user?.email), 
-    [user?.email]
+    profileContacts.filter(c => c.email !== user?.email).map(c => ({ id: String(c.id), email: c.email, name: c.full_name })), 
+    [profileContacts, user?.email]
   )
 
   const selectedContact = useMemo(() => 
@@ -570,6 +579,7 @@ export default function ChatPage() {
       <div className="chat-app">
         <Sidebar onBack={goBack} showSidebar={showSidebar} onSearch={handleSearch}>
           <ContactList
+            contacts={contacts}
             peer={peer}
             onSelectContact={selectContact}
             getLastMessage={getLastMessage}

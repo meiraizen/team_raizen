@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { supabase } from '../supabaseClient'
+import { supabase } from '../../services/supabase'
 import { useAuthStore } from '../../store/auth'
 
 export function usePresence() {

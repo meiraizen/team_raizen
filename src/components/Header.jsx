@@ -1,10 +1,15 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { AppBar, Toolbar, Typography, Button, IconButton, Box, Drawer, List, ListItemButton, ListItemText, Divider } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, IconButton, Box, Drawer, List, ListItemButton, ListItemText, Divider, Avatar, Menu, MenuItem, Tooltip } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import LogoutIcon from '@mui/icons-material/Logout';
+import PersonIcon from '@mui/icons-material/Person';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/auth';
+import { usePermissions } from '../hooks/usePermissions';
+import { MODULES } from '../services/permissions';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
@@ -64,14 +69,15 @@ const getTitleFromPath = (pathname) => {
 export default function Header() {
   const user = useAuthStore(state => state.user);
   const logout = useAuthStore(state => state.logout);
-  const logoutAllDevices = useAuthStore(state => state.logoutAllDevices);
   const navigate = useNavigate();
   const location = useLocation();
   const isMobile = useMediaQuery('(max-width:600px)');
   const theme = useTheme();
   const hoverColor = getHoverColor(theme);
+  const { canView, isSuperAdmin } = usePermissions();
 
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const toggleMobile = () => setMobileOpen(o => !o);
 
@@ -83,24 +89,24 @@ export default function Header() {
     navigate('/login');
   };
 
-  const handleLogoutAll = async () => {
-    if (window.confirm('Logout from all devices?')) {
-      try { await logoutAllDevices(); } catch {}
-      navigate('/login');
-    }
-  };
-
   const currentTitle = getTitleFromPath(location.pathname);
 
-  const menuItems = useMemo(() => {
+  const navItems = useMemo(() => {
+    if (!user) return [];
+    return [
+      canView(MODULES.BILLBOOK) && { label: 'Billbook', path: '/billbook' },
+    ].filter(Boolean);
+  }, [user, canView]);
+
+  const mobileMenuItems = useMemo(() => {
     if (!user) return [];
     return [
       { label: 'Home', path: '/home' },
-      { label: 'Billbook', path: '/billbook' },
-           { label: 'Logout', action: handleLogoutAll }, //Logout from all devices
-      // { label: 'Logout', action: handleLogout }, //Logout from current device
+      ...navItems,
+      ...(isSuperAdmin ? [{ label: 'Manage Users', path: '/user-management' }] : []),
+      { label: 'Logout', action: handleLogout },
     ];
-  }, [user]);
+  }, [navItems, isSuperAdmin]);
 
   const handleItemClick = (item) => {
     if (item.path) navigate(item.path);
@@ -150,18 +156,49 @@ export default function Header() {
               />
             </Box>
           )}
-          {!isMobile && (
-            user ? (
-              <Box sx={{ display: 'flex', gap: 5, cursor: 'none' }}>
-                <Button color="inherit" component={Link} to="/home" sx={hoverColor}>Home</Button>
-                <Button color="inherit" component={Link} to="/billbook" sx={hoverColor}>Billbook</Button>
-                <Button color="inherit" component={Link} to="/contact" sx={hoverColor}>Contact</Button>
-                <Button color="inherit" onClick={handleLogoutAll} sx={hoverColor}>Logout</Button>
-                    {/* <Button color="inherit" onClick={handleLogout} sx={hoverColor}>Logout</Button> */} 
-              </Box>
-            ) : (
-              <Button color="inherit" component={Link} to="/login">Login</Button>
-            )
+          {!isMobile && user && (
+            <Box sx={{ display: 'flex', gap: 5, cursor: 'none', alignItems: 'center' }}>
+              <Button color="inherit" component={Link} to="/home" sx={hoverColor}>Home</Button>
+              {navItems.map(item => (
+                <Button key={item.path} color="inherit" component={Link} to={item.path} sx={hoverColor}>
+                  {item.label}
+                </Button>
+              ))}
+              <Tooltip title={user?.email || ''}>
+                <IconButton onClick={(e) => setAnchorEl(e.currentTarget)} size="small" sx={{ ml: 2 }}>
+                  <Avatar sx={{ width: 32, height: 32, bgcolor: 'secondary.main' }}>
+                    {user?.user_metadata?.full_name?.charAt(0)?.toUpperCase() || user?.email?.charAt(0)?.toUpperCase() || 'U'}
+                  </Avatar>
+                </IconButton>
+              </Tooltip>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={() => setAnchorEl(null)}
+                onClick={() => setAnchorEl(null)}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+              >
+                <MenuItem disabled sx={{ opacity: 0.7 }}>
+                  <PersonIcon sx={{ mr: 1 }} fontSize="small" />
+                  {user?.user_metadata?.full_name || user?.email}
+                </MenuItem>
+                <Divider />
+                {isSuperAdmin && (
+                  <MenuItem onClick={() => navigate('/user-management')}>
+                    <ManageAccountsIcon sx={{ mr: 1 }} fontSize="small" />
+                    Manage Users
+                  </MenuItem>
+                )}
+                <MenuItem onClick={handleLogout}>
+                  <LogoutIcon sx={{ mr: 1 }} fontSize="small" />
+                  Logout
+                </MenuItem>
+              </Menu>
+            </Box>
+          )}
+          {!isMobile && !user && (
+            <Button color="inherit" component={Link} to="/login">Login</Button>
           )}
         </Toolbar>
       </AppBar>
@@ -185,10 +222,9 @@ export default function Header() {
           }}
         >
           <Box role="presentation">
-                       <Box sx={{ display: 'flex', alignItems: 'center', px: 1, pb: 1 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', px: 1, pb: 1 }}>
               <Button
                 onClick={toggleMobile}
-                // startIcon={<ArrowBackIcon />}
                 size="small"
                 sx={{ textTransform: 'none' }}
               >
@@ -197,7 +233,7 @@ export default function Header() {
             </Box>
             <Divider />
             <List>
-              {menuItems.map(item => (
+              {mobileMenuItems.map(item => (
                 <ListItemButton
                   key={item.label}
                   onClick={() => handleItemClick(item)}

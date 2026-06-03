@@ -1,5 +1,4 @@
 import { memo, useMemo } from 'react'
-import { useAuthStore, allowedAccounts } from '../../store/auth'
 
 const ContactItem = memo(({ contact, isActive, onClick, lastMessage, isOnline }) => (
   <div 
@@ -21,15 +20,8 @@ const ContactItem = memo(({ contact, isActive, onClick, lastMessage, isOnline })
   </div>
 ))
 
-const ContactList = memo(({ peer, onSelectContact, getLastMessage, searchTerm = '', onlineUsers = [] }) => {
-  const user = useAuthStore(s => s.user)
-  
-  const contacts = useMemo(
-    () => allowedAccounts.filter(c => c.email !== user?.email),
-    [user?.email]
-  )
-
-  // Search across all contacts (not only online)
+const ContactList = memo(({ contacts = [], peer, onSelectContact, getLastMessage, searchTerm = '', onlineUsers = [] }) => {
+  // Search across all contacts
   const filteredContacts = useMemo(() => {
     if (!searchTerm.trim()) return contacts
     const term = searchTerm.toLowerCase()

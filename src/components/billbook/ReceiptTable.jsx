@@ -190,7 +190,7 @@ const ReceiptTable = () => {
   };
 
   return (
-    <> <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between' }}> <BackButton /> <IconButton  onClick={handleGenerateReceipt}  sx={{
+    <> <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between' }}> <BackButton to="/billbook" /> <IconButton  onClick={handleGenerateReceipt}  sx={{
     '&:hover': {
       backgroundColor: 'white', 
        },'&:hover img': {

@@ -92,7 +92,7 @@ export default function VerifyCertificate() {
 
   return (
     <div style={{ padding: '40px 20px', minHeight: '100vh', background: '#f4f7f8' }}>
-      <BackButton />
+      <BackButton to="/home" />
       
       <div style={{ 
         display: 'flex', 
